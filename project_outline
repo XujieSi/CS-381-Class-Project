@@ -1,0 +1,169 @@
+r Use of a Scarce Shared Temporally Bounded Resource : Bandwidth
+
+Problem Statement
+
+Motivation
+Although with enough preparation and capital expenditure sufficient bandwidth can be established for any purpose, in practical situations economic factors come into play.  Consider bandwidth requirements in catastrophic situations.  The availability of bandwidth is in short supply just when more bandwidth would be most useful, at the onset of the emergency.  Consider the following scenarios: 1) Tsunami in Japan#; 2) Earthquakes in Haiti#; 3) War in Afghanistan#.  In each of these situation network connectivity is reduced and what remains is unreliable, just as the need for effective communication is increased.  In some cases the shortage of bandwidth is caused by the presence of sophisticated encryption schemes.
+
+Description
+Suppose there are processes, P_i,  which have time sensitive messages, M_i.  This is an on-line problem so the specific time when these M messages are generated as well as their sizes, value V_i and quantity are not know precisely.  Nevertheless, their properties may be described statistically.  The goal is to fairly allocate the available bandwidth such that the value of the messages delivered is maximized.  
+To make the problem more tractable it is presumed that all P form a clique.  This means that every message will be broadcast and collisions are possible.  It is presumed that there are more M than could be delivered, some messages must be dropped.  
+Additionally, the nodes may lose privilege and subsequently need to acquire more, thus there are elements of self stabilization.
+
+Assumptions and Constraints
+A message is either completely sent to everyone or it is not sent to anyone.
+The message must be sent within a specified time or its value goes to zero.
+Each process has access to a local clock which is guaranteed to not deviate from a global clock by more than t_d.
+The number of messages are not guaranteed to be distributed in any regular way over time or space, it is possible that only a few processes generate the bulk of the  messages over a relatively short time, or they may generate many messages uniformly, or any other combination.
+
+
+Candidate Solution #1
+Use TCP/IP, 802.11, with its contention and exponential retry.  It is expected that this approach will fail for the problem as specified.  It will be evaluated as a baseline.
+
+Candidate Solution #2
+Use a modified Time-Triggered-Architecture.  The problem here is that not every P_i will consume the same amount of bandwidth, thus bandwidth would be wasted.  It may be possible for the time slices to be assigned dynamically to adjust for this.
+
+Candidate Solution #3
+Something else, inspired by material introduced in class.
+
+
+Approach
+Develop a set of data generators which produce message loads representative of the types of loads seen in the scenarios described.  Run sets of processes to generate message sets in simulation and exercise the candidate solutions.
+
+Possibly Related Problems
+On-line Knapsack problem
+Byzantine general problem
+Self stablization
+
+
+http://en.wikipedia.org/wiki/Combat-net_radio
+http://en.wikipedia.org/wiki/Time_division_multiple_access
+
+http://cs.itd.nrl.navy.mil/work/core/
+
+www.nsnam.org/tutorials/simutools08/ns-3-tutorial-handouts.pdf
+
+A previous ns2 implementation
+http://www.auto-nomos.de/ns2doku/dir_e59c83025a9da845eda2731fd993af74.html
+
+http://groups.google.com/group/ns-3-users/browse_thread/thread/f590fc5555d03f9b/929732774f0bb28f?lnk=gst&q=tdma#929732774f0bb28f
+
+http://code.nsnam.org/tomh/ns-3-simple-wireless/
+
+
+
+
+
+building ns3 on ubuntu 11.10
+
+
+sudo apt-get install gcc g++ python python-dev mercurial bzr gdb valgrind gsl-bin libgsl0-dev libgsl0ldbl \
+flex bison tcpdump sqlite sqlite3 libsqlite3-dev libxml2 libxml2-dev libgtk2.0-0 libgtk2.0-dev \
+uncrustify doxygen graphviz imagemagick \
+texlive texlive-pdf texlive-latex-extra texlive-generic-extra texlive-generic-recommended \
+texinfo dia texlive texlive-latex-extra texlive-extra-utils texlive-generic-recommended texi2html \
+python-pygraphviz python-kiwi python-pygoocanvas libgoocanvas-dev \
+libboost-signals-dev libboost-filesystem-dev
+
+
+cd
+ mkdir repos
+  cd repos
+   hg clone http://code.nsnam.org/ns-3-allinone
+
+   cd ns-3-dev
+
+   ./waf configure --enable-examples --enable-tests --doxygen-no-build
+   Setting top to                           : /opt/network-study/repos/ns-3-allinone/ns-3-dev 
+   Setting out to                           : /opt/network-study/repos/ns-3-allinone/ns-3-dev/build 
+   Checking for 'gcc' (c compiler)          : /usr/bin/gcc 
+   Checking for 'g++' (c++ compiler)        : /usr/bin/g++ 
+   Checking for program pkg-config          : /usr/bin/pkg-config 
+   Checking for compilation flag -Wl,--soname=foo... support : ok 
+   Checking for click location                               : not found 
+   Checking for pkg-config flags for GTK_CONFIG_STORE        : ok 
+   Checking for pkg-config flags for LIBXML2                 : ok 
+   Checking for type uint128_t                               : not found 
+   Checking for type __uint128_t                             : yes 
+   Checking high precision time implementation               : 128-bit integer 
+   Checking for header stdint.h                              : yes 
+   Checking for header inttypes.h                            : yes 
+   Checking for header sys/inttypes.h                        : not found 
+   Checking for header sys/types.h                           : yes 
+   Checking for header sys/stat.h                            : yes 
+   Checking for header dirent.h                              : yes 
+   Checking for header stdlib.h                              : yes 
+   Checking for header signal.h                              : yes 
+   Checking for header pthread.h                             : yes 
+   Checking for header stdint.h                              : yes 
+   Checking for header inttypes.h                            : yes 
+   Checking for header sys/inttypes.h                        : not found 
+   Checking for library rt                                   : yes 
+   Checking for header netpacket/packet.h                    : yes 
+   Checking for NSC location                                 : ../nsc (guessed) 
+   Checking for library dl                                   : yes 
+   Checking for NSC supported architecture x86_64            : ok 
+   Checking for header sys/socket.h                          : yes 
+   Checking for header netinet/in.h                          : yes 
+   Checking boost includes                                   : 1_46_1 
+   Checking boost libs                                       : ok 
+   Checking for OpenFlow location                            : not found 
+   Checking for library sqlite3                              : yes 
+   Checking for header linux/if_tun.h                        : yes 
+   Checking for program python                               : /usr/bin/python 
+   Checking for python version                               : (2, 7, 2, 'final', 0) 
+   Checking for library python2.7 in LIBDIR                  : yes 
+   Checking for program python2.7-config,python-config-2.7,python2.7m-config : /usr/bin/python2.7-config 
+   Checking for header Python.h                                              : yes 
+   Checking for compilation flag -fvisibility=hidden... support              : ok 
+   Checking for pybindgen location                                           : ../pybindgen (guessed) 
+   Python module pybindgen                                                   : ok 
+   Checking for pybindgen version                                            : 0.15.0.795 
+   Checking for types uint64_t and unsigned long equivalence                 : yes 
+   Checking for types uint64_t and unsigned long long equivalence            : no 
+   Checking for the apidefs that can be used for Python bindings             : gcc-LP64 
+   Checking for internal GCC cxxabi                                          : complete 
+   Python module pygccxml                                                    : ok 
+   Checking for pygccxml version                                             : 1.0.0 
+   Checking for program gccxml                                               : /usr/bin/gccxml 
+   Checking for gccxml version                                               : 0.9.0 
+   Checking for program sudo                                                 : /usr/bin/sudo 
+   Checking for program valgrind                                             : /usr/bin/valgrind 
+   Checking for pkg-config flags for GSL                                     : ok 
+   Checking for compilation flag -Wno-error=deprecated-d... support          : ok 
+   Checking for compilation flag -Wno-error=deprecated-d... support          : ok 
+   Checking for compilation flag -fstrict-aliasing... support                : ok 
+   Checking for compilation flag -fstrict-aliasing... support                : ok 
+   Checking for compilation flag -Wstrict-aliasing... support                : ok 
+   Checking for compilation flag -Wstrict-aliasing... support                : ok 
+   Checking for program doxygen                                              : /usr/bin/doxygen 
+   ---- Summary of optional NS-3 features:
+   NS-3 Click Integration        : not enabled (nsclick not enabled (see option --with-nsclick))
+   GtkConfigStore                : enabled
+   XmlIo                         : enabled
+   Threading Primitives          : enabled
+   Real Time Simulator           : enabled
+   Emulated Net Device           : enabled
+   Network Simulation Cradle     : not enabled (NSC library liblinux2.6.26.so is missing: NSC has not been built?)
+   MPI Support                   : not enabled (option --enable-mpi not selected)
+   NS-3 OpenFlow Integration     : not enabled (OpenFlow not enabled (see option --with-openflow))
+   SQlite stats data output      : enabled
+   Tap Bridge                    : enabled
+   Python Bindings               : enabled
+   Python API Scanning Support   : enabled
+   Use sudo to set suid bit      : not enabled (option --enable-sudo not selected)
+   Build tests                   : enabled
+   Build examples                : enabled
+   GNU Scientific Library (GSL)  : enabled
+   'configure' finished sucessfully (5.814s)
+
+
+   ./waf
+    <builds all the stuff>
+
+	...has some issues with...
+	./waf doxygen
+	Waf: Entering directory `/opt/network-study/repos/ns-3-allinone/ns-3-dev/build'
+	Waf: Leaving directory `/opt/network-study/repos/ns-3-allinone/ns-3-dev/build'
+	assert failed. cond="uid != 0", msg="Assert in TypeId::LookupByName: ns3::TcpSocketFactory not found", file=../src/core/model/type-id.cc, line=388
+
