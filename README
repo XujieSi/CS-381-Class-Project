@@ -1,2 +1,20 @@
 
-Hello
+README : This file describing the files in this repository.
+
+project_outline.fodt : outlining the project objectives and goals.
+
+configure-ns3.fodt : description of how ns-3 is installed on Ubuntu 11.10
+
+high-level-model.fodg : a diagram showing the basic configuration for 
+the problem and the ns-3 components.
+
+images : pictures used in presentations
+
+
+*.fodt & *.fodg :
+Flat xml open document (LibreOffice) files.
+These are used instead of binary files so they may 
+be better mangaged by change tools used by configuration
+management systems.
+
+
