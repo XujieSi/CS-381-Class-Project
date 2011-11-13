@@ -1,0 +1,18 @@
+
+
+Work through the ns-3 tutorial
+
+Develop the following four modules based on work found here...
+http://codereview.appspot.com/4747046/#ps1
+
+- A channel for serial networks
+  - support for collision detection
+  - 
+- A network device for serial communication
+  - performs time slicing
+
+- A helper for building sample networks
+
+- An application for a representative benchmark
+
+

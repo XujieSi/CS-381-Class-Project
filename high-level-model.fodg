@@ -6,8 +6,8 @@
   <config:config-item-set config:name="ooo:view-settings">
    <config:config-item config:name="VisibleAreaTop" config:type="int">-407</config:config-item>
    <config:config-item config:name="VisibleAreaLeft" config:type="int">-1391</config:config-item>
-   <config:config-item config:name="VisibleAreaWidth" config:type="int">24559</config:config-item>
-   <config:config-item config:name="VisibleAreaHeight" config:type="int">29036</config:config-item>
+   <config:config-item config:name="VisibleAreaWidth" config:type="int">24558</config:config-item>
+   <config:config-item config:name="VisibleAreaHeight" config:type="int">29035</config:config-item>
    <config:config-item-map-indexed config:name="Views">
     <config:config-item-map-entry>
      <config:config-item config:name="ViewId" config:type="string">view1</config:config-item>
@@ -63,6 +63,15 @@
    <config:config-item config:name="ColorTableURL" config:type="string">$(user)/config/standard.soc</config:config-item>
    <config:config-item config:name="DashTableURL" config:type="string">$(user)/config/standard.sod</config:config-item>
    <config:config-item config:name="DefaultTabStop" config:type="int">1270</config:config-item>
+   <config:config-item-map-indexed config:name="ForbiddenCharacters">
+    <config:config-item-map-entry>
+     <config:config-item config:name="Language" config:type="string">en</config:config-item>
+     <config:config-item config:name="Country" config:type="string">US</config:config-item>
+     <config:config-item config:name="Variant" config:type="string"/>
+     <config:config-item config:name="BeginLine" config:type="string"/>
+     <config:config-item config:name="EndLine" config:type="string"/>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
    <config:config-item config:name="GradientTableURL" config:type="string">$(user)/config/standard.sog</config:config-item>
    <config:config-item config:name="HatchTableURL" config:type="string">$(user)/config/standard.soh</config:config-item>
    <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
@@ -320,7 +329,7 @@
     <draw:path draw:style-name="gr1" draw:text-style-name="P1" draw:layer="layout" svg:width="10.497cm" svg:height="19.695cm" svg:x="6.325cm" svg:y="2.318cm" svg:viewBox="0 0 10498 19696" svg:d="m1375 14676c-12 359 439 1984 780 2341 375 392-913 3111 3061 2620 919-683 4064 889 4445-2159 889-1778 1270-3302 127-5588 508-2159 1143-2032-508-3937 635-2540 381-3556-612-5759 358-1734-2817-2877-4595-1734-1905-1016-3429-127-2732 4820-9 418-2475 514-697 5848-889 3429 743 3175 731 3548z">
      <text:p text:style-name="P1">CHANNEL</text:p>
     </draw:path>
-    <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="6.588cm" svg:y1="3.35cm" svg:x2="8.571cm" svg:y2="7.35cm" draw:start-shape="id1" draw:start-glue-point="10" draw:end-shape="id2" svg:d="m6588 3350c1641 0 650 4000 1983 4000">
+    <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="6.588cm" svg:y1="3.35cm" svg:x2="8.571cm" svg:y2="7.35cm" draw:start-shape="id1" draw:start-glue-point="10" draw:end-shape="id2" svg:d="m6588 3350c1639 0 648 4000 1983 4000">
      <text:p/>
     </draw:connector>
     <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="4.773cm" svg:y1="21.447cm" svg:x2="6.143cm" svg:y2="20.05cm" draw:start-shape="id3" draw:end-shape="id4" draw:end-glue-point="2" svg:d="m4773 21447c0-894 1370-196 1370-1397">
@@ -354,7 +363,7 @@
     <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="17.959cm" svg:y1="5.318cm" svg:x2="17.573cm" svg:y2="7.604cm" draw:start-shape="id10" draw:end-shape="id6" draw:end-glue-point="0" svg:d="m17959 5318c0 1866-386 723-386 2286">
      <text:p/>
     </draw:connector>
-    <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="8.571cm" svg:y1="15.604cm" svg:x2="7.096cm" svg:y2="19.097cm" draw:start-shape="id11" draw:end-shape="id4" svg:d="m8571 15604c-952 0-215 3493-1475 3493">
+    <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="8.571cm" svg:y1="15.604cm" svg:x2="7.096cm" svg:y2="19.097cm" draw:start-shape="id11" draw:end-shape="id4" svg:d="m8571 15604c-954 0-217 3493-1475 3493">
      <text:p/>
     </draw:connector>
     <draw:connector draw:style-name="gr2" draw:text-style-name="P1" draw:layer="layout" draw:type="curve" svg:x1="15.351cm" svg:y1="16.112cm" svg:x2="17.002cm" svg:y2="18.97cm" draw:start-shape="id12" draw:end-shape="id7" draw:end-glue-point="3" svg:d="m15351 16112c1389 0 564 2858 1651 2858">
@@ -14153,7 +14162,8 @@
        lbRXuCqzfMaDKzvnqhKlBn9212QOnEyn06SPjrGqn06nib/JYDBINJ47Ozuo1Wro9/v4+vUr
        Op0OcrkcDg8PcXh4GG9sbIQ2GHtJ3cn/Af0V+6w83Q9tAAAAAElFTkSuQmCC
       </office:binary-data>
-      <text:p text:style-name="P1">NODE</text:p>
+      <text:p text:style-name="P1">NODE &amp;</text:p>
+      <text:p text:style-name="P1">APPLICATION</text:p>
      </draw:image>
     </draw:frame>
     <draw:frame draw:style-name="gr5" draw:text-style-name="P1" xml:id="id8" draw:id="id8" draw:layer="layout" svg:width="5.261cm" svg:height="3.223cm" svg:x="14.789cm" svg:y="22.082cm">
@@ -17473,7 +17483,8 @@
        lbRXuCqzfMaDKzvnqhKlBn9212QOnEyn06SPjrGqn06nib/JYDBINJ47Ozuo1Wro9/v4+vUr
        Op0OcrkcDg8PcXh4GG9sbIQ2GHtJ3cn/Af0V+6w83Q9tAAAAAElFTkSuQmCC
       </office:binary-data>
-      <text:p text:style-name="P1">NODE</text:p>
+      <text:p text:style-name="P1">NODE &amp;</text:p>
+      <text:p text:style-name="P1">APPLICATION</text:p>
      </draw:image>
     </draw:frame>
     <draw:frame draw:style-name="gr5" draw:text-style-name="P1" xml:id="id3" draw:id="id3" draw:layer="layout" svg:width="5.261cm" svg:height="3.223cm" svg:x="2.143cm" svg:y="21.447cm">
@@ -20793,7 +20804,8 @@
        lbRXuCqzfMaDKzvnqhKlBn9212QOnEyn06SPjrGqn06nib/JYDBINJ47Ozuo1Wro9/v4+vUr
        Op0OcrkcDg8PcXh4GG9sbIQ2GHtJ3cn/Af0V+6w83Q9tAAAAAElFTkSuQmCC
       </office:binary-data>
-      <text:p text:style-name="P1">NODE</text:p>
+      <text:p text:style-name="P1">NODE &amp;</text:p>
+      <text:p text:style-name="P1">APPLICATION</text:p>
      </draw:image>
     </draw:frame>
     <draw:frame draw:style-name="gr5" draw:text-style-name="P1" xml:id="id10" draw:id="id10" draw:layer="layout" svg:width="5.261cm" svg:height="3.223cm" svg:x="15.329cm" svg:y="2.095cm">
@@ -24113,7 +24125,8 @@
        lbRXuCqzfMaDKzvnqhKlBn9212QOnEyn06SPjrGqn06nib/JYDBINJ47Ozuo1Wro9/v4+vUr
        Op0OcrkcDg8PcXh4GG9sbIQ2GHtJ3cn/Af0V+6w83Q9tAAAAAElFTkSuQmCC
       </office:binary-data>
-      <text:p text:style-name="P1">NODE</text:p>
+      <text:p text:style-name="P1">NODE &amp;</text:p>
+      <text:p text:style-name="P1">APPLICATION</text:p>
      </draw:image>
     </draw:frame>
    </draw:page>

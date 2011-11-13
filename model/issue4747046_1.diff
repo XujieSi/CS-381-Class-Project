@@ -1,0 +1,4715 @@
+Index: src/simple-wireless-tdma/doc/tdma.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/doc/tdma.h
+@@ -0,0 +1,42 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_H_
++#define TDMA_H_
++
++/**
++ * \defgroup tdma TDMA MAC protocol
++ *
++ * This section documents the API of the ns-3 TDMA module. For a
++ * generic functional description, please refer to the ns-3 model
++ * library document.
++ */
++
++#endif /* TDMA_H_ */
+Index: src/simple-wireless-tdma/doc/tdma.rst
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/doc/tdma.rst
+@@ -0,0 +1,93 @@
++.. include:: replace.txt
++
++TDMA MAC Protocol
++-----------------
++
++Time division multiple access (TDMA) model is a contention free link layer model built on top of 
++``ns3::SimpleWirelessChannel`` model.
++
++
++TDMA MAC Overview
++*****************
++
++Time division multiple access is a contention-free medium access protocol. The channel bandwidth that is 
++shared by all nodes in the network is partitioned into time slots for dedicated use among those nodes. 
++Each node transmits data only during this dedicated time slot allotted to it. The transmission slots are 
++usually of fixed time intervals. Each transmission slot is separated by a guard interval so that the 
++transmissions do not overlap. The value of the guard interval is decided by the simple-wireless channel model. 
++It is usually the amount of time it takes for a packet to travel the distance specified by the transmission 
++range. In this simple TDMA model, it is assumed that the clocks of the nodes are synchronized.
++
++Implementation of TDMA
++**********************
++
++The ns-3 implementation of TDMA has a centralized TDMA controller that assigns transmission slots to various 
++nodes in the network. Figure 3.10 shows the class-interaction diagram between various classes used in the 
++implementation. ``ns3::TdmaController``, ``ns3::TdmaCentralMac``, and ``ns3:TdmaMacQueue`` are the major 
++classes in this implementation. ``ns3::TdmaController`` controls the scheduling aspect of the protocol. 
++TDMA frame processing, creating MAC headers and trailers, and MAC callback mechanisms are handled by 
++``ns3::TdmaCentralMac``. ``ns3::TdmaMacQueue`` takes care of the packet queuing and dequeuing.
++
++.. _tdmamacclassinteraction:
++
++.. figure:: figures/tdmamacclassinteraction.png
++
++    TDMA MAC model classes overview
++
++``ns3::TdmaCentralMac``
++=======================
++
++``ns3::TdmaMac`` is the base class from which ``ns3::TdmaCentralMac`` is derived. The current implementation 
++considers a simple centralized TDMA MAC. However, considering the other possible implementations of 
++distributed TDMA models, we created a common base class so that other implementations could be derived from 
++it. All the data packets ready for transmission by the node are sent down either from IP to 
++``ns3::TdmaCentralMac``. ``ns3::TdmaCentralMac`` upon receiving the packets, enqueues them and waits for 
++its turn to transmit. As soon as this node gets its turn to transmit, ``ns3::TdmaCentralMac`` looks up the 
++``ns3::TdmaMacQueue`` for any queued packets. It then iteratively dequeues packets, attaches the MAC headers 
++and trailers and them sends them to ``ns3::SimpleWirelessChannel``. Before sending them, TdmaCentralMac 
++calculates the transmission time required based on the packet size and data rate. It adds up the transmission 
++times of all the packets sent and compares it with the **SlotTime** allotted to it by the 
++``ns3::TdmaController``. If it could not transmit any more packets in that slot, the loop terminates stopping 
++further transmissions. Simple-wireless channel forwards the packets to all the nodes which are within the 
++**MaxRange** attribute value specified by the user at the start of simulation. ``ns3::TdmaCentralMac`` also 
++takes care of the packets received from simple-wireless channel. It removes the attached MAC headers and 
++trailers and forwards the packet to IP.
++
++``ns3::TdmaMacQueue``
++=====================
++
++TDMA maintains a drop-tail queue to store packets received from the network layer until it gets its 
++transmission slot. The attributes that can me modified for this class are **MacQueueLength** and 
++**MacQueueTime**. So all the packets trying to be enqueued after the queue size reaches **MacQueueLength** 
++are be dropped and packets stored in the queue for a time-interval longer than **MacQueueTime** are also 
++dropped.
++
++``ns3::TdmaController``
++=======================
++
++``ns3::TdmaController`` takes care of all the scheduling aspects of the protocol. It initiates the TDMA 
++sessions and authorizes the nodes to transmit in the slots specified by it. The number of slots alloted for 
++transmission along with the slots durations are provided to it as attributes specified by the user at start of simulation. The list 
++of attributes along with their default values associated with ``ns3::TdmaController`` are shown below. A 
++``ns3::TdmaHelper`` takes all these attributes along with a list on nodes and initializes the TdmaController. 
++``ns3::TdmaController`` maintains a list of MAC pointers associated with all the nodes. Based on the slot 
++assignment provided by the user, this list is populated by ``ns3::TdmaHelper`` class before the simulation 
++starts. The user can provide the slot assignments for nodes either through the simulation script or an 
++external file. After the simulation starts, the ``ns3::TdmaController`` initiates scheduling of TDMA sessions based on 
++the node ids. It calls the ``ns3::TdmaCentralMac`` from its list of MAC pointers and instructs the node that it 
++could transmit for a particular **SlotTime**. As soon as the transmission slot for that node is complete, the 
++``ns3::TdmaController`` waits for **GaurdTime** and then calls the next node from the list and so on. Once all the nodes 
++from the list are assigned a transmission slot, the controller waits for **InterFrameTime** before starting 
++with the same procedure again.
++
+++-----------------+---------------------+
++| Attribute       | Default Value       |
+++-----------------+---------------------+
++| DataRate        | 11 mb/s             |
+++-----------------+---------------------+
++| SlotTime        | 1100 us             |
+++-----------------+---------------------+
++| GuardTime       | 100 us              |
+++-----------------+---------------------+
++| InterFrameTime  | 0 us                |
+++-----------------+---------------------+
+\ No newline at end of file
+Index: src/simple-wireless-tdma/examples/tdma-example.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/examples/tdma-example.cc
+@@ -0,0 +1,447 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/core-module.h"
++#include "ns3/network-module.h"
++#include "ns3/applications-module.h"
++#include "ns3/mobility-module.h"
++#include "ns3/config-store-module.h"
++#include "ns3/wifi-module.h"
++#include "ns3/internet-module.h"
++#include "ns3/simple-wireless-tdma-module.h"
++#include "ns3/dsdv-module.h"
++#include <iostream>
++#include <cmath>
++
++using namespace ns3;
++
++uint16_t port = 9;
++
++NS_LOG_COMPONENT_DEFINE ("TdmaExample");
++
++class TdmaExample
++{
++public:
++  TdmaExample ();
++  void CaseRun (uint32_t nWifis,
++                uint32_t nSinks,
++                double totalTime,
++                std::string rate,
++                std::string phyMode,
++                uint32_t nodeSpeed,
++                uint32_t periodicUpdateInterval,
++                uint32_t settlingTime,
++                double dataStart,
++                std::string CSVfileName,
++                bool usingWifi,
++                double txpDistance,
++                uint32_t nSlots,
++                uint32_t slotTime,
++                uint32_t gaurdTime,
++                uint32_t interFrameGap);
++
++private:
++  uint32_t m_nWifis;
++  uint32_t m_nSinks;
++  double m_totalTime;
++  std::string m_rate;
++  std::string m_phyMode;
++  uint32_t m_nodeSpeed;
++  uint32_t m_periodicUpdateInterval;
++  uint32_t m_settlingTime;
++  double m_dataStart;
++  uint32_t bytesTotal;
++  uint32_t packetsReceived;
++  std::string m_CSVfileName;
++  uint32_t m_slots;
++  uint32_t m_slotTime;
++  uint32_t m_gaurdTime;
++  uint32_t m_interFrameGap;
++
++  std::map<double, double> m_transmitRangeMap;
++
++  NodeContainer nodes;
++  NetDeviceContainer devices;
++  Ipv4InterfaceContainer interfaces;
++
++private:
++  void CreateNodes ();
++  void CreateDevices (std::string tr_name, bool usingWifi, double txpDistance);
++  void InstallInternetStack ();
++  void InstallApplications ();
++  void SetupMobility ();
++  void ReceivePacket (Ptr <Socket> );
++  Ptr <Socket> SetupPacketReceive (Ipv4Address, Ptr <Node> );
++  void CheckThroughput ();
++  void InsertIntoTxp (void);
++
++};
++
++int main (int argc, char **argv)
++{
++  TdmaExample test;
++  uint32_t nWifis = 4;
++  uint32_t nSinks = 1;
++  double totalTime = 100.0;
++  std::string rate ("8kbps");
++  std::string phyMode ("DsssRate11Mbps");
++  uint32_t nodeSpeed = 10; //in m/s
++  std::string appl = "all";
++  uint32_t periodicUpdateInterval = 15;
++  uint32_t settlingTime = 6;
++  double dataStart = 50.0;
++  std::string CSVfileName = "TdmaExample.csv";
++  bool usingWifi = false;
++  double txpDistance = 400.0;
++
++  // tdma parameters
++  uint32_t nSlots = nWifis;
++  uint32_t slotTime = 1000;
++  uint32_t interFrameGap = 0;
++  uint32_t gaurdTime = 0;
++
++  CommandLine cmd;
++  cmd.AddValue ("nWifis", "Number of wifi nodes[Default:30]", nWifis);
++  cmd.AddValue ("nSinks", "Number of wifi sink nodes[Default:10]", nSinks);
++  cmd.AddValue ("usingWifi", "Do you want to use WifiMac(1/0)[Default:false(0)]", usingWifi);
++  cmd.AddValue ("totalTime", "Total Simulation time[Default:100]", totalTime);
++  cmd.AddValue ("phyMode", "Wifi Phy mode[Default:DsssRate11Mbps]", phyMode);
++  cmd.AddValue ("rate", "CBR traffic rate[Default:8kbps]", rate);
++  cmd.AddValue ("nodeSpeed", "Node speed in RandomWayPoint model[Default:10]", nodeSpeed);
++  cmd.AddValue ("periodicUpdateInterval", "Periodic Interval Time[Default=15]", periodicUpdateInterval);
++  cmd.AddValue ("settlingTime", "Settling Time before sending out an update for changed metric[Default=6]", settlingTime);
++  cmd.AddValue ("dataStart", "Time at which nodes start to transmit data[Default=50.0]", dataStart);
++  cmd.AddValue ("CSVfileName", "The name of the CSV output file name[Default:TdmaExample.csv]", CSVfileName);
++  cmd.AddValue ("txpDistance", "MaxRange for the node transmissions [Default:400.0]", txpDistance);
++  cmd.AddValue ("nSlots", "Number of slots per gframe [Default:nWifis]", nSlots);
++  cmd.AddValue ("slotTime", "Slot transmission Time [Default(us):1000]", slotTime);
++  cmd.AddValue ("gaurdTime", "Duration to wait between slots [Default(us):0]", gaurdTime);
++  cmd.AddValue ("interFrameGap", "Duration between frames [Default(us):0]", interFrameGap);
++  cmd.Parse (argc, argv);
++
++  std::ofstream out (CSVfileName.c_str ());
++  out << "SimulationSecond," <<
++  "ReceiveRate," <<
++  "PacketsReceived," <<
++  "NumberOfSinks," <<
++  std::endl;
++  out.close ();
++
++  SeedManager::SetSeed (12345);
++
++  Config::SetDefault ("ns3::OnOffApplication::PacketSize", StringValue ("1000"));
++  Config::SetDefault ("ns3::OnOffApplication::DataRate", StringValue (rate));
++
++  test = TdmaExample ();
++  test.CaseRun (nWifis, nSinks, totalTime, rate, phyMode, nodeSpeed, periodicUpdateInterval,
++                settlingTime, dataStart,CSVfileName,usingWifi,txpDistance, nSlots, slotTime, gaurdTime, interFrameGap);
++
++  return 0;
++}
++
++TdmaExample::TdmaExample ()
++  : bytesTotal (0),
++    packetsReceived (0)
++{
++}
++
++void
++TdmaExample::ReceivePacket (Ptr <Socket> socket)
++{
++  NS_LOG_UNCOND (Simulator::Now ().GetSeconds () << " Received one packet!");
++  Ptr <Packet> packet;
++  while (packet = socket->Recv ())
++    {
++      bytesTotal += packet->GetSize ();
++      packetsReceived += 1;
++    }
++}
++
++void
++TdmaExample::CheckThroughput ()
++{
++  double kbs = (bytesTotal * 8.0) / 1000;
++  bytesTotal = 0;
++
++  std::ofstream out (m_CSVfileName.c_str (), std::ios::app);
++
++  out << (Simulator::Now ()).GetSeconds () << "," << kbs << "," << packetsReceived << "," << m_nSinks << std::endl;
++
++  out.close ();
++  packetsReceived = 0;
++  Simulator::Schedule (Seconds (1.0), &TdmaExample::CheckThroughput, this);
++}
++
++Ptr <Socket>
++TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
++{
++
++  TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
++  Ptr <Socket> sink = Socket::CreateSocket (node, tid);
++  InetSocketAddress local = InetSocketAddress (addr, port);
++  sink->Bind (local);
++  sink->SetRecvCallback (MakeCallback ( &TdmaExample::ReceivePacket, this));
++
++  return sink;
++}
++
++void
++TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::string rate,
++                      std::string phyMode, uint32_t nodeSpeed, uint32_t periodicUpdateInterval, uint32_t settlingTime,
++                      double dataStart, std::string CSVfileName, bool usingWifi, double txpDistance, uint32_t nSlots,
++                      uint32_t slotTime, uint32_t gaurdTime, uint32_t interFrameGap)
++{
++  m_nWifis = nWifis;
++  m_nSinks = nSinks;
++  m_totalTime = totalTime;
++  m_rate = rate;
++  m_phyMode = phyMode;
++  m_nodeSpeed = nodeSpeed;
++  m_periodicUpdateInterval = periodicUpdateInterval;
++  m_settlingTime = settlingTime;
++  m_dataStart = dataStart;
++  m_CSVfileName = CSVfileName;
++  m_slots = nSlots;
++  m_slotTime = slotTime;
++  m_gaurdTime = gaurdTime;
++  m_interFrameGap = interFrameGap;
++
++  std::stringstream ss;
++  ss << m_nWifis;
++  std::string t_nodes = ss.str ();
++
++  std::stringstream ss2;
++  ss2 << m_totalTime;
++  std::string sTotalTime = ss2.str ();
++
++  std::stringstream ss3;
++  ss3 << txpDistance;
++  std::string t_txpDistance = ss3.str ();
++
++  std::string macProtocol = "";
++  if (usingWifi)
++    {
++      macProtocol = "wifi";
++    }
++  else
++    {
++      macProtocol = "tdma";
++    }
++
++  std::string tr_name = "Dsdv_Manet_"
++    + t_nodes + "Nodes_"
++    + macProtocol + "_"
++    + t_txpDistance + "txDistance_"
++    + sTotalTime + "SimTime";
++  std::cout << "Trace file generated is " << tr_name << ".tr\n";
++
++  InsertIntoTxp ();
++  CreateNodes ();
++  CreateDevices (tr_name,usingWifi,txpDistance);
++  SetupMobility ();
++  InstallInternetStack ();
++  InstallApplications ();
++
++  std::cout << "\nStarting simulation for " << m_totalTime << " s ...\n";
++
++  CheckThroughput ();
++
++  Simulator::Stop (Seconds (m_totalTime));
++  Simulator::Run ();
++  Simulator::Destroy ();
++}
++
++void
++TdmaExample::CreateNodes ()
++{
++  std::cout << "Creating " << (unsigned) m_nWifis << " nodes.\n";
++  nodes.Create (m_nWifis);
++  NS_ASSERT_MSG (m_nWifis > m_nSinks, "Sinks must be less or equal to the number of nodes in network");
++}
++
++void
++TdmaExample::SetupMobility ()
++{
++  MobilityHelper mobility;
++/*  ObjectFactory pos;
++  pos.SetTypeId ("ns3::RandomRectanglePositionAllocator");
++  pos.Set ("X", RandomVariableValue (UniformVariable (0, 1000)));
++  pos.Set ("Y", RandomVariableValue (UniformVariable (0, 1000)));
++
++  Ptr <PositionAllocator> positionAlloc = pos.Create ()->GetObject <PositionAllocator> ();
++  mobility.SetMobilityModel ("ns3::RandomWaypointMobilityModel", "Speed", RandomVariableValue (ConstantVariable (m_nodeSpeed)),
++      "Pause", RandomVariableValue (ConstantVariable (2.0)), "PositionAllocator", PointerValue (positionAlloc));
++  mobility.SetPositionAllocator (positionAlloc);*/
++
++  ObjectFactory pos;
++  pos.SetTypeId ("ns3::RandomRectanglePositionAllocator");
++  pos.Set ("X", RandomVariableValue (UniformVariable (0.0, 300.0)));
++  pos.Set ("Y", RandomVariableValue (UniformVariable (0.0, 0.0)));
++  Ptr<PositionAllocator> positionAlloc = pos.Create ()->GetObject<PositionAllocator> ();
++  mobility.SetPositionAllocator (positionAlloc);
++  mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
++  mobility.Install (nodes);
++}
++
++void
++TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDistance)
++{
++  if (usingWifi)
++    {
++      Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (m_phyMode));
++      Config::SetDefault ("ns3::WifiRemoteStationManager::RtsCtsThreshold", StringValue ("2000"));
++
++      double txp;
++      if (m_transmitRangeMap.find (txpDistance) == m_transmitRangeMap.end ())
++        {
++          txp = 0.0;
++        }
++      else
++        {
++          txp = m_transmitRangeMap[txpDistance];
++        }
++
++      NqosWifiMacHelper wifiMac = NqosWifiMacHelper::Default ();
++      wifiMac.SetType ("ns3::AdhocWifiMac");
++      YansWifiPhyHelper wifiPhy = YansWifiPhyHelper::Default ();
++      YansWifiChannelHelper wifiChannel;
++      wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
++      wifiChannel.AddPropagationLoss ("ns3::FriisPropagationLossModel");
++      wifiPhy.SetChannel (wifiChannel.Create ());
++      WifiHelper wifi;
++      wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
++      wifi.SetRemoteStationManager ("ns3::ConstantRateWifiManager",
++                                    "DataMode", StringValue (m_phyMode),
++                                    "ControlMode", StringValue (m_phyMode));
++      //set the tx range based on txpDistance
++      wifiPhy.Set ("TxPowerStart", DoubleValue (txp));
++      wifiPhy.Set ("TxPowerEnd", DoubleValue (txp));
++
++      devices = wifi.Install (wifiPhy, wifiMac, nodes);
++
++      AsciiTraceHelper ascii;
++      wifiPhy.EnableAsciiAll (ascii.CreateFileStream (tr_name + ".tr"));
++      wifiPhy.EnablePcapAll (tr_name);
++    }
++  else
++    {
++      Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (txpDistance));
++      // default allocation, each node gets a slot to transmit
++      TdmaHelper tdma = TdmaHelper (nodes.GetN (),nodes.GetN ()); // in this case selected, numSlots = nodes
++      /* can make custom allocation through simulation script
++       * will override default allocation
++       */
++      /*tdma.SetSlots(4,
++          0,1,1,0,0,
++          1,0,0,0,0,
++          2,0,0,1,0,
++          3,0,0,0,1);*/
++      // if TDMA slot assignment is through a file
++      //TdmaHelper tdma = TdmaHelper ("tdmaSlots.txt");
++      TdmaControllerHelper controller;
++      controller.Set ("SlotTime", TimeValue (MicroSeconds (1100)));
++      controller.Set ("GaurdTime", TimeValue (MicroSeconds (100)));
++      controller.Set ("InterFrameTime", TimeValue (MicroSeconds (0)));
++      tdma.SetTdmaControllerHelper (controller);
++      devices = tdma.Install (nodes);
++
++      AsciiTraceHelper ascii;
++      Ptr<OutputStreamWrapper> stream = ascii.CreateFileStream (tr_name + ".tr");
++      tdma.EnableAsciiAll (stream);
++    }
++}
++
++void
++TdmaExample::InstallInternetStack ()
++{
++  DsdvHelper dsdv;
++  dsdv.Set ("PeriodicUpdateInterval", TimeValue (Seconds (m_periodicUpdateInterval)));
++  dsdv.Set ("SettlingTime", TimeValue (Seconds (m_settlingTime)));
++  InternetStackHelper stack;
++  stack.SetRoutingHelper (dsdv);
++  stack.Install (nodes);
++  Ipv4AddressHelper address;
++  address.SetBase ("10.1.1.0", "255.255.255.0");
++  interfaces = address.Assign (devices);
++}
++
++void
++TdmaExample::InstallApplications ()
++{
++  for (uint32_t i = 0; i <= m_nSinks - 1; i++ )
++    {
++      Ptr<Node> node = NodeList::GetNode (i);
++      Ipv4Address nodeAddress = node->GetObject<Ipv4> ()->GetAddress (1, 0).GetLocal ();
++      Ptr<Socket> sink = SetupPacketReceive (nodeAddress, node);
++    }
++
++  for (uint32_t clientNode = 0; clientNode <= m_nWifis - 1; clientNode++ )
++    {
++      for (uint32_t j = 0; j <= m_nSinks - 1; j++ )
++        {
++          OnOffHelper onoff1 ("ns3::UdpSocketFactory", Address (InetSocketAddress (interfaces.GetAddress (j), port)));
++          onoff1.SetAttribute ("OnTime", RandomVariableValue (ConstantVariable (1)));
++          onoff1.SetAttribute ("OffTime", RandomVariableValue (ConstantVariable (0)));
++
++          if (j != clientNode)
++            {
++              ApplicationContainer apps1 = onoff1.Install (nodes.Get (clientNode));
++              UniformVariable var;
++              apps1.Start (Seconds (var.GetValue (m_dataStart, m_dataStart + 1)));
++              apps1.Stop (Seconds (m_totalTime));
++            }
++        }
++    }
++}
++
++void
++TdmaExample::InsertIntoTxp ()
++{
++  m_transmitRangeMap.insert (std::pair<double, double> (100.0, 1.2251));
++  m_transmitRangeMap.insert (std::pair<double, double> (130.0, 3.5049));
++  m_transmitRangeMap.insert (std::pair<double, double> (150.0, 4.7478));
++  m_transmitRangeMap.insert (std::pair<double, double> (180.0, 6.3314));
++  m_transmitRangeMap.insert (std::pair<double, double> (200.0, 7.2457));
++  m_transmitRangeMap.insert (std::pair<double, double> (300.0, 10.7675));
++  m_transmitRangeMap.insert (std::pair<double, double> (350.0, 12.1065));
++  m_transmitRangeMap.insert (std::pair<double, double> (400.0, 13.2663));
++  m_transmitRangeMap.insert (std::pair<double, double> (450.0, 14.2893));
++  m_transmitRangeMap.insert (std::pair<double, double> (500.0, 15.2045));
++  m_transmitRangeMap.insert (std::pair<double, double> (550.0, 16.0323));
++  m_transmitRangeMap.insert (std::pair<double, double> (600.0, 16.7881));
++  m_transmitRangeMap.insert (std::pair<double, double> (650.0, 17.4834));
++  m_transmitRangeMap.insert (std::pair<double, double> (700.0, 18.1271));
++  m_transmitRangeMap.insert (std::pair<double, double> (800.0, 19.2869));
++  m_transmitRangeMap.insert (std::pair<double, double> (900.0, 20.3099));
++  m_transmitRangeMap.insert (std::pair<double, double> (950.0, 20.7796));
++  m_transmitRangeMap.insert (std::pair<double, double> (1000.0, 21.2251));
++  m_transmitRangeMap.insert (std::pair<double, double> (27800.0, 50.0));
++}
++
+Index: src/simple-wireless-tdma/examples/tdmaSlots.txt
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/examples/tdmaSlots.txt
+@@ -0,0 +1,4 @@
++3:1,0,0,0
++2:0,1,0,0
++1:0,0,1,0
++0:0,0,0,1
+\ No newline at end of file
+Index: src/simple-wireless-tdma/examples/wscript
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/examples/wscript
+@@ -0,0 +1,5 @@
++## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
++
++def build(bld):
++    obj = bld.create_ns3_program('tdma-example', ['core', 'simulator', 'mobility', 'simple-wireless-tdma'])
++    obj.source = 'tdma-example.cc'
+\ No newline at end of file
+Index: src/simple-wireless-tdma/helper/tdma-controller-helper.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-controller-helper.cc
+@@ -0,0 +1,65 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "tdma-controller-helper.h"
++#include "ns3/tdma-controller.h"
++
++namespace ns3 {
++
++TdmaControllerHelper::TdmaControllerHelper ()
++{
++  m_agentFactory.SetTypeId ("ns3:TdmaController");
++}
++
++TdmaControllerHelper::~TdmaControllerHelper ()
++{
++
++}
++
++TdmaControllerHelper*
++TdmaControllerHelper::Copy (void) const
++{
++  return new TdmaControllerHelper (*this);
++}
++
++Ptr<TdmaController>
++TdmaControllerHelper::Create (void) const
++{
++  Ptr<TdmaController> agent = m_agentFactory.Create<TdmaController> ();
++  return agent;
++}
++
++void
++TdmaControllerHelper::Set (std::string name, const AttributeValue &value)
++{
++  m_agentFactory.Set (name, value);
++}
++
++}
+Index: src/simple-wireless-tdma/helper/tdma-controller-helper.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-controller-helper.h
+@@ -0,0 +1,64 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMACONTROLLERHELPER_H_
++#define TDMACONTROLLERHELPER_H_
++
++#include "ns3/object-factory.h"
++#include "ns3/tdma-controller.h"
++
++
++namespace ns3 {
++/**
++ * \ingroup aodv
++ * \brief Helper class that adds AODV routing to nodes.
++ */
++class TdmaControllerHelper
++{
++public:
++  TdmaControllerHelper ();
++  ~TdmaControllerHelper ();
++
++  Ptr<TdmaController> Create (void) const;
++  /**
++   * \param name the name of the attribute to set
++   * \param value the value of the attribute to set.
++   *
++   * This method controls the attributes of ns3::aodv::RoutingProtocol
++   */
++  void Set (std::string name, const AttributeValue &value);
++  TdmaControllerHelper* Copy (void) const;
++
++private:
++  ObjectFactory m_agentFactory;
++};
++
++}
++#endif /* TDMACONTROLLERHELPER_H_ */
+Index: src/simple-wireless-tdma/helper/tdma-helper.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-helper.cc
+@@ -0,0 +1,416 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "tdma-helper.h"
++#include "ns3/tdma-mac-net-device.h"
++#include "ns3/simple-wireless-channel.h"
++#include "ns3/channel.h"
++#include "ns3/mobility-model.h"
++#include "ns3/log.h"
++#include "ns3/config.h"
++#include "ns3/simulator.h"
++#include "ns3/names.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaHelper");
++
++namespace ns3 {
++
++static void AsciiMacTxEventWithContext (Ptr<OutputStreamWrapper> stream, std::string context,
++                                        Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "t " << Simulator::Now ().GetSeconds () << " " << context << " "
++                        << *packet << std::endl;
++}
++
++static void AsciiMacRxOkEventWithContext (Ptr<OutputStreamWrapper> stream, std::string context,
++                                          Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "r " << Simulator::Now ().GetSeconds () << " " << context << " "
++                        << *packet << std::endl;
++}
++
++static void AsciiMacTxDropEventWithContext (Ptr<OutputStreamWrapper> stream, std::string context,
++                                            Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "d " << Simulator::Now ().GetSeconds () << " " << context << " "
++                        << *packet << std::endl;
++}
++
++static void AsciiMacTxEventWithoutContext (Ptr<OutputStreamWrapper> stream, Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "t " << Simulator::Now ().GetSeconds () << " " << *packet << std::endl;
++}
++
++static void AsciiMacRxOkEventWithoutContext (Ptr<OutputStreamWrapper> stream, Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "r " << Simulator::Now ().GetSeconds () << " " << *packet << std::endl;
++}
++
++static void AsciiMacTxDropEventWithoutContext (Ptr<OutputStreamWrapper> stream, Ptr<const Packet> packet)
++{
++  *stream->GetStream () << "d " << Simulator::Now ().GetSeconds () << " " << *packet << std::endl;
++}
++
++TdmaHelper::TdmaHelper (uint32_t numNodes, uint32_t numSlots) : m_controller (0),
++                                                                m_controllerHelper (0),
++                                                                m_slotAllotmentArray (0),
++                                                                m_numRows (numNodes),
++                                                                m_numCols (numSlots + 1)
++{
++  NS_LOG_FUNCTION (this << numNodes << numSlots);
++  m_mac.SetTypeId ("ns3::TdmaCentralMac");
++  m_channel = CreateObject<SimpleWirelessChannel> ();
++  Allocate2D ();
++  SetDefaultSlots ();
++}
++
++TdmaHelper::TdmaHelper (std::string filename) : m_controller (0),
++                                                m_controllerHelper (0),
++                                                m_slotAllotmentArray (0),
++                                                m_filename (filename)
++{
++  m_mac.SetTypeId ("ns3::TdmaCentralMac");
++  m_channel = CreateObject<SimpleWirelessChannel> ();
++  m_parser = CreateObject<TdmaSlotAssignmentFileParser> (m_filename);
++  m_numRows = m_parser->GetNodeCount ();
++  m_numCols = m_parser->GetTotalSlots () + 1; // +1 for nodeid in first column
++  Allocate2D ();
++  SetSlots ();
++}
++
++TdmaHelper::~TdmaHelper ()
++{
++  NS_LOG_FUNCTION (this);
++  Deallocate2D ();
++}
++
++void
++TdmaHelper::SetFileName (std::string filename)
++{
++  m_filename = filename;
++}
++
++void
++TdmaHelper::SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelper)
++{
++  NS_LOG_FUNCTION (this);
++  delete m_controllerHelper;
++  m_controllerHelper = controllerHelper.Copy ();
++  m_controller = m_controllerHelper->Create ();
++  m_controller->SetTotalSlotsAllowed (m_numCols - 1);
++}
++
++void TdmaHelper::Deallocate2D (void)
++{
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      free (m_slotAllotmentArray[i]);
++    }
++  free (m_slotAllotmentArray);
++}
++
++void TdmaHelper::Allocate2D (void)
++{
++  NS_LOG_FUNCTION (this);
++  m_slotAllotmentArray = (uint32_t**)malloc (m_numRows * sizeof(int*));
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      m_slotAllotmentArray[i] = (uint32_t*)malloc (m_numCols * sizeof(int));
++    }
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      m_slotAllotmentArray[i][0] = i; //put in nodeId
++      for (uint32_t j = 1; j < m_numCols; j++)
++        {
++          m_slotAllotmentArray[i][j] = 0;
++        }
++    }
++}
++
++void
++TdmaHelper::SetDefaultSlots (void)
++{
++  NS_LOG_FUNCTION (this);
++  //PrintSlotAllotmentArray ();
++  int continuousSlots = (m_numCols - 1) / m_numRows;
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      NS_LOG_DEBUG ("i:" << i << " continuousSlots:" << continuousSlots
++                         << " m_numRows:" << m_numRows << " m_numCols:" << m_numCols);
++      int tmp = 0;
++      while (tmp < continuousSlots)
++        {
++          tmp++;
++          if (continuousSlots * i + tmp > m_numCols)
++            {
++              break;
++            }
++          m_slotAllotmentArray[i][continuousSlots * i + tmp] = 1;
++        }
++    }
++  uint32_t remainingSlots = m_numCols - 1 - (continuousSlots * m_numRows);
++  NS_LOG_DEBUG ("remainingSlots:" << remainingSlots);
++  for (uint32_t i = 0; i < remainingSlots; i++)
++    {
++      m_slotAllotmentArray[i][continuousSlots * m_numRows + i + 1] = 1;
++    }
++  //PrintSlotAllotmentArray ();
++}
++
++void
++TdmaHelper::SetSlots (void)
++{
++  //PrintSlotAllotmentArray();
++  std::vector<SlotArray> & slotArrays = m_parser->GetSlotArrays ();
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      m_slotAllotmentArray[i][0] = slotArrays[i][0]; //put in nodeId
++      for (uint32_t j = 1; j < m_numCols; j++)
++        {
++          m_slotAllotmentArray[i][j] = slotArrays[i][j];
++        }
++    }
++  //PrintSlotAllotmentArray();
++}
++
++void
++TdmaHelper::SetSlots (int numNodes, ...)
++{
++  NS_LOG_FUNCTION (this);
++  va_list args;
++  va_start (args, numNodes);
++  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      NS_LOG_DEBUG ("new row");
++      m_slotAllotmentArray[i][0] = va_arg (args, int);
++      for (uint32_t j = 1; j < m_numCols; j++)
++        {
++          NS_LOG_DEBUG ("new column");
++          NS_LOG_DEBUG ("before: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
++          m_slotAllotmentArray[i][j] = va_arg (args, int);
++          NS_LOG_DEBUG ("after: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
++        }
++    }
++  va_end (args);
++  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
++  //PrintSlotAllotmentArray();
++}
++
++void
++TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
++{
++  NS_LOG_FUNCTION (this << mac << nodeId);
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      if (m_slotAllotmentArray[i][0] == nodeId)
++        {
++          for (uint32_t j = 1; j < m_numCols; j++)
++            {
++              //validation of the slots
++              NS_ASSERT_MSG (((m_slotAllotmentArray[i][j] == 0) || (m_slotAllotmentArray[i][j] == 1)),
++                             "Tdma slots should be assigned with only 0 or 1");
++              for (uint32_t k = 0; k < m_numRows; k++)
++                {
++                  if (k == i)
++                    {
++                      continue;
++                    }
++                  NS_ASSERT_MSG (!(m_slotAllotmentArray[k][j] == 1 && m_slotAllotmentArray[i][j] == 1),
++                                 "Slot exclusivity is not maintained");
++                }
++              if (m_slotAllotmentArray[i][j] == 1)
++                {
++                  m_controller->AddTdmaSlot (j - 1,mac);
++                }
++            }
++        }
++    }
++}
++
++void
++TdmaHelper::PrintSlotAllotmentArray (void) const
++{
++  std::cout << "Printing SlotAllotmentArray\n";
++  for (uint32_t i = 0; i < m_numRows; i++)
++    {
++      std::cout << m_slotAllotmentArray[i][0] << " : \t";
++      for (uint32_t j = 1; j < m_numCols; j++)
++        {
++          std::cout << m_slotAllotmentArray[i][j] << ",\t";
++        }
++      std::cout << "\n";
++    }
++}
++
++NetDeviceContainer
++TdmaHelper::Install (NodeContainer c) const
++{
++  NS_LOG_FUNCTION (this);
++  NetDeviceContainer devices;
++  NS_ASSERT (m_controller != 0);
++  for (NodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
++    {
++      Ptr<Node> node = *i;
++      Ptr<TdmaNetDevice> device = CreateObject<TdmaNetDevice> ();
++      Ptr<TdmaMac> mac = m_mac.Create<TdmaMac> ();
++      mac->SetAddress (Mac48Address::Allocate ());
++      AssignTdmaSlots (mac,node->GetId ());
++      device->SetMac (mac);
++      device->SetChannel (m_channel);
++      device->SetTdmaController (m_controller);
++      node->AddDevice (device);
++      devices.Add (device);
++    }
++  return devices;
++}
++
++NetDeviceContainer
++TdmaHelper::Install (Ptr<Node> node) const
++{
++  NS_LOG_FUNCTION (this << node);
++  return Install (NodeContainer (node));
++}
++
++NetDeviceContainer
++TdmaHelper::Install (std::string nodeName) const
++{
++  NS_LOG_FUNCTION (this << nodeName);
++  Ptr<Node> node = Names::Find<Node> (nodeName);
++  return Install (NodeContainer (node));
++}
++
++void
++TdmaHelper::EnableLogComponents (void)
++{
++  LogComponentEnable ("TdmaHelper", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaControllerHelper", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaCentralMac", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaMacLow", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaController", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaMacQueue", LOG_LEVEL_ALL);
++  LogComponentEnable ("TdmaNetDevice", LOG_LEVEL_ALL);
++  LogComponentEnable ("SimpleWirelessChannel", LOG_LEVEL_ALL);
++}
++
++void
++TdmaHelper::EnableAsciiInternal (
++  Ptr<OutputStreamWrapper> stream,
++  std::string prefix,
++  Ptr<NetDevice> nd,
++  bool explicitFilename)
++{
++  Ptr<TdmaNetDevice> device = nd->GetObject<TdmaNetDevice> ();
++  if (device == 0)
++    {
++      NS_LOG_INFO ("TdmaHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::TdmaNetDevice");
++      return;
++    }
++
++  //
++  // Our trace sinks are going to use packet printing, so we have to make sure
++  // that is turned on.
++  //
++  Packet::EnablePrinting ();
++
++  uint32_t nodeid = nd->GetNode ()->GetId ();
++  uint32_t deviceid = nd->GetIfIndex ();
++  std::ostringstream oss;
++
++  //
++  // If we are not provided an OutputStreamWrapper, we are expected to create
++  // one using the usual trace filename conventions and write our traces
++  // without a context since there will be one file per context and therefore
++  // the context would be redundant.
++  //
++  if (stream == 0)
++    {
++      //
++      // Set up an output stream object to deal with private ofstream copy
++      // constructor and lifetime issues.  Let the helper decide the actual
++      // name of the file given the prefix.
++      //
++      AsciiTraceHelper asciiTraceHelper;
++
++      std::string filename;
++      if (explicitFilename)
++        {
++          filename = prefix;
++        }
++      else
++        {
++          filename = asciiTraceHelper.GetFilenameFromDevice (prefix, device);
++        }
++
++      Ptr<OutputStreamWrapper> theStream = asciiTraceHelper.CreateFileStream (filename);
++      //
++      // We could go poking through the phy and the state looking for the
++      // correct trace source, but we can let Config deal with that with
++      // some search cost.  Since this is presumably happening at topology
++      // creation time, it doesn't seem much of a price to pay.
++      //
++      oss.str ("");
++      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacRx";
++      Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacRxOkEventWithoutContext, theStream));
++
++      oss.str ("");
++
++      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTx";
++      Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacTxEventWithoutContext, theStream));
++
++      oss.str ("");
++
++      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTxDrop";
++      Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacTxDropEventWithoutContext, theStream));
++
++      return;
++    }
++
++  //
++  // If we are provided an OutputStreamWrapper, we are expected to use it, and
++  // to provide a context.  We are free to come up with our own context if we
++  // want, and use the AsciiTraceHelper Hook*WithContext functions, but for
++  // compatibility and simplicity, we just use Config::Connect and let it deal
++  // with coming up with a context.
++  //
++  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacRx";
++  Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacRxOkEventWithContext, stream));
++
++  oss.str ("");
++
++  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTx";
++  Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacTxEventWithContext, stream));
++
++  oss.str ("");
++
++  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTxDrop";
++  Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacTxDropEventWithContext, stream));
++}
++} // namespace ns3
+Index: src/simple-wireless-tdma/helper/tdma-helper.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-helper.h
+@@ -0,0 +1,205 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_HELPER_H
++#define TDMA_HELPER_H
++
++#include <string>
++#include <stdarg.h>
++#include "ns3/attribute.h"
++#include "ns3/tdma-mac.h"
++#include "ns3/object-factory.h"
++#include "ns3/node-container.h"
++#include "ns3/net-device-container.h"
++#include "ns3/trace-helper.h"
++#include "ns3/tdma-controller-helper.h"
++#include "tdma-slot-assignment-parser.h"
++
++namespace ns3 {
++
++class TdmaMac;
++class TdmaNetDevice;
++class Node;
++class TdmaController;
++
++/**
++ * \brief create MAC objects
++ *
++ * This base class must be implemented by new MAC implementation which wish to integrate
++ * with the \ref ns3::TdmaHelper class.
++ */
++class TdmaMacHelper
++{
++public:
++  virtual ~TdmaMacHelper ();
++  /**
++   * \returns a new MAC object.
++   *
++   * Subclasses must implement this method to allow the ns3::TdmaHelper class
++   * to create MAC objects from ns3::TdmaHelper::Install.
++   */
++  virtual Ptr<TdmaMac> Create (void) const = 0;
++};
++
++/**
++ * \brief helps to create TdmaNetDevice objects and ensures creation of a centralized
++ * TdmaController which takes care of the slot scheduling
++ */
++class TdmaHelper : public AsciiTraceHelperForDevice
++{
++public:
++  /**
++   * Constructor with two attributes
++   *
++   * \param numNodes number of nodes in the TDMA frame
++   * \param numSlots total number of slots per frame
++   */
++  TdmaHelper (uint32_t numNodes, uint32_t numSlots);
++  /**
++   * Constructor with filename for slot assignment
++   *
++   * \param fileName file name that contains the TDMA slot assignment.
++   * Slot file must be of the format specified below. nodeId followed by
++   * ':' and then slot assignment with ',' seperating the slots
++   * 0:1,1,0,0,0
++   * 1:0,0,1,0,0
++   * 2:0,0,0,1,0
++   * 3:0,0,0,0,1
++   */
++  TdmaHelper (std::string fileName);
++  ~TdmaHelper ();
++
++  /**
++   * \returns a device container which contains all the devices created by this method.
++   */
++  NetDeviceContainer Install (NodeContainer c) const;
++  /**
++   * \param mac the MAC helper to create MAC objects
++   * \param node the node on which a aero device must be created
++   * \param controller the TdmaController to add to these devices
++   * \returns a device container which contains all the devices created by this method.
++   */
++  NetDeviceContainer Install (Ptr<Node> node) const;
++  /**
++   * \param nodeName the name of node on which a wifi device must be created
++   * \returns a device container which contains all the devices created by this method.
++   */
++  NetDeviceContainer Install (std::string nodeName) const;
++
++  void SetFileName (std::string filename);
++  /**
++   * \brief Set the TdmaController for this TdamHelper class
++   */
++  void SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelper);
++  /**
++   * \brief used to set the TDMA slots from the simulation script
++   * useful for low number of nodes. If the number of nodes is more, it is
++   * advisable to use the external file to set TDMA slots.
++   * For example, assume tdma is a TdmaHelper object, the slot assigment
++   * for 4 nodes can be set as follows. We have a total of 5 slots,
++   * out of which first two slots are assigned to node 1 and the other nodes
++   * are assigned single slots as shown below
++   * tdma.SetSlots(4,
++   *               0,1,1,0,0,0,
++   *               1,0,0,1,0,0,
++   *               2,0,0,0,1,0,
++   *               3,0,0,0,0,1);   *
++   */
++  void SetSlots (int NodeNum, ...);
++  /**
++   * Helper to enable all TdmaNetDevice log components with one statement
++   */
++  static void EnableLogComponents (void);
++private:
++  /**
++   * \brief Enable ascii trace output on the indicated net device.
++   * \internal
++   *
++   * NetDevice-specific implementation mechanism for hooking the trace and
++   * writing to the trace file.
++   *
++   * \param stream The output stream object to use when logging ascii traces.
++   * \param prefix Filename prefix to use for ascii trace files.
++   * \param nd Net device for which you want to enable tracing.
++   */
++  virtual void EnableAsciiInternal (Ptr<OutputStreamWrapper> stream,
++                                    std::string prefix,
++                                    Ptr<NetDevice> nd,
++                                    bool explicitFilename);
++  /**
++   * \brief print the TDMA slot assignment for debugging purposes.
++   */
++  void PrintSlotAllotmentArray (void) const;
++  /**
++   * \brief Assigns a single TDMA slot in a frame for each node installed
++   * by the TDMA helper.
++   * \internal
++   * Slot assignment is done in ascending order of the node id of nodes
++   * present in the node container that was passed to the TdmaHelper
++   * install method
++   */
++  void SetDefaultSlots (void);
++  /**
++   * \brief used for slot assignment from an external file
++   */
++  void SetSlots (void);
++  /**
++   *  \brief memory allocation of the m_slotAllotmentArray when number of
++   *  nodes and total number of slots occupied by those nodes is specified
++   *  by the user
++   */
++  void Allocate2D (void);
++  /**
++   * memory deallocation of the m_slotAllotmentArray during object deletion
++   */
++  void Deallocate2D (void);
++  /**
++   * \brief Populate the m_slotArray in the TdmaController class with the
++   * mac pointers of nodes assigned to those slots
++   *
++   * \param mac mac pointer of the node assigned to this TDMA slot
++   * \param nodeId node id assigned to this TDMA slot
++   */
++  void AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const;
++
++  ObjectFactory m_mac;
++  Ptr<SimpleWirelessChannel> m_channel;
++  Ptr<TdmaController> m_controller;
++  const TdmaControllerHelper *m_controllerHelper;
++  uint32_t **m_slotAllotmentArray;
++  uint32_t m_numRows;
++  uint32_t m_numCols;
++  std::string m_filename;
++  Ptr<TdmaSlotAssignmentFileParser> m_parser;
++};
++
++} // namespace ns3
++
++#endif /* AERO_HELPER_H */
+Index: src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc
+@@ -0,0 +1,126 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "tdma-slot-assignment-parser.h"
++#include <fstream>
++#include "ns3/log.h"
++#include "ns3/uinteger.h"
++
++namespace ns3 {
++
++NS_LOG_COMPONENT_DEFINE ("TdmaSlotAssignmentFileParser");
++
++NS_OBJECT_ENSURE_REGISTERED (TdmaSlotAssignmentFileParser);
++
++TypeId TdmaSlotAssignmentFileParser::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3::TdmaSlotAssignmentFileParser")
++    .SetParent<Object> ();
++  return tid;
++}
++
++TdmaSlotAssignmentFileParser::TdmaSlotAssignmentFileParser (std::string fileName) : m_numRows (0),
++                                                                                    m_numCols (0)
++{
++  NS_LOG_FUNCTION (fileName);
++  m_fileName = fileName;
++  ParseTdmaSlotInformation ();
++}
++
++TdmaSlotAssignmentFileParser::~TdmaSlotAssignmentFileParser ()
++{
++}
++
++void
++TdmaSlotAssignmentFileParser::ParseTdmaSlotInformation ()
++{
++  NS_LOG_FUNCTION (this);
++  std::ifstream topgen;
++  topgen.open (m_fileName.c_str ());
++  std::string line;
++  if (!topgen.is_open ())
++    {
++      NS_LOG_WARN ("Couldn't open the file " << m_fileName);
++    }
++
++  while (!topgen.eof ())
++    {
++      SlotArray word;
++      int pos;
++      line.clear ();
++      //getline (topgen, line);
++      topgen >> line;
++      std::string nodeId ("");
++      std::stringstream stream (line);
++      NS_LOG_DEBUG ("line: " << line);
++      getline (stream,nodeId,':');
++      if (nodeId == "")
++        {
++          break;
++        }
++      m_numRows++;
++      NS_LOG_DEBUG ("m_numRows:" << m_numRows);
++      line.erase (0,nodeId.size () + 1);
++      word.push_back (atoi (nodeId.c_str ()));
++      NS_LOG_DEBUG ("nodeId: " << nodeId << " line now:" << line);
++      while ( (pos = line.find (',')) > 0)
++        {
++          NS_LOG_DEBUG ("pos:" << pos);
++          std::string field = line.substr (0,pos);
++          NS_ASSERT_MSG (field == "0" || field == "1", "slots should only be either 0 or 1");
++          line = line.substr (pos + 1);
++          word.push_back (atoi (field.c_str ()));
++          NS_LOG_DEBUG ("field:" << word.back ());
++          m_numCols++;
++        }
++      NS_ASSERT_MSG (line == "0" || line == "1", "slots should only be either 0 or 1");
++      word.push_back (atoi (line.c_str ()));
++      NS_LOG_DEBUG ("field:" << word.back ());
++      m_slotArray.push_back (word);
++      m_numCols++;
++    }
++  NS_ASSERT (m_numCols % m_numRows == 0);
++  m_numCols = m_numCols / m_numRows;
++  NS_LOG_DEBUG ("Nodes in TDMA: " << m_numRows << " slots per frame: " << m_numCols);
++}
++
++uint32_t
++TdmaSlotAssignmentFileParser::GetNodeCount (void)
++{
++  return m_numRows;
++}
++
++uint32_t
++TdmaSlotAssignmentFileParser::GetTotalSlots (void)
++{
++  return m_numCols;
++}
++
++} /* namespace ns3 */
+Index: src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h
+@@ -0,0 +1,63 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef __TDMA_PARSER_H__
++#define __TDMA_PARSER_H__
++
++#include "ns3/object.h"
++
++namespace ns3 {
++typedef std::vector<uint32_t> SlotArray;
++class TdmaHelper;
++
++class TdmaSlotAssignmentFileParser : public Object
++{
++public:
++  static TypeId GetTypeId (void);
++  ~TdmaSlotAssignmentFileParser ();
++  TdmaSlotAssignmentFileParser (std::string fileName);
++  void ParseTdmaSlotInformation (void);
++  uint32_t GetNodeCount (void);
++  uint32_t GetTotalSlots (void);
++  std::vector<SlotArray> & GetSlotArrays ()
++  {
++    return m_slotArray;
++  }
++
++private:
++  std::string m_fileName;
++  uint32_t m_numRows; /// Equivalent to number of nodes
++  uint32_t m_numCols; /// Equivalent to number of slots
++  std::vector<SlotArray> m_slotArray;
++
++};
++// end namespace ns3
++}
++#endif // __TDMA_PARSER_H__
+Index: src/simple-wireless-tdma/model/simple-wireless-channel.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/simple-wireless-channel.cc
+@@ -0,0 +1,112 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2010 University of Washington
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Modified by Hemanth Narra <hemanthnarra222@gmail.com> to suit the
++ * TDMA implementation.
++ */
++#include "simple-wireless-channel.h"
++#include "ns3/simulator.h"
++#include "ns3/packet.h"
++#include "ns3/node.h"
++#include "ns3/log.h"
++#include "ns3/double.h"
++#include "ns3/uinteger.h"
++#include "ns3/ptr.h"
++#include "ns3/net-device.h"
++#include "ns3/mobility-model.h"
++
++NS_LOG_COMPONENT_DEFINE ("SimpleWirelessChannel");
++
++namespace ns3 {
++
++NS_OBJECT_ENSURE_REGISTERED (SimpleWirelessChannel);
++
++TypeId
++SimpleWirelessChannel::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3::SimpleWirelessChannel")
++    .SetParent<Channel> ()
++    .AddConstructor<SimpleWirelessChannel> ()
++    .AddAttribute ("MaxRange",
++                   "Maximum Transmission Range (meters)",
++                   DoubleValue (250),
++                   MakeDoubleAccessor (&SimpleWirelessChannel::m_range),
++                   MakeDoubleChecker<double> ())
++  ;
++  return tid;
++}
++
++SimpleWirelessChannel::SimpleWirelessChannel ()
++{
++}
++
++void
++SimpleWirelessChannel::Send (Ptr<const Packet> p, Ptr<TdmaMacLow> sender)
++{
++  NS_LOG_FUNCTION (p << sender);
++  for (TdmaMacLowList::const_iterator i = m_tdmaMacLowList.begin (); i != m_tdmaMacLowList.end (); ++i)
++    {
++      Ptr<TdmaMacLow> tmp = *i;
++      if (tmp->GetDevice () == sender->GetDevice ())
++        {
++          continue;
++        }
++      Ptr<MobilityModel> a = sender->GetDevice ()->GetNode ()->GetObject<MobilityModel> ();
++      Ptr<MobilityModel> b = tmp->GetDevice ()->GetNode ()->GetObject<MobilityModel> ();
++      NS_ASSERT_MSG (a && b, "Error:  nodes must have mobility models");
++      double distance = a->GetDistanceFrom (b);
++      NS_LOG_DEBUG ("Distance: " << distance << " Max Range: " << m_range);
++      if (distance > m_range)
++        {
++          continue;
++        }
++      // speed of light is 3.3 ns/meter
++      Time propagationTime = NanoSeconds (uint64_t (3.3 * distance));
++      NS_LOG_DEBUG ("Node " << sender->GetDevice ()->GetNode ()->GetId () << " sending to node " <<
++                    tmp->GetDevice ()->GetNode ()->GetId () << " at distance " << distance <<
++                    " meters; arriving time (ns): " << propagationTime);
++      Simulator::ScheduleWithContext (tmp->GetDevice ()->GetNode ()->GetId (),(propagationTime),
++                                      &TdmaMacLow::Receive, tmp, p->Copy ());
++    }
++}
++
++void
++SimpleWirelessChannel::Add (Ptr<TdmaMacLow> tdmaMacLow)
++{
++  NS_LOG_DEBUG (this << " " << tdmaMacLow);
++  m_tdmaMacLowList.push_back (tdmaMacLow);
++  NS_LOG_DEBUG ("current m_tdmaMacLowList size: " << m_tdmaMacLowList.size ());
++}
++
++uint32_t
++SimpleWirelessChannel::GetNDevices (void) const
++{
++  return m_tdmaMacLowList.size ();
++}
++Ptr<NetDevice>
++SimpleWirelessChannel::GetDevice (uint32_t i) const
++{
++  return m_tdmaMacLowList[i]->GetDevice ();
++}
++
++double
++SimpleWirelessChannel::GetMaxRange (void) const
++{
++  return m_range;
++}
++
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/simple-wireless-channel.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/simple-wireless-channel.h
+@@ -0,0 +1,78 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2010 University of Washington
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Modified by Hemanth Narra <hemanthnarra222@gmail.com> to suit the
++ * TDMA implementation.
++ */
++#ifndef SIMPLE_WIRELESS_CHANNEL_H
++#define SIMPLE_WIRELESS_CHANNEL_H
++
++#include "ns3/channel.h"
++#include "ns3/mac48-address.h"
++#include "ns3/nstime.h"
++#include "ns3/data-rate.h"
++#include "tdma-mac-low.h"
++#include "tdma-mac-net-device.h"
++#include <vector>
++
++namespace ns3 {
++
++class TdmaMacLow;
++class Packet;
++
++/**
++ * \ingroup channel
++ * \brief A simple channel, for simple things and testing
++ */
++class SimpleWirelessChannel : public Channel
++{
++public:
++  typedef std::vector<Ptr<TdmaMacLow> > TdmaMacLowList;
++  static TypeId GetTypeId (void);
++  SimpleWirelessChannel ();
++
++  /**
++   * Copy the packet to be received at a time equal to the transmission
++   * time plus the propagation delay between sender and all receivers
++   * on the channel that are within the range of the sender
++   *
++   * \param p Pointer to packet
++   * \param sender sending NetDevice
++   * \param txTime transmission time (seconds)
++   */
++  void Send (Ptr<const Packet> p, Ptr<TdmaMacLow> sender);
++
++  /**
++   * Add a device to the channel
++   *
++   * \param device Device to add
++   */
++  void Add (Ptr<TdmaMacLow> tdmaMacLow);
++  double GetMaxRange (void) const;
++
++  // inherited from ns3::Channel
++  virtual uint32_t GetNDevices (void) const;
++  virtual Ptr<NetDevice> GetDevice (uint32_t i) const;
++
++private:
++  TdmaMacLowList m_tdmaMacLowList;
++  double m_range;
++};
++
++} // namespace ns3
++
++#endif /* SIMPLE_WIRELESS_CHANNEL_H */
+Index: src/simple-wireless-tdma/model/tdma-central-mac.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-central-mac.cc
+@@ -0,0 +1,401 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/assert.h"
++#include "ns3/log.h"
++#include "ns3/simulator.h"
++#include "ns3/trace-source-accessor.h"
++#include "ns3/wifi-mac-header.h"
++#include "tdma-central-mac.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaCentralMac");
++
++namespace ns3 {
++
++NS_OBJECT_ENSURE_REGISTERED (TdmaCentralMac);
++
++#undef NS_LOG_APPEND_CONTEXT
++#define NS_LOG_APPEND_CONTEXT if (m_low != 0) {std::clog << "[TdmaMac=" << m_low->GetAddress () << "] "; }
++
++TypeId
++TdmaCentralMac::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3::TdmaCentralMac")
++    .SetParent<TdmaMac> ()
++    .AddConstructor<TdmaCentralMac> ()
++    .AddTraceSource ("MacTx",
++                     "A packet has been received from higher layers and is being processed in preparation for "
++                     "queueing for transmission.",
++                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macTxTrace))
++    .AddTraceSource ("MacTxDrop",
++                     "A packet has been dropped in the MAC layer before being queued for transmission.",
++                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macTxDropTrace))
++    .AddTraceSource ("MacPromiscRx",
++                     "A packet has been received by this device, has been passed up from the physical layer "
++                     "and is being forwarded up the local protocol stack.  This is a promiscuous trace,",
++                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macPromiscRxTrace))
++    .AddTraceSource ("MacRx",
++                     "A packet has been received by this device, has been passed up from the physical layer "
++                     "and is being forwarded up the local protocol stack.  This is a non-promiscuous trace,",
++                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macRxTrace))
++    .AddTraceSource ("MacRxDrop",
++                     "A packet has been dropped in the MAC layer after it has been passed up from the physical "
++                     "layer.",
++                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macRxDropTrace))
++  ;
++  return tid;
++}
++
++TdmaCentralMac::TdmaCentralMac ()
++{
++  NS_LOG_FUNCTION (this);
++  m_isTdmaRunning = false;
++  m_low = CreateObject<TdmaMacLow> ();
++  m_queue = CreateObject<TdmaMacQueue> ();
++  m_queue->SetTdmaMacTxDropCallback (MakeCallback (&TdmaCentralMac::NotifyTxDrop, this));
++}
++TdmaCentralMac::~TdmaCentralMac ()
++{
++}
++
++void
++TdmaCentralMac::DoDispose (void)
++{
++  m_low->Dispose ();
++  m_low = 0;
++  m_device = 0;
++  m_queue = 0;
++  m_tdmaController = 0;
++  TdmaMac::DoDispose ();
++}
++
++void
++TdmaCentralMac::NotifyTx (Ptr<const Packet> packet)
++{
++  m_macTxTrace (packet);
++}
++
++void
++TdmaCentralMac::NotifyTxDrop (Ptr<const Packet> packet)
++{
++  m_macTxDropTrace (packet);
++}
++
++void
++TdmaCentralMac::NotifyRx (Ptr<const Packet> packet)
++{
++  m_macRxTrace (packet);
++}
++
++void
++TdmaCentralMac::NotifyPromiscRx (Ptr<const Packet> packet)
++{
++  m_macPromiscRxTrace (packet);
++}
++
++void
++TdmaCentralMac::NotifyRxDrop (Ptr<const Packet> packet)
++{
++  m_macRxDropTrace (packet);
++}
++
++void
++TdmaCentralMac::SetChannel (Ptr<SimpleWirelessChannel> channel)
++{
++  if (channel != 0)
++    {
++      m_channel = channel;
++      m_tdmaController->SetChannel (channel);
++      m_low->SetChannel (m_channel);
++    }
++}
++
++Ptr<SimpleWirelessChannel>
++TdmaCentralMac::GetChannel (void) const
++{
++  return m_channel;
++}
++
++void
++TdmaCentralMac::SetTdmaController (Ptr<TdmaController> controller)
++{
++  m_tdmaController = controller;
++}
++
++Ptr<TdmaController>
++TdmaCentralMac::GetTdmaController (void) const
++{
++  return m_tdmaController;
++}
++
++void
++TdmaCentralMac::SetDevice (Ptr<TdmaNetDevice> device)
++{
++  m_device = device;
++  m_low->SetDevice (m_device);
++}
++
++Ptr<TdmaNetDevice>
++TdmaCentralMac::GetDevice (void) const
++{
++  return m_device;
++}
++
++Ptr<TdmaMacLow>
++TdmaCentralMac::GetTdmaMacLow (void) const
++{
++  return m_low;
++}
++
++void
++TdmaCentralMac::SetForwardUpCallback (Callback<void,Ptr<Packet>, Mac48Address, Mac48Address> upCallback)
++{
++  NS_LOG_FUNCTION (this);
++  m_upCallback = upCallback;
++}
++
++void
++TdmaCentralMac::SetLinkUpCallback (Callback<void> linkUp)
++{
++  linkUp ();
++}
++
++void
++TdmaCentralMac::SetTxQueueStartCallback (Callback<bool,uint32_t> queueStart)
++{
++  NS_LOG_FUNCTION (this);
++  m_queueStart = queueStart;
++}
++
++void
++TdmaCentralMac::SetTxQueueStopCallback (Callback<bool,uint32_t> queueStop)
++{
++  NS_LOG_FUNCTION (this);
++  m_queueStop = queueStop;
++}
++
++uint32_t
++TdmaCentralMac::GetQueueState (uint32_t index)
++{
++  if (m_queue->GetMaxSize () == m_queue->GetSize ())
++    {
++      return 0;
++    }
++  else
++    {
++      return 1;
++    }
++}
++
++uint32_t
++TdmaCentralMac::GetNQueues (void)
++{
++  //TDMA currently has only one queue
++  return 1;
++}
++
++void
++TdmaCentralMac::SetLinkDownCallback (Callback<void> linkDown)
++{
++}
++
++void
++TdmaCentralMac::SetMaxQueueSize (uint32_t size)
++{
++  NS_LOG_FUNCTION (this << size);
++  m_queue->SetMaxSize (size);
++}
++void
++TdmaCentralMac::SetMaxQueueDelay (Time delay)
++{
++  NS_LOG_FUNCTION (this << delay);
++  m_queue->SetMaxDelay (delay);
++}
++
++
++Mac48Address
++TdmaCentralMac::GetAddress (void) const
++{
++  return m_low->GetAddress ();
++}
++Ssid
++TdmaCentralMac::GetSsid (void) const
++{
++  return m_ssid;
++}
++void
++TdmaCentralMac::SetAddress (Mac48Address address)
++{
++  NS_LOG_FUNCTION (address);
++  m_low->SetAddress (address);
++  m_low->SetBssid (address);
++}
++void
++TdmaCentralMac::SetSsid (Ssid ssid)
++{
++  NS_LOG_FUNCTION (ssid);
++  m_ssid = ssid;
++}
++Mac48Address
++TdmaCentralMac::GetBssid (void) const
++{
++  return m_low->GetBssid ();
++}
++
++void
++TdmaCentralMac::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
++{
++  NS_LOG_FUNCTION (this << packet << from);
++  //NotifyRx(packet);
++  m_upCallback (packet, from, to);
++}
++
++void
++TdmaCentralMac::Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
++{
++  NS_LOG_FUNCTION (this << packet << &hdr);
++  if (!m_queue->Enqueue (packet, hdr))
++    {
++      NotifyTxDrop (packet);
++    }
++  //Cannot request for channel access in tdma. Tdma schedules every node in round robin manner
++  //RequestForChannelAccess();
++}
++
++void
++TdmaCentralMac::StartTransmission (uint64_t transmissionTimeUs)
++{
++  NS_LOG_DEBUG (transmissionTimeUs << " usec");
++  Time totalTransmissionSlot = MicroSeconds (transmissionTimeUs);
++  if (m_queue->IsEmpty ())
++    {
++      NS_LOG_DEBUG ("queue empty");
++      return;
++    }
++  WifiMacHeader header;
++  Ptr<const Packet> peekPacket = m_queue->Peek (&header);
++  Time packetTransmissionTime = m_tdmaController->CalculateTxTime (peekPacket);
++  NS_LOG_DEBUG ("Packet TransmissionTime(microSeconds): " << packetTransmissionTime.GetMicroSeconds () << "usec");
++  if (packetTransmissionTime < totalTransmissionSlot)
++    {
++      totalTransmissionSlot -= packetTransmissionTime;
++      Simulator::Schedule (packetTransmissionTime, &TdmaCentralMac::SendPacketDown, this,totalTransmissionSlot);
++    }
++  else
++    {
++      NS_LOG_DEBUG ("Packet takes more time to transmit than the slot allotted. Will send in next slot");
++    }
++}
++
++void
++TdmaCentralMac::SendPacketDown (Time remainingTime)
++{
++  WifiMacHeader header;
++  Ptr<const Packet> packet = m_queue->Dequeue (&header);
++  m_low->StartTransmission (packet, &header);
++  TxQueueStart (0);
++  NotifyTx (packet);
++  TxQueueStart (0);
++  StartTransmission (remainingTime.GetMicroSeconds ());
++}
++
++void
++TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from)
++{
++  NS_LOG_FUNCTION (this << packet << to << from);
++  WifiMacHeader hdr;
++  hdr.SetTypeData ();
++  hdr.SetAddr1 (to);
++  hdr.SetAddr2 (GetAddress ());
++  hdr.SetAddr3 (from);
++  hdr.SetDsFrom ();
++  hdr.SetDsNotTo ();
++  Queue (packet, hdr);
++}
++void
++TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
++{
++  NS_LOG_FUNCTION (this << packet << to);
++  WifiMacHeader hdr;
++  hdr.SetTypeData ();
++  hdr.SetAddr1 (to);
++  hdr.SetAddr2 (GetAddress ());
++  hdr.SetAddr3 (m_low->GetAddress ());
++  hdr.SetDsFrom ();
++  hdr.SetDsNotTo ();
++  Queue (packet, hdr);
++  NS_LOG_FUNCTION (this << packet << to);
++}
++bool
++TdmaCentralMac::SupportsSendFrom (void) const
++{
++  return true;
++}
++
++void
++TdmaCentralMac::TxOk (const WifiMacHeader &hdr)
++{
++}
++void
++TdmaCentralMac::TxFailed (const WifiMacHeader &hdr)
++{
++}
++
++void
++TdmaCentralMac::TxQueueStart (uint32_t index)
++{
++  NS_ASSERT (index < GetNQueues ());
++  m_queueStart (index);
++}
++void
++TdmaCentralMac::TxQueueStop (uint32_t index)
++{
++  NS_ASSERT (index < GetNQueues ());
++  m_queueStop (index);
++}
++
++void
++TdmaCentralMac::Receive (Ptr<Packet> packet, const WifiMacHeader *hdr)
++{
++  ForwardUp (packet, hdr->GetAddr3 (), hdr->GetAddr1 ());
++}
++
++void
++TdmaCentralMac::DoStart (void)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  m_isTdmaRunning = true;
++  m_queue->SetMacPtr (this);
++  m_tdmaController->Start ();
++  m_low->SetRxCallback (MakeCallback (&TdmaCentralMac::Receive, this));
++  TdmaMac::DoStart ();
++}
++
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/tdma-central-mac.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-central-mac.h
+@@ -0,0 +1,176 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_CENTRAL_MAC_H
++#define TDMA_CENTRAL_MAC_H
++
++#include "ns3/data-rate.h"
++#include "ns3/nstime.h"
++#include "tdma-mac.h"
++#include "tdma-mac-low.h"
++#include "tdma-mac-queue.h"
++
++namespace ns3 {
++
++class WifiMacHeader;
++class TdmaController;
++class TdmaMacLow;
++
++/**
++ * \brief Tdma Mac that supports centralized tdma controller
++ *
++ * Tdma Controller drives the transmission of packets in a round-robin
++ * manner depending on the number of slots allocated to a node and the
++ * slot interval. Mac also be made to request for more slots or change in
++ * slot interval which would take affect from the next epoch.
++ */
++class TdmaCentralMac : public TdmaMac
++{
++public:
++  static TypeId GetTypeId (void);
++
++  TdmaCentralMac ();
++  ~TdmaCentralMac ();
++
++  // inherited from TdmaMac.
++  virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from);
++  virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to);
++  virtual bool SupportsSendFrom (void) const;
++  virtual void SetForwardUpCallback (Callback<void,Ptr<Packet>, Mac48Address, Mac48Address> upCallback);
++  virtual void SetLinkUpCallback (Callback<void> linkUp);
++  virtual void SetLinkDownCallback (Callback<void> linkDown);
++  virtual Mac48Address GetAddress (void) const;
++  virtual Ssid GetSsid (void) const;
++  virtual void SetAddress (Mac48Address address);
++  virtual void SetSsid (Ssid ssid);
++  virtual Mac48Address GetBssid (void) const;
++  virtual void SetTdmaController (Ptr<TdmaController> controller);
++  virtual Ptr<TdmaController> GetTdmaController (void) const;
++  virtual void SetDevice (Ptr<TdmaNetDevice> device);
++  virtual Ptr<TdmaNetDevice> GetDevice (void) const;
++  virtual void SetChannel (Ptr<SimpleWirelessChannel> channel);
++  virtual void StartTransmission (uint64_t transmissionTime);
++  virtual void NotifyTx (Ptr<const Packet> packet);
++  virtual void NotifyTxDrop (Ptr<const Packet> packet);
++  virtual void NotifyRx (Ptr<const Packet> packet);
++  virtual void NotifyPromiscRx (Ptr<const Packet> packet);
++  virtual void NotifyRxDrop (Ptr<const Packet> packet);
++  virtual void SetTxQueueStartCallback (Callback<bool,uint32_t> queueStart);
++  virtual void SetTxQueueStopCallback (Callback<bool,uint32_t> queueStop);
++  virtual uint32_t GetQueueState (uint32_t index);
++  virtual uint32_t GetNQueues (void);
++
++  /**
++   * \param packet packet to send
++   * \param hdr header of packet to send.
++   *
++   * Store the packet in the internal queue until it
++   * can be sent safely.
++   */
++  void Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr);
++  void SetMaxQueueSize (uint32_t size);
++  void SetMaxQueueDelay (Time delay);
++  Ptr<SimpleWirelessChannel> GetChannel (void) const;
++  Ptr<TdmaMacLow> GetTdmaMacLow (void) const;
++  void RequestForChannelAccess (void);
++
++private:
++  void Receive (Ptr<Packet> packet, const WifiMacHeader *hdr);
++  void ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to);
++  void TxOk (const WifiMacHeader &hdr);
++  void TxFailed (const WifiMacHeader &hdr);
++  virtual void DoDispose (void);
++  virtual void DoStart (void);
++  TdmaCentralMac (const TdmaCentralMac & ctor_arg);
++  TdmaCentralMac &operator = (const TdmaCentralMac &o);
++  void TxQueueStart (uint32_t index);
++  void TxQueueStop (uint32_t index);
++  void SendPacketDown (Time remainingTime);
++
++  /**
++   * The trace source fired when packets come into the "top" of the device
++   * at the L3/L2 transition, before being queued for transmission.
++   *
++   * \see class CallBackTraceSource
++   */
++  TracedCallback<Ptr<const Packet> > m_macTxTrace;
++
++  /**
++   * The trace source fired when packets coming into the "top" of the device
++   * are dropped at the MAC layer during transmission.
++   *
++   * \see class CallBackTraceSource
++   */
++  TracedCallback<Ptr<const Packet> > m_macTxDropTrace;
++
++  /**
++   * The trace source fired for packets successfully received by the device
++   * immediately before being forwarded up to higher layers (at the L2/L3
++   * transition).  This is a promiscuous trace.
++   *
++   * \see class CallBackTraceSource
++   */
++  TracedCallback<Ptr<const Packet> > m_macPromiscRxTrace;
++
++  /**
++   * The trace source fired for packets successfully received by the device
++   * immediately before being forwarded up to higher layers (at the L2/L3
++   * transition).  This is a non- promiscuous trace.
++   *
++   * \see class CallBackTraceSource
++   */
++  TracedCallback<Ptr<const Packet> > m_macRxTrace;
++
++  /**
++   * The trace source fired when packets coming into the "top" of the device
++   * are dropped at the MAC layer during reception.
++   *
++   * \see class CallBackTraceSource
++   */
++  TracedCallback<Ptr<const Packet> > m_macRxDropTrace;
++
++  Callback<void, Ptr<Packet>,Mac48Address, Mac48Address> m_upCallback;
++  Callback<bool,uint32_t> m_queueStart;
++  Callback<bool,uint32_t> m_queueStop;
++  std::vector<uint32_t> m_slots;
++  Ptr<TdmaController> m_tdmaController;
++  Ptr<TdmaNetDevice> m_device;
++  Ptr<TdmaMacQueue> m_queue;
++  Ptr<TdmaMacLow> m_low;
++  Ptr<SimpleWirelessChannel> m_channel;
++  Ssid m_ssid;
++  Ptr<Node> m_nodePtr;
++  bool m_isTdmaRunning;
++};
++
++} // namespace ns3
++
++
++#endif /* TDMA_CENTRAL_MAC_H */
+Index: src/simple-wireless-tdma/model/tdma-controller.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-controller.cc
+@@ -0,0 +1,294 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/assert.h"
++#include "ns3/enum.h"
++#include "ns3/log.h"
++#include "ns3/simulator.h"
++#include "tdma-central-mac.h"
++#include "tdma-controller.h"
++#include "tdma-mac.h"
++#include "tdma-mac-low.h"
++#include "ns3/abort.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaController");
++
++#define MY_DEBUG(x) \
++  NS_LOG_DEBUG (Simulator::Now () << " " << this << " " << x)
++
++namespace ns3 {
++NS_OBJECT_ENSURE_REGISTERED (TdmaController);
++
++Time
++TdmaController::GetDefaultSlotTime (void)
++{
++  return MicroSeconds (1100);
++}
++
++Time
++TdmaController::GetDefaultGaurdTime (void)
++{
++  return MicroSeconds (100);
++}
++
++DataRate
++TdmaController::GetDefaultDataRate (void)
++{
++  NS_LOG_DEBUG ("Setting default");
++  return DataRate ("11000000b/s");
++}
++
++/*************************************************************
++ * Tdma Controller Class Functions
++ ************************************************************/
++TypeId
++TdmaController::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3:TdmaController")
++    .SetParent<Object> ()
++    .AddConstructor<TdmaController> ()
++    .AddAttribute ("DataRate",
++                   "The default data rate for point to point links",
++                   DataRateValue (GetDefaultDataRate ()),
++                   MakeDataRateAccessor (&TdmaController::SetDataRate,
++                                         &TdmaController::GetDataRate),
++                   MakeDataRateChecker ())
++    .AddAttribute ("SlotTime", "The duration of a Slot in microseconds.",
++                   TimeValue (GetDefaultSlotTime ()),
++                   MakeTimeAccessor (&TdmaController::SetSlotTime,
++                                     &TdmaController::GetSlotTime),
++                   MakeTimeChecker ())
++    .AddAttribute ("GaurdTime", "GaurdTime between TDMA slots in microseconds.",
++                   TimeValue (GetDefaultGaurdTime ()),
++                   MakeTimeAccessor (&TdmaController::SetGaurdTime,
++                                     &TdmaController::GetGaurdTime),
++                   MakeTimeChecker ())
++    .AddAttribute ("InterFrameTime", "The wait time between consecutive tdma frames.",
++                   TimeValue (MicroSeconds (0)),
++                   MakeTimeAccessor (&TdmaController::SetInterFrameTimeInterval,
++                                     &TdmaController::GetInterFrameTimeInterval),
++                   MakeTimeChecker ())
++    .AddAttribute ("TdmaMode","Tdma Mode, Centralized",
++                   EnumValue (CENTRALIZED),
++                   MakeEnumAccessor (&TdmaController::m_tdmaMode),
++                   MakeEnumChecker (CENTRALIZED, "Centralized"));
++  return tid;
++}
++
++TdmaController::TdmaController () : m_activeEpoch (false),
++                                    m_channel (0)
++{
++  NS_LOG_FUNCTION (this);
++}
++
++TdmaController::~TdmaController ()
++{
++  m_channel = 0;
++  m_bps = 0;
++  m_slotPtrs.clear ();
++}
++
++void
++TdmaController::Start (void)
++{
++  NS_LOG_FUNCTION (this);
++  if (!m_activeEpoch)
++    {
++      m_activeEpoch = true;
++      Simulator::Schedule (NanoSeconds (10),&TdmaController::StartTdmaSessions, this);
++    }
++}
++
++void
++TdmaController::StartTdmaSessions (void)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  ScheduleTdmaSession (0);
++}
++
++void
++TdmaController::AddTdmaSlot (uint32_t slotPos, Ptr<TdmaMac> macPtr)
++{
++  NS_LOG_FUNCTION (slotPos << macPtr);
++  std::pair<std::map<uint32_t, Ptr<TdmaMac> >::iterator, bool> result =
++    m_slotPtrs.insert (std::make_pair (slotPos,macPtr));
++  if (result.second == true)
++    {
++      NS_LOG_DEBUG ("Added mac : " << macPtr << " in slot " << slotPos);
++    }
++  else
++    {
++      NS_LOG_WARN ("Could not add mac: " << macPtr << " to slot " << slotPos);
++    }
++}
++
++void
++TdmaController::SetSlotTime (Time slotTime)
++{
++  NS_LOG_FUNCTION (this << slotTime);
++  m_slotTime = slotTime.GetMicroSeconds ();
++}
++
++Time
++TdmaController::GetSlotTime (void) const
++{
++  return MicroSeconds (m_slotTime);
++}
++
++void
++TdmaController::SetDataRate (DataRate bps)
++{
++  NS_LOG_FUNCTION (this << bps);
++  m_bps = bps;
++}
++
++DataRate
++TdmaController::GetDataRate (void) const
++{
++  return m_bps;
++}
++
++void
++TdmaController::SetChannel (Ptr<SimpleWirelessChannel> c)
++{
++  NS_LOG_FUNCTION (this << c);
++  m_channel = c;
++}
++
++
++Ptr<SimpleWirelessChannel>
++TdmaController::GetChannel (void) const
++{
++  NS_LOG_FUNCTION (this);
++  return m_channel;
++}
++
++void
++TdmaController::SetGaurdTime (Time gaurdTime)
++{
++  NS_LOG_FUNCTION (this << gaurdTime);
++  //gaurdTime is based on the SimpleWirelessChannel's max range
++  if (m_channel != 0)
++    {
++      m_gaurdTime = Seconds (m_channel->GetMaxRange () / 300000000.0).GetMicroSeconds ();
++    }
++  else
++    {
++      m_gaurdTime = gaurdTime.GetMicroSeconds ();
++    }
++}
++
++Time
++TdmaController::GetGaurdTime (void) const
++{
++  return MicroSeconds (m_gaurdTime);
++}
++
++void
++TdmaController::SetInterFrameTimeInterval (Time interFrameTime)
++{
++  NS_LOG_FUNCTION (interFrameTime);
++  m_tdmaInterFrameTime = interFrameTime.GetMicroSeconds ();
++}
++
++Time
++TdmaController::GetInterFrameTimeInterval (void) const
++{
++  return MicroSeconds (m_tdmaInterFrameTime);
++}
++
++void
++TdmaController::SetTotalSlotsAllowed (uint32_t slotsAllowed)
++{
++  m_totalSlotsAllowed = slotsAllowed;
++  m_slotPtrs.clear ();
++}
++
++uint32_t
++TdmaController::GetTotalSlotsAllowed (void) const
++{
++  return m_totalSlotsAllowed;
++}
++
++void
++TdmaController::ScheduleTdmaSession (const uint32_t slotNum)
++{
++  NS_LOG_FUNCTION (slotNum);
++  std::map<uint32_t, Ptr<TdmaMac> >::iterator it = m_slotPtrs.find (slotNum);
++  if (it == m_slotPtrs.end ())
++    {
++      NS_LOG_WARN ("No MAC ptrs in TDMA controller");
++    }
++  uint32_t numOfSlotsAllotted = 1;
++  while (1)
++    {
++      std::map<uint32_t, Ptr<TdmaMac> >::iterator j = m_slotPtrs.find (slotNum + numOfSlotsAllotted);
++      if (j != m_slotPtrs.end ())
++        {
++          if (it->second == j->second)
++            {
++              numOfSlotsAllotted++;
++            }
++          else
++            {
++              break;
++            }
++        }
++      else
++        {
++          break;
++        }
++    }
++  NS_LOG_DEBUG ("Number of slots allotted for this node is: " << numOfSlotsAllotted);
++  Time transmissionSlot = MicroSeconds (GetSlotTime ().GetMicroSeconds () * numOfSlotsAllotted);
++  Time totalTransmissionTimeUs = GetGaurdTime () + transmissionSlot;
++  NS_ASSERT (it->second != NULL);
++  it->second->StartTransmission (transmissionSlot.GetMicroSeconds ());
++  if ((slotNum + numOfSlotsAllotted) == GetTotalSlotsAllowed ())
++    {
++      NS_LOG_DEBUG ("Starting over all sessions again");
++      Simulator::Schedule ((totalTransmissionTimeUs + GetInterFrameTimeInterval ()), &TdmaController::StartTdmaSessions, this);
++    }
++  else
++    {
++      NS_LOG_DEBUG ("Scheduling next session");
++      Simulator::Schedule (totalTransmissionTimeUs, &TdmaController::ScheduleTdmaSession, this, (slotNum + numOfSlotsAllotted));
++    }
++}
++
++Time
++TdmaController::CalculateTxTime (Ptr<const Packet> packet)
++{
++  NS_LOG_FUNCTION (*packet);
++  NS_ASSERT_MSG (packet->GetSize () < 1500,"PacketSize must be less than 1500B, it is: " << packet->GetSize ());
++  return Seconds (m_bps.CalculateTxTime (packet->GetSize ()));
++}
++
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/tdma-controller.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-controller.h
+@@ -0,0 +1,162 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_CONTROLLER_H
++#define TDMA_CONTROLLER_H
++
++#include "ns3/nstime.h"
++#include "ns3/event-id.h"
++#include "ns3/data-rate.h"
++#include "ns3/packet.h"
++#include "ns3/simple-wireless-channel.h"
++#include "ns3/timer.h"
++#include <vector>
++#include <map>
++
++namespace ns3 {
++
++enum TdmaMode
++{
++  CENTRALIZED = 1,
++};
++
++class TdmaMac;
++class TdmaMacLow;
++class SimpleWirelessChannel;
++
++class TdmaController : public Object
++{
++public:
++  static TypeId GetTypeId (void);
++  TdmaController ();
++  ~TdmaController ();
++
++  typedef std::map<uint32_t,Ptr<TdmaMac> > TdmaMacPtrMap;
++
++  /**
++   * \param slotTime the duration of a slot.
++   *
++   * It is a bad idea to call this method after RequestAccess or
++   * one of the Notify methods has been invoked.
++   */
++  void SetSlotTime (Time slotTime);
++  /**
++   */
++  void SetGaurdTime (Time gaurdTime);
++  /**
++   */
++  void SetDataRate (DataRate bps);
++  /**
++   */
++  void AddTdmaSlot (uint32_t slot, Ptr<TdmaMac> macPtr);
++  /**
++   */
++  void SetInterFrameTimeInterval (Time interFrameTime);
++  /**
++   */
++  void SetTotalSlotsAllowed (uint32_t slotsAllowed);
++  /**
++   */
++  Time GetSlotTime (void) const;
++  /**
++   */
++  Time GetGaurdTime (void) const;
++  /**
++   */
++  DataRate GetDataRate (void) const;
++  /**
++   */
++  Time GetInterFrameTimeInterval (void) const;
++  /**
++   */
++  uint32_t GetTotalSlotsAllowed (void) const;
++  /**
++   * \param duration expected duration of reception
++   *
++   * Notify the DCF that a packet reception started
++   * for the expected duration.
++   */
++  void NotifyRxStartNow (Time duration);
++  /**
++   * Notify the DCF that a packet reception was just
++   * completed successfully.
++   */
++  void NotifyRxEndOkNow (void);
++  /**
++   * Notify the DCF that a packet reception was just
++   * completed unsuccessfully.
++   */
++  void NotifyRxEndErrorNow (void);
++  /**
++   * \param duration expected duration of transmission
++   *
++   * Notify the DCF that a packet transmission was
++   * just started and is expected to last for the specified
++   * duration.
++   */
++  void NotifyTxStartNow (Time duration);
++  Time CalculateTxTime (Ptr<const Packet> packet);
++  void StartTdmaSessions (void);
++  void SetChannel (Ptr<SimpleWirelessChannel> c);
++  virtual void Start (void);
++private:
++  static Time GetDefaultSlotTime (void);
++  static Time GetDefaultGaurdTime (void);
++  static DataRate GetDefaultDataRate (void);
++  void DoRestartAccessTimeoutIfNeeded (void);
++  void AccessTimeout (void);
++  void DoGrantAccess (void);
++  bool IsBusy (void) const;
++  void UpdateFrameLength (void);
++  void ScheduleTdmaSession (const uint32_t slotNum);
++  Ptr<SimpleWirelessChannel> GetChannel (void) const;
++
++//  Time m_lastRxStart;
++//  Time m_lastRxDuration;
++//  bool m_lastRxReceivedOk;
++//  Time m_lastRxEnd;
++//  Time m_lastTxStart;
++//  Time m_lastTxDuration;
++//  EventId m_accessTimeout;
++  DataRate m_bps;
++  uint32_t m_slotTime;
++  uint32_t m_gaurdTime;
++  uint32_t m_tdmaFrameLength; //total frameLength in microseconds
++  uint32_t m_tdmaInterFrameTime;
++  uint32_t m_totalSlotsAllowed;
++  bool m_activeEpoch;
++  TdmaMode m_tdmaMode;
++  TdmaMacPtrMap m_slotPtrs;
++  Ptr<SimpleWirelessChannel> m_channel;
++};
++
++} // namespace ns3
++
++#endif /* AERO_TDMA_CONTROLLER_H */
+Index: src/simple-wireless-tdma/model/tdma-mac-low.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-low.cc
+@@ -0,0 +1,172 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/packet.h"
++#include "ns3/log.h"
++#include "tdma-mac-low.h"
++#include "ns3/wifi-mac-trailer.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaMacLow");
++
++#undef NS_LOG_APPEND_CONTEXT
++#define NS_LOG_APPEND_CONTEXT std::clog << "[TdmaMac=" << m_self << "] "
++
++
++namespace ns3 {
++
++TdmaMacLow::TdmaMacLow ()
++  : m_currentPacket (0)
++{
++}
++
++TdmaMacLow::~TdmaMacLow ()
++{
++}
++
++
++void
++TdmaMacLow::DoDispose (void)
++{
++  NS_LOG_FUNCTION (this);
++  m_channel = 0;
++  m_device = 0;
++}
++
++void
++TdmaMacLow::SetAddress (Mac48Address ad)
++{
++  m_self = ad;
++}
++
++void
++TdmaMacLow::SetBssid (Mac48Address bssid)
++{
++  m_bssid = bssid;
++}
++Mac48Address
++TdmaMacLow::GetAddress (void) const
++{
++  return m_self;
++}
++
++Mac48Address
++TdmaMacLow::GetBssid (void) const
++{
++  return m_bssid;
++}
++
++void
++TdmaMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback)
++{
++  m_rxCallback = callback;
++}
++
++Ptr<SimpleWirelessChannel>
++TdmaMacLow::GetChannel (void) const
++{
++  return m_channel;
++}
++
++void
++TdmaMacLow::SetChannel (Ptr<SimpleWirelessChannel> channel)
++{
++  NS_LOG_FUNCTION (channel);
++  m_channel = channel;
++  m_channel->Add (this);
++}
++
++Ptr<TdmaNetDevice>
++TdmaMacLow::GetDevice (void) const
++{
++  return m_device;
++}
++
++void
++TdmaMacLow::SetDevice (Ptr<TdmaNetDevice> device)
++{
++  NS_LOG_FUNCTION (device);
++  m_device = device;
++}
++
++void
++TdmaMacLow::StartTransmission (Ptr<const Packet> packet,
++                               const WifiMacHeader* hdr)
++{
++  NS_LOG_FUNCTION (this << packet << hdr);
++  m_currentPacket = packet->Copy ();
++  m_currentHdr = *hdr;
++
++  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
++                ", to=" << m_currentHdr.GetAddr1 ());
++  m_currentPacket->AddHeader (m_currentHdr);
++  WifiMacTrailer fcs;
++  m_currentPacket->AddTrailer (fcs);
++  ForwardDown (m_currentPacket, &m_currentHdr);
++  m_currentPacket = 0;
++}
++
++void
++TdmaMacLow::Receive (Ptr<Packet> packet)
++{
++  NS_LOG_DEBUG (*packet);
++  WifiMacHeader hdr;
++  packet->RemoveHeader (hdr);
++  if (hdr.IsData () || hdr.IsMgt ())
++    {
++      NS_LOG_DEBUG ("rx group from=" << hdr.GetAddr2 ());
++      WifiMacTrailer fcs;
++      packet->RemoveTrailer (fcs);
++      m_rxCallback (packet, &hdr);
++    }
++  else
++    {
++      NS_LOG_DEBUG ("Need to drop frame as it is not either data or management frame");
++    }
++  return;
++}
++
++uint32_t
++TdmaMacLow::GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
++{
++  WifiMacTrailer fcs;
++  return packet->GetSize () + hdr->GetSize () + fcs.GetSerializedSize ();
++}
++
++void
++TdmaMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr)
++{
++  NS_LOG_DEBUG ("send " << hdr->GetTypeString () <<
++                ", to=" << hdr->GetAddr1 () <<
++                ", size=" << packet->GetSize ());
++  //HERE IT IS SIMPLEWIRELESSCHANNEL SEND CALL
++  m_channel->Send (packet, this);
++}
++
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/tdma-mac-low.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-low.h
+@@ -0,0 +1,119 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_MAC_LOW_H
++#define TDMA_MAC_LOW_H
++
++#include <vector>
++#include <stdint.h>
++#include <ostream>
++#include <map>
++
++#include "ns3/wifi-mac-header.h"
++#include "simple-wireless-channel.h"
++#include "ns3/data-rate.h"
++#include "ns3/mac48-address.h"
++#include "ns3/callback.h"
++#include "ns3/event-id.h"
++#include "ns3/packet.h"
++#include "ns3/nstime.h"
++#include "ns3/qos-utils.h"
++#include "ns3/node.h"
++
++namespace ns3 {
++
++
++class TdmaMac;
++class SimpleWirelessChannel;
++class TdmaNetDevice;
++
++class TdmaMacLow : public Object
++{
++public:
++  typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> TdmaMacLowRxCallback;
++
++  TdmaMacLow ();
++  virtual ~TdmaMacLow ();
++  void SetDevice (Ptr<TdmaNetDevice> device);
++  void SetAddress (Mac48Address ad);
++  void SetBssid (Mac48Address ad);
++  Mac48Address GetAddress (void) const;
++  Mac48Address GetBssid (void) const;
++  Ptr<TdmaNetDevice> GetDevice (void) const;
++  /**
++   * Associate the device with a channel
++   *
++   * \param channel Pointer to the channel
++   */
++  void SetChannel (Ptr<SimpleWirelessChannel> channel);
++  /**
++   * \param callback the callback which receives every incoming packet.
++   *
++   * This callback typically forwards incoming packets to
++   * an instance of ns3::TdmaCentralMac.
++   */
++  void SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback);
++  /**
++   * \param packet packet to send
++   * \param hdr 802.11 header for packet to send
++   *
++   * Start the transmission of the input packet and notify the listener
++   * of transmission events.
++   */
++  void StartTransmission (Ptr<const Packet> packet,
++                          const WifiMacHeader* hdr);
++
++  /**
++   * \param packet packet received
++   * \param rxSnr snr of packet received
++   * \param txMode transmission mode of packet received
++   * \param preamble type of preamble used for the packet received
++   *
++   * This method is typically invoked by the lower PHY layer to notify
++   * the MAC layer that a packet was successfully received.
++   */
++  void Receive (Ptr<Packet> packet);
++private:
++  uint32_t GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
++  void ForwardDown (Ptr<const Packet> packet, const WifiMacHeader *hdr);
++  virtual Ptr<SimpleWirelessChannel> GetChannel (void) const;
++  virtual void DoDispose (void);
++  TdmaMacLowRxCallback m_rxCallback;
++  Ptr<Packet> m_currentPacket;
++  Ptr<SimpleWirelessChannel> m_channel;
++  Ptr<TdmaNetDevice> m_device;
++  WifiMacHeader m_currentHdr;
++  Mac48Address m_self;
++  Mac48Address m_bssid;
++};
++
++} // namespace ns3
++
++#endif /* TDMA_MAC_LOW_H */
+Index: src/simple-wireless-tdma/model/tdma-mac-net-device.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-net-device.cc
+@@ -0,0 +1,425 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "tdma-mac.h"
++#include "tdma-mac-net-device.h"
++#include "ns3/llc-snap-header.h"
++#include "ns3/packet.h"
++#include "ns3/uinteger.h"
++#include "ns3/pointer.h"
++#include "ns3/node.h"
++#include "ns3/trace-source-accessor.h"
++#include "ns3/log.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaNetDevice");
++
++namespace ns3 {
++
++NS_OBJECT_ENSURE_REGISTERED (TdmaNetDevice);
++
++TypeId
++TdmaNetDevice::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3::TdmaNetDevice")
++    .SetParent<NetDevice> ()
++    .AddConstructor<TdmaNetDevice> ()
++    .AddAttribute ("Mtu", "The MAC-level Maximum Transmission Unit",
++                   UintegerValue (MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
++                   MakeUintegerAccessor (&TdmaNetDevice::SetMtu,
++                                         &TdmaNetDevice::GetMtu),
++                   MakeUintegerChecker<uint16_t> (1,MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH))
++    .AddAttribute ("Mac", "The MAC layer attached to this device.",
++                   PointerValue (),
++                   MakePointerAccessor (&TdmaNetDevice::GetMac,
++                                        &TdmaNetDevice::SetMac),
++                   MakePointerChecker<TdmaMac> ())
++    .AddAttribute ("Channel", "The channel attached to this device",
++                   PointerValue (),
++                   MakePointerAccessor (&TdmaNetDevice::DoGetChannel,
++                                        &TdmaNetDevice::SetChannel),
++                   MakePointerChecker<SimpleWirelessChannel> ())
++    .AddAttribute ("TdmaController", "The tdma controller attached to this device",
++                   PointerValue (),
++                   MakePointerAccessor (&TdmaNetDevice::GetTdmaController,
++                                        &TdmaNetDevice::SetTdmaController),
++                   MakePointerChecker<TdmaController> ());
++  return tid;
++}
++
++TdmaNetDevice::TdmaNetDevice ()
++  : m_configComplete (false)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++}
++TdmaNetDevice::~TdmaNetDevice ()
++{
++  NS_LOG_FUNCTION_NOARGS ();
++}
++
++void
++TdmaNetDevice::DoDispose (void)
++{
++  m_node = 0;
++  m_mac->Dispose ();
++  m_mac = 0;
++  m_channel = 0;
++  m_tdmaController = 0;
++  // chain up.
++  NetDevice::DoDispose ();
++}
++
++void
++TdmaNetDevice::DoStart (void)
++{
++  m_mac->Start ();
++  NetDevice::DoStart ();
++}
++
++void
++TdmaNetDevice::CompleteConfig (void)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  if (m_mac == 0
++      || m_node == 0
++      || m_channel == 0
++      || m_tdmaController == 0
++      || m_configComplete)
++    {
++      return;
++    }
++  //setup mac
++  m_mac->SetTdmaController (m_tdmaController);
++  m_mac->SetChannel (m_channel);
++  // setup callbacks
++  m_mac->SetForwardUpCallback (MakeCallback (&TdmaNetDevice::ForwardUp, this));
++  m_mac->SetLinkUpCallback (MakeCallback (&TdmaNetDevice::LinkUp, this));
++  m_mac->SetLinkDownCallback (MakeCallback (&TdmaNetDevice::LinkDown, this));
++  m_mac->SetTxQueueStartCallback (MakeCallback (&TdmaNetDevice::TxQueueStart, this));
++  m_mac->SetTxQueueStopCallback (MakeCallback (&TdmaNetDevice::TxQueueStop, this));
++  m_configComplete = true;
++}
++
++void
++TdmaNetDevice::SetMac (Ptr<TdmaMac> mac)
++{
++  m_mac = mac;
++  m_mac->SetDevice (this);
++  CompleteConfig ();
++}
++Ptr<TdmaMac>
++TdmaNetDevice::GetMac (void) const
++{
++  return m_mac;
++}
++
++void
++TdmaNetDevice::SetTdmaController (Ptr<TdmaController> controller)
++{
++  m_tdmaController = controller;
++  CompleteConfig ();
++}
++
++Ptr<TdmaController>
++TdmaNetDevice::GetTdmaController (void) const
++{
++  return m_tdmaController;
++}
++
++Ptr<Node>
++TdmaNetDevice::GetNode (void) const
++{
++  return m_node;
++}
++
++void
++TdmaNetDevice::SetNode (Ptr<Node> node)
++{
++  m_node = node;
++  CompleteConfig ();
++}
++
++void
++TdmaNetDevice::SetChannel (Ptr<SimpleWirelessChannel> channel)
++{
++  if (channel != 0)
++    {
++      m_channel = channel;
++      CompleteConfig ();
++    }
++}
++
++Ptr<Channel>
++TdmaNetDevice::GetChannel (void) const
++{
++  return m_channel;
++}
++
++Ptr<SimpleWirelessChannel>
++TdmaNetDevice::DoGetChannel (void) const
++{
++  return m_channel;
++}
++
++void
++TdmaNetDevice::SetIfIndex (const uint32_t index)
++{
++  m_ifIndex = index;
++}
++
++uint32_t
++TdmaNetDevice::GetIfIndex (void) const
++{
++  return m_ifIndex;
++}
++
++void
++TdmaNetDevice::SetAddress (Address address)
++{
++  m_mac->SetAddress (Mac48Address::ConvertFrom (address));
++}
++
++Address
++TdmaNetDevice::GetAddress (void) const
++{
++  return m_mac->GetAddress ();
++}
++
++bool
++TdmaNetDevice::SetMtu (const uint16_t mtu)
++{
++  if (mtu > MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH)
++    {
++      return false;
++    }
++  m_mtu = mtu;
++  return true;
++}
++
++uint16_t
++TdmaNetDevice::GetMtu (void) const
++{
++  return m_mtu;
++}
++
++bool
++TdmaNetDevice::IsLinkUp (void) const
++{
++  return m_linkUp;
++}
++
++void
++TdmaNetDevice::AddLinkChangeCallback (Callback<void> callback)
++{
++  m_linkChanges.ConnectWithoutContext (callback);
++}
++
++bool
++TdmaNetDevice::IsBroadcast (void) const
++{
++  return true;
++}
++
++Address
++TdmaNetDevice::GetBroadcast (void) const
++{
++  return Mac48Address::GetBroadcast ();
++}
++
++bool
++TdmaNetDevice::IsMulticast (void) const
++{
++  return true;
++}
++
++Address
++TdmaNetDevice::GetMulticast (Ipv4Address multicastGroup) const
++{
++  return Mac48Address::GetMulticast (multicastGroup);
++}
++
++Address TdmaNetDevice::GetMulticast (Ipv6Address addr) const
++{
++  return Mac48Address::GetMulticast (addr);
++}
++
++bool
++TdmaNetDevice::IsPointToPoint (void) const
++{
++  return false;
++}
++
++bool
++TdmaNetDevice::IsBridge (void) const
++{
++  return false;
++}
++
++bool
++TdmaNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber)
++{
++  NS_LOG_FUNCTION (*packet << " Dest:" << dest << " ProtocolNo:" << protocolNumber);
++  NS_ASSERT (Mac48Address::IsMatchingType (dest));
++  Mac48Address realTo = Mac48Address::ConvertFrom (dest);
++  Mac48Address realFrom = Mac48Address::ConvertFrom (GetAddress ());
++  LlcSnapHeader llc;
++  llc.SetType (protocolNumber);
++  packet->AddHeader (llc);
++  m_mac->Enqueue (packet, realTo);
++  return true;
++}
++
++bool
++TdmaNetDevice::NeedsArp (void) const
++{
++  return true;
++}
++
++void
++TdmaNetDevice::SetReceiveCallback (NetDevice::ReceiveCallback cb)
++{
++  m_forwardUp = cb;
++}
++
++void
++TdmaNetDevice::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
++{
++  NS_LOG_FUNCTION (*packet << from << to);
++  LlcSnapHeader llc;
++  packet->RemoveHeader (llc);
++  enum NetDevice::PacketType type;
++  if (to.IsBroadcast ())
++    {
++      NS_LOG_DEBUG ("NetDevice::PACKET_BROADCAST");
++      type = NetDevice::PACKET_BROADCAST;
++    }
++  else if (to.IsGroup ())
++    {
++      NS_LOG_DEBUG ("NetDevice::PACKET_MULTICAST");
++      type = NetDevice::PACKET_MULTICAST;
++    }
++  else if (to == m_mac->GetAddress ())
++    {
++      NS_LOG_DEBUG ("NetDevice::PACKET_HOST");
++      type = NetDevice::PACKET_HOST;
++    }
++  else
++    {
++      NS_LOG_DEBUG ("NetDevice::PACKET_OTHERHOST");
++      type = NetDevice::PACKET_OTHERHOST;
++    }
++
++  if (type != NetDevice::PACKET_OTHERHOST)
++    {
++      m_mac->NotifyRx (packet);
++      m_forwardUp (this, packet, llc.GetType (), from);
++    }
++
++  if (!m_promiscRx.IsNull ())
++    {
++      m_mac->NotifyPromiscRx (packet);
++      m_promiscRx (this, packet, llc.GetType (), from, to, type);
++    }
++}
++
++void
++TdmaNetDevice::LinkUp (void)
++{
++  m_linkUp = true;
++  m_linkChanges ();
++}
++
++void
++TdmaNetDevice::LinkDown (void)
++{
++  m_linkUp = false;
++  m_linkChanges ();
++}
++
++bool
++TdmaNetDevice::SendFrom (Ptr<Packet> packet, const Address& source, const Address& dest, uint16_t protocolNumber)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  NS_ASSERT (Mac48Address::IsMatchingType (dest));
++  NS_ASSERT (Mac48Address::IsMatchingType (source));
++  Mac48Address realTo = Mac48Address::ConvertFrom (dest);
++  Mac48Address realFrom = Mac48Address::ConvertFrom (source);
++  LlcSnapHeader llc;
++  llc.SetType (protocolNumber);
++  packet->AddHeader (llc);
++  m_mac->Enqueue (packet, realTo, realFrom);
++  return true;
++}
++
++void
++TdmaNetDevice::SetPromiscReceiveCallback (PromiscReceiveCallback cb)
++{
++  m_promiscRx = cb;
++}
++
++bool
++TdmaNetDevice::SupportsSendFrom (void) const
++{
++  return m_mac->SupportsSendFrom ();
++}
++
++bool
++TdmaNetDevice::TxQueueStart (uint32_t index)
++{
++  m_queueStateChanges (index);
++  return true;
++}
++
++bool
++TdmaNetDevice::TxQueueStop (uint32_t index)
++{
++  m_queueStateChanges (index);
++  return true;
++}
++
++uint32_t
++TdmaNetDevice::GetQueueState (uint32_t index)
++{
++  return m_mac->GetQueueState (index);
++}
++
++uint32_t
++TdmaNetDevice::GetNQueues (void)
++{
++  return m_mac->GetNQueues ();
++}
++
++void
++TdmaNetDevice::SetQueueStateChangeCallback (Callback<void,uint32_t> callback)
++{
++  m_queueStateChanges.ConnectWithoutContext (callback);
++}
++
++} // namespace ns3
++
+Index: src/simple-wireless-tdma/model/tdma-mac-net-device.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-net-device.h
+@@ -0,0 +1,147 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_NET_DEVICE_H
++#define TDMA_NET_DEVICE_H
++
++#include "ns3/net-device.h"
++#include "ns3/packet.h"
++#include "ns3/traced-callback.h"
++#include "ns3/mac48-address.h"
++#include "ns3/tdma-mac.h"
++#include "ns3/simple-wireless-channel.h"
++#include "tdma-controller.h"
++#include <string>
++
++namespace ns3 {
++
++class SimpleWirelessChannel;
++class TdmaController;
++/**
++ * \brief Hold together all Tdma-related objects.
++ *
++ * This class holds together ns3::SimpleWirelessChannel and
++ * ns3::TdmaMac
++ */
++class TdmaNetDevice : public NetDevice
++{
++public:
++  static TypeId GetTypeId (void);
++
++  TdmaNetDevice ();
++  virtual ~TdmaNetDevice ();
++
++  /**
++   * \param mac the mac layer to use.
++   */
++  void SetMac (Ptr<TdmaMac> mac);
++  /**
++   * \returns the mac we are currently using.
++   */
++  Ptr<TdmaMac> GetMac (void) const;
++  /**
++   * \param channel The channel this device is attached to
++   */
++  void SetChannel (Ptr<SimpleWirelessChannel> channel);
++  /**
++   * \param controller The tdma controller this device is attached to
++   */
++  void SetTdmaController (Ptr<TdmaController> controller);
++
++  // inherited from NetDevice base class.
++  virtual void SetIfIndex (const uint32_t index);
++  virtual uint32_t GetIfIndex (void) const;
++  virtual Ptr<Channel> GetChannel (void) const;
++  virtual void SetAddress (Address address);
++  virtual Address GetAddress (void) const;
++  virtual bool SetMtu (const uint16_t mtu);
++  virtual uint16_t GetMtu (void) const;
++  virtual bool IsLinkUp (void) const;
++  virtual void AddLinkChangeCallback (Callback<void> callback);
++  virtual bool IsBroadcast (void) const;
++  virtual Address GetBroadcast (void) const;
++  virtual bool IsMulticast (void) const;
++  virtual Address GetMulticast (Ipv4Address multicastGroup) const;
++  virtual bool IsPointToPoint (void) const;
++  virtual bool IsBridge (void) const;
++  virtual bool Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber);
++  virtual Ptr<Node> GetNode (void) const;
++  virtual void SetNode (Ptr<Node> node);
++  virtual bool NeedsArp (void) const;
++  virtual void SetReceiveCallback (NetDevice::ReceiveCallback cb);
++
++  virtual Address GetMulticast (Ipv6Address addr) const;
++
++  virtual bool SendFrom (Ptr<Packet> packet, const Address& source, const Address& dest, uint16_t protocolNumber);
++  virtual void SetPromiscReceiveCallback (PromiscReceiveCallback cb);
++  virtual bool SupportsSendFrom (void) const;
++
++  virtual uint32_t GetQueueState (uint32_t index);
++  virtual uint32_t GetNQueues (void);
++  virtual void SetQueueStateChangeCallback (Callback<void,uint32_t> callback);
++
++private:
++  // This value conforms to the 802.11 specification
++  static const uint16_t MAX_MSDU_SIZE = 2304;
++
++  virtual void DoDispose (void);
++  virtual void DoStart (void);
++  void ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to);
++  void LinkUp (void);
++  void LinkDown (void);
++  void Setup (void);
++  Ptr<SimpleWirelessChannel> DoGetChannel (void) const;
++  Ptr<TdmaController> GetTdmaController (void) const;
++  void CompleteConfig (void);
++
++  Ptr<Node> m_node;
++  Ptr<TdmaMac> m_mac;
++  Ptr<SimpleWirelessChannel> m_channel;
++  Ptr<TdmaController> m_tdmaController;
++  NetDevice::ReceiveCallback m_forwardUp;
++  NetDevice::PromiscReceiveCallback m_promiscRx;
++
++  TracedCallback<Ptr<const Packet>, Mac48Address> m_rxLogger;
++  TracedCallback<Ptr<const Packet>, Mac48Address> m_txLogger;
++
++  bool TxQueueStart (uint32_t index);
++  bool TxQueueStop (uint32_t index);
++  TracedCallback<uint32_t> m_queueStateChanges;
++
++  uint32_t m_ifIndex;
++  bool m_linkUp;
++  TracedCallback<> m_linkChanges;
++  mutable uint16_t m_mtu;
++  bool m_configComplete;
++};
++
++} // namespace ns3
++
++#endif /* TDMA_NET_DEVICE_H */
+Index: src/simple-wireless-tdma/model/tdma-mac-queue.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-queue.cc
+@@ -0,0 +1,249 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/simulator.h"
++#include "ns3/uinteger.h"
++#include "ns3/log.h"
++#include "tdma-mac-queue.h"
++
++using namespace std;
++NS_LOG_COMPONENT_DEFINE ("TdmaMacQueue");
++namespace ns3 {
++
++NS_OBJECT_ENSURE_REGISTERED (TdmaMacQueue);
++
++TdmaMacQueue::Item::Item (Ptr<const Packet> packet,
++                          const WifiMacHeader &hdr,
++                          Time tstamp)
++  : packet (packet),
++    hdr (hdr),
++    tstamp (tstamp)
++{
++}
++
++TypeId
++TdmaMacQueue::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3::TdmaMacQueue")
++    .SetParent<Object> ()
++    .AddConstructor<TdmaMacQueue> ()
++    .AddAttribute ("MaxPacketNumber", "If a packet arrives when there are already this number of packets, it is dropped.",
++                   UintegerValue (400),
++                   MakeUintegerAccessor (&TdmaMacQueue::m_maxSize),
++                   MakeUintegerChecker<uint32_t> ())
++    .AddAttribute ("MaxDelay", "If a packet stays longer than this delay in the queue, it is dropped.",
++                   TimeValue (Seconds (10.0)),
++                   MakeTimeAccessor (&TdmaMacQueue::m_maxDelay),
++                   MakeTimeChecker ())
++  ;
++  return tid;
++}
++
++TdmaMacQueue::TdmaMacQueue ()
++  : m_size (0),
++    m_count (0)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++}
++
++TdmaMacQueue::~TdmaMacQueue ()
++{
++  Flush ();
++}
++
++void
++TdmaMacQueue::SetMaxSize (uint32_t maxSize)
++{
++  m_maxSize = maxSize;
++}
++
++void
++TdmaMacQueue::SetMacPtr (Ptr<TdmaMac> macPtr)
++{
++  m_macPtr = macPtr;
++}
++
++void
++TdmaMacQueue::SetMaxDelay (Time delay)
++{
++  m_maxDelay = delay;
++}
++
++void
++TdmaMacQueue::SetTdmaMacTxDropCallback (Callback<void,Ptr<const Packet> > callback)
++{
++  m_txDropCallback = callback;
++}
++
++uint32_t
++TdmaMacQueue::GetMaxSize (void) const
++{
++  return m_maxSize;
++}
++
++Time
++TdmaMacQueue::GetMaxDelay (void) const
++{
++  return m_maxDelay;
++}
++
++bool
++TdmaMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
++{
++  NS_LOG_DEBUG ("Queue Size: " << GetSize () << " Max Size: " << GetMaxSize ());
++  Cleanup ();
++  if (m_size == m_maxSize)
++    {
++      return false;
++    }
++  Time now = Simulator::Now ();
++  m_queue.push_back (Item (packet, hdr, now));
++  m_size++;
++  NS_LOG_DEBUG ("Inserted packet of size: " << packet->GetSize ()
++                                            << " uid: " << packet->GetUid ());
++  return true;
++}
++
++void
++TdmaMacQueue::Cleanup (void)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  if (m_queue.empty ())
++    {
++      return;
++    }
++  Time now = Simulator::Now ();
++  uint32_t n = 0;
++  for (PacketQueueI i = m_queue.begin (); i != m_queue.end (); )
++    {
++      if (i->tstamp + m_maxDelay > now)
++        {
++          i++;
++        }
++      else
++        {
++          m_count++;
++          NS_LOG_DEBUG (Simulator::Now ().GetSeconds () << "s Dropping this packet as its exceeded queue time, pid: " << i->packet->GetUid ()
++                                                        << " macPtr: " << m_macPtr
++                                                        << " queueSize: " << m_queue.size ()
++                                                        << " count:" << m_count);
++          m_txDropCallback (i->packet);
++          i = m_queue.erase (i);
++          n++;
++        }
++    }
++  m_size -= n;
++}
++
++Ptr<const Packet>
++TdmaMacQueue::Dequeue (WifiMacHeader *hdr)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  Cleanup ();
++  if (!m_queue.empty ())
++    {
++      Item i = m_queue.front ();
++      m_queue.pop_front ();
++      m_size--;
++      *hdr = i.hdr;
++      NS_LOG_DEBUG ("Dequeued packet of size: " << i.packet->GetSize ());
++      return i.packet;
++    }
++  return 0;
++}
++
++Ptr<const Packet>
++TdmaMacQueue::Peek (WifiMacHeader *hdr)
++{
++  NS_LOG_FUNCTION_NOARGS ();
++  Cleanup ();
++  if (!m_queue.empty ())
++    {
++      Item i = m_queue.front ();
++      *hdr = i.hdr;
++      return i.packet;
++    }
++  return 0;
++}
++
++bool
++TdmaMacQueue::IsEmpty (void)
++{
++  Cleanup ();
++  return m_queue.empty ();
++}
++
++uint32_t
++TdmaMacQueue::GetSize (void)
++{
++  return m_size;
++}
++
++void
++TdmaMacQueue::Flush (void)
++{
++  m_queue.erase (m_queue.begin (), m_queue.end ());
++  m_size = 0;
++}
++
++Mac48Address
++TdmaMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI it)
++{
++  if (type == WifiMacHeader::ADDR1)
++    {
++      return it->hdr.GetAddr1 ();
++    }
++  if (type == WifiMacHeader::ADDR2)
++    {
++      return it->hdr.GetAddr2 ();
++    }
++  if (type == WifiMacHeader::ADDR3)
++    {
++      return it->hdr.GetAddr3 ();
++    }
++  return 0;
++}
++
++bool
++TdmaMacQueue::Remove (Ptr<const Packet> packet)
++{
++  PacketQueueI it = m_queue.begin ();
++  for (; it != m_queue.end (); it++)
++    {
++      if (it->packet == packet)
++        {
++          m_queue.erase (it);
++          m_size--;
++          return true;
++        }
++    }
++  return false;
++}
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/tdma-mac-queue.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac-queue.h
+@@ -0,0 +1,140 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#ifndef TDMA_MAC_QUEUE_H
++#define TDMA_MAC_QUEUE_H
++
++#include <list>
++#include "ns3/packet.h"
++#include "ns3/nstime.h"
++#include "ns3/object.h"
++#include "ns3/tdma-mac.h"
++#include "ns3/wifi-mac-header.h"
++
++
++namespace ns3 {
++/**
++ * \brief a TDMA MAC queue.
++ *
++ * This queue implements what is needed for the 802.11e standard
++ * Specifically, it refers to 802.11e/D9, section 9.9.1.6, paragraph 6.
++ *
++ * When a packet is received by the MAC, to be sent to the channel,
++ * it is queued in the internal queue after being tagged by the
++ * current time.
++ *
++ * When a packet is dequeued, the queue checks its timestamp
++ * to verify whether or not it should be dropped. If m_maxDelay has
++ * elapsed, it is dropped. Otherwise, it is returned to the caller.
++ */
++class TdmaMacQueue : public Object
++{
++public:
++  typedef Callback<void, Ptr<const Packet> > TdmaMacTxDropCallback;
++
++  static TypeId GetTypeId (void);
++  TdmaMacQueue ();
++  ~TdmaMacQueue ();
++
++  void SetMacPtr (Ptr<TdmaMac> macPtr);
++  /**
++   * \brief sets max size of a TdmaMacQueue
++   */
++  void SetMaxSize (uint32_t maxSize);
++  /**
++   * \brief sets max time a packet could stay in TdmaMacQueue
++   */
++  void SetMaxDelay (Time delay);
++  /**
++   * \brief returns max size of TdmaMacQueue. Packets trying to enqueue after
++   * reaching max size will be dropped
++   */
++  uint32_t GetMaxSize (void) const;
++  /**
++   * \brief returns max time a packet could stay in TdmaMacQueue
++   */
++  Time GetMaxDelay (void) const;
++
++  bool Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr);
++  /**
++   * \brief Dequeues a packet based on the header passed to it
++   *
++   * \param hdr header to be dequeued from the TdmaMacQueue
++   */
++  Ptr<const Packet> Dequeue (WifiMacHeader *hdr);
++  Ptr<const Packet> Peek (WifiMacHeader *hdr);
++  /**
++   * If exists, removes <i>packet</i> from queue and returns true. Otherwise it
++   * takes no effects and return false. Deletion of the packet is
++   * performed in linear time (O(n)).
++   */
++  bool Remove (Ptr<const Packet> packet);
++  void SetTdmaMacTxDropCallback (Callback<void,Ptr<const Packet> > callback);
++  void Flush (void);
++  /**
++   * \brief returns true is TdmaMacQueue is empty
++   */
++  bool IsEmpty (void);
++  /**
++   * \brief returns size of TdmaMacQueue
++   */
++  uint32_t GetSize (void);
++private:
++  struct Item;
++
++  typedef std::list<struct Item> PacketQueue;
++  typedef std::list<struct Item>::reverse_iterator PacketQueueRI;
++  typedef std::list<struct Item>::iterator PacketQueueI;
++
++  void Cleanup (void);
++  Mac48Address GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI);
++
++  struct Item
++  {
++    Item (Ptr<const Packet> packet,
++          const WifiMacHeader &hdr,
++          Time tstamp);
++    Ptr<const Packet> packet;
++    WifiMacHeader hdr;
++    Time tstamp;
++  };
++
++  PacketQueue m_queue;
++  uint32_t m_size;
++  uint32_t m_maxSize;
++  Time m_maxDelay;
++  uint32_t m_count;
++  Ptr<TdmaMac> m_macPtr;
++  TdmaMacTxDropCallback m_txDropCallback;
++};
++
++} // namespace ns3
++
++#endif /* AERO_MAC_QUEUE_H */
+Index: src/simple-wireless-tdma/model/tdma-mac.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac.cc
+@@ -0,0 +1,85 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "tdma-mac.h"
++#include "ns3/uinteger.h"
++#include "ns3/pointer.h"
++#include "ns3/trace-source-accessor.h"
++#include "ns3/log.h"
++
++NS_LOG_COMPONENT_DEFINE ("TdmaMac");
++
++namespace ns3 {
++
++NS_OBJECT_ENSURE_REGISTERED (TdmaMac);
++
++Time
++TdmaMac::GetDefaultMaxPropagationDelay (void)
++{
++  // 1000m
++  return Seconds (1000.0 / 300000000.0);
++}
++
++TypeId
++TdmaMac::GetTypeId (void)
++{
++  static TypeId tid = TypeId ("ns3:TdmaMac")
++    .SetParent<Object> ()
++    .AddAttribute ("MaxPropagationDelay", "The maximum propagation delay. Unused for now.",
++                   TimeValue (GetDefaultMaxPropagationDelay ()),
++                   MakeTimeAccessor (&TdmaMac::m_maxPropagationDelay),
++                   MakeTimeChecker ())
++    .AddAttribute ("Ssid", "The ssid we want to belong to.",
++                   SsidValue (Ssid ("default")),
++                   MakeSsidAccessor (&TdmaMac::GetSsid,
++                                     &TdmaMac::SetSsid),
++                   MakeSsidChecker ())
++#if 0
++    // Not currently implemented in this device
++    .AddTraceSource ("Sniffer",
++                     "Trace source simulating a non-promiscuous packet sniffer attached to the device",
++                     MakeTraceSourceAccessor (&TdmaMac::m_snifferTrace))
++#endif
++  ;
++
++  return tid;
++}
++
++void
++TdmaMac::SetMaxPropagationDelay (Time delay)
++{
++  m_maxPropagationDelay = delay;
++}
++Time
++TdmaMac::GetMaxPropagationDelay (void) const
++{
++  return m_maxPropagationDelay;
++}
++} // namespace ns3
+Index: src/simple-wireless-tdma/model/tdma-mac.h
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/model/tdma-mac.h
+@@ -0,0 +1,168 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2010 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanth@ittc.ku.com>
++ *
++ * Thanks to the students and our professor Dr.James P.G. Sterbenz in the ResiliNets group
++ * at The University of Kansas, https://wiki.ittc.ku.edu/resilinets/Main_Page
++ */
++#ifndef TDMA_MAC_H
++#define TDMA_MAC_H
++
++#include <stdint.h>
++#include "ns3/traced-callback.h"
++#include "ns3/packet.h"
++#include "ns3/ptr.h"
++#include "ns3/mac48-address.h"
++#include "ns3/ssid.h"
++#include "ns3/node.h"
++#include "tdma-controller.h"
++
++namespace ns3 {
++
++class SimpleWirelessChannel;
++class TdmaNetDevice;
++class TdmaController;
++
++/**
++ * \brief base class for all MAC-level wifi objects.
++ *
++ * This class encapsulates all the low-level MAC functionality
++ * DCA, EDCA, etc) and all the high-level MAC functionality
++ * (association/disassociation state machines).
++ *
++ */
++class TdmaMac : public Object
++{
++public:
++  static TypeId GetTypeId (void);
++
++  /**
++   * \param delay the max propagation delay.
++   *
++   * Unused for now.
++   */
++  void SetMaxPropagationDelay (Time delay);
++  Time GetMaxPropagationDelay (void) const;
++
++  /**
++   * \returns the MAC address associated to this MAC layer.
++   */
++  virtual Mac48Address GetAddress (void) const = 0;
++  /**
++   * \returns the ssid which this MAC layer is going to try to stay in.
++   */
++  virtual Ssid GetSsid (void) const = 0;
++  /**
++   * \param address the current address of this MAC layer.
++   */
++  virtual void SetAddress (Mac48Address address) = 0;
++  /**
++   * \param ssid the current ssid of this MAC layer.
++   */
++  virtual void SetSsid (Ssid ssid) = 0;
++  /**
++   * \returns the bssid of the network this device belongs to.
++   */
++  virtual Mac48Address GetBssid (void) const = 0;
++  virtual void SetTdmaController (Ptr<TdmaController> controller) = 0;
++  virtual Ptr<TdmaController> GetTdmaController (void) const = 0;
++  virtual void SetChannel (Ptr<SimpleWirelessChannel> channel) = 0;
++  virtual void SetDevice (Ptr<TdmaNetDevice> device) = 0;
++
++  /**
++   * \param packet the packet to send.
++   * \param to the address to which the packet should be sent.
++   * \param from the address from which the packet should be sent.
++   *
++   * The packet should be enqueued in a tx queue, and should be
++   * dequeued as soon as the DCF function determines that
++   * access it granted to this MAC.  The extra parameter "from" allows
++   * this device to operate in a bridged mode, forwarding received
++   * frames without altering the source address.
++   */
++  virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from) = 0;
++  /**
++   * \param packet the packet to send.
++   * \param to the address to which the packet should be sent.
++   *
++   * The packet should be enqueued in a tx queue, and should be
++   * dequeued as soon as the DCF function determines that
++   * access it granted to this MAC.
++   */
++  virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to) = 0;
++  virtual bool SupportsSendFrom (void) const = 0;
++  /**
++   * \param upCallback the callback to invoke when a packet must be forwarded up the stack.
++   */
++  virtual void SetForwardUpCallback (Callback<void,Ptr<Packet>, Mac48Address, Mac48Address> upCallback) = 0;
++  /**
++   * \param linkUp the callback to invoke when the link becomes up.
++   */
++  virtual void SetLinkUpCallback (Callback<void> linkUp) = 0;
++  /**
++   * \param linkDown the callback to invoke when the link becomes down.
++   */
++  virtual void SetLinkDownCallback (Callback<void> linkDown) = 0;
++  /**
++   * \param queuespace the callback to invoke network protocol to senddown packet
++   * when there is space in the mac queue.
++   */
++  virtual void SetTxQueueStartCallback (Callback<bool,uint32_t> queueStart) = 0;
++  virtual void SetTxQueueStopCallback (Callback<bool,uint32_t> queueStop) = 0;
++  virtual uint32_t GetQueueState (uint32_t index) = 0;
++  virtual uint32_t GetNQueues (void) = 0;
++  virtual void StartTransmission (uint64_t transmissionTime) = 0;
++  /**
++   * Public method used to fire a MacTx trace.  Implemented for encapsulation
++   * purposes.
++   */
++  virtual void NotifyTx (Ptr<const Packet> packet) = 0;
++
++  /**
++   * Public method used to fire a MacTxDrop trace.  Implemented for encapsulation
++   * purposes.
++   */
++  virtual void NotifyTxDrop (Ptr<const Packet> packet) = 0;
++
++  /**
++   * Public method used to fire a MacRx trace.  Implemented for encapsulation
++   * purposes.
++   */
++  virtual void NotifyRx (Ptr<const Packet> packet) = 0;
++
++  /**
++   * Public method used to fire a MacPromiscRx trace.  Implemented for encapsulation
++   * purposes.
++   */
++  virtual void NotifyPromiscRx (Ptr<const Packet> packet) = 0;
++
++  /**
++   * Public method used to fire a MacRxDrop trace.  Implemented for encapsulation
++   * purposes.
++   */
++  virtual void NotifyRxDrop (Ptr<const Packet> packet) = 0;
++private:
++  static Time GetDefaultMaxPropagationDelay (void);
++  Time m_maxPropagationDelay;
++  uint32_t m_nodeId;
++
++};
++
++} // namespace ns3
++
++#endif /* AERO_MAC_H */
+Index: src/simple-wireless-tdma/test/tdma-test.cc
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/test/tdma-test.cc
+@@ -0,0 +1,226 @@
++/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
++/*
++ * Copyright (c) 2011 Hemanth Narra
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation;
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++ *
++ * Author: Hemanth Narra <hemanthnarra222@gmail.com>
++ *
++ * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
++ * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
++ * Information and Telecommunication Technology Center (ITTC)
++ * and Department of Electrical Engineering and Computer Science
++ * The University of Kansas Lawrence, KS USA.
++ *
++ * Work supported in part by NSF FIND (Future Internet Design) Program
++ * under grant CNS-0626918 (Postmodern Internet Architecture),
++ * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
++ * US Department of Defense (DoD), and ITTC at The University of Kansas.
++ */
++#include "ns3/test.h"
++#include "ns3/simulator.h"
++#include "ns3/random-variable.h"
++#include "ns3/tdma-helper.h"
++#include "ns3/double.h"
++#include "ns3/uinteger.h"
++#include "ns3/string.h"
++#include "ns3/boolean.h"
++#include "ns3/tdma-controller.h"
++#include "ns3/tdma-central-mac.h"
++#include "ns3/tdma-mac.h"
++#include "ns3/simple-wireless-channel.h"
++#include "ns3/names.h"
++#include "ns3/callback.h"
++#include "ns3/config.h"
++#include "ns3/node-container.h"
++#include "ns3/mobility-helper.h"
++
++namespace ns3 {
++class TdmaSlotAllocationTestCase : public TestCase
++{
++public:
++  TdmaSlotAllocationTestCase ();
++  ~TdmaSlotAllocationTestCase ();
++  virtual void DoRun (void);
++  void MacTxTrace (Ptr<Packet> packet, const WifiMacHeader *hdr);
++  void CreateNodes ();
++private:
++  NodeContainer * m_nodes;
++  std::vector<Ptr<Packet> > m_packets;
++};
++
++TdmaSlotAllocationTestCase::TdmaSlotAllocationTestCase (void)
++  : TestCase ("Tdma slot allocation test case"),
++    m_nodes (0)
++{
++}
++TdmaSlotAllocationTestCase::~TdmaSlotAllocationTestCase ()
++{
++  delete m_nodes;
++  m_packets.clear ();
++}
++void
++TdmaSlotAllocationTestCase::DoRun ()
++{
++  // set the tx range of a node
++  Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (303));
++  /**
++   * CreateNodes and assign mobility models;
++   * **required by simple-wireless-channel to identify distance between them**
++   */
++  CreateNodes ();
++  Ptr<TdmaController> tdmaController = CreateObject<TdmaController> ();
++  tdmaController->SetSlotTime (MicroSeconds (1100));
++  tdmaController->SetGaurdTime (MicroSeconds (100));
++  tdmaController->SetInterFrameTimeInterval (MicroSeconds (200));
++  tdmaController->SetTotalSlotsAllowed (3);
++  Ptr<SimpleWirelessChannel> channel = CreateObject<SimpleWirelessChannel> ();
++
++  //create and initialize node1
++  Ptr<TdmaNetDevice> device1 = CreateObject<TdmaNetDevice> ();
++  device1->SetNode (m_nodes->Get (0));
++  Ptr<TdmaCentralMac> mac1 = CreateObject<TdmaCentralMac> ();
++  mac1->SetAddress (Mac48Address::Allocate ());
++  device1->SetMac (mac1);
++  device1->SetTdmaController (tdmaController);
++  device1->SetChannel (channel);
++  mac1->GetTdmaMacLow ()->SetRxCallback (MakeCallback (&TdmaSlotAllocationTestCase::MacTxTrace, this));
++
++  Ptr<TdmaNetDevice> device2 = CreateObject<TdmaNetDevice> ();
++  device2->SetNode (m_nodes->Get (1));
++  Ptr<TdmaCentralMac> mac2 = CreateObject<TdmaCentralMac> ();
++  mac2->SetAddress (Mac48Address::Allocate ());
++  device2->SetMac (mac2);
++  device2->SetTdmaController (tdmaController);
++  device2->SetChannel (channel);
++  mac2->GetTdmaMacLow ()->SetRxCallback (MakeCallback (&TdmaSlotAllocationTestCase::MacTxTrace, this));
++
++  //creating and enqueueing packets to the macs
++  uint32_t pktSize = 1420;
++  for (int it = 0; it < 4; it++)
++    {
++      Ptr<Packet> pkt = Create<Packet> (pktSize);
++      m_packets.push_back (pkt);
++      pktSize -= 11;
++      if (it > 1)
++        {
++          mac2->Enqueue (pkt,mac1->GetAddress ());
++        }
++      else
++        {
++          mac1->Enqueue (pkt,mac2->GetAddress ());
++        }
++    }
++
++  // setting slots in the TdmaController
++  tdmaController->AddTdmaSlot (0,mac1);
++  tdmaController->AddTdmaSlot (1,mac1);
++  tdmaController->AddTdmaSlot (2,mac2);
++  tdmaController->StartTdmaSessions ();
++
++  Simulator::Stop (MilliSeconds (8));
++  Simulator::Run ();
++  Simulator::Destroy ();
++  device1->Dispose ();
++  device2->Dispose ();
++}
++
++void
++TdmaSlotAllocationTestCase::CreateNodes ()
++{
++  m_nodes = new NodeContainer;
++  m_nodes->Create (2);
++  MobilityHelper mobility;
++  mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
++                                 "MinX", DoubleValue (0.0),
++                                 "MinY", DoubleValue (0.0),
++                                 "DeltaX", DoubleValue (303),
++                                 "DeltaY", DoubleValue (0),
++                                 "GridWidth", UintegerValue (2),
++                                 "LayoutType", StringValue ("RowFirst"));
++  mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
++  mobility.Install (*m_nodes);
++}
++
++/**
++ *  packet Tx times from source:
++ *  1420 bytes: 1419*8/11000000 = 0.001032 us
++ *  1409 bytes: 1408*8/11000000 = 0.001024 us
++ *  1398 bytes: 1397*8/11000000 = 0.001016 us
++ *  1387 bytes: 1386*8/11000000 = 0.001008 us
++ *
++ *  time taken by simple-wireless-channel to move them over the medium
++ *  303*3.3*10^(-9) = 1us
++ *  node 1 is allotted 2 slots and node 0 is allotted 1 slot
++ *  so tx start and transmission slot times for node 0 and node 1 are as follows
++ *  Also, GaurdTime is 100 us; so we should add 100 us after every tx slot.
++ *          tx start    transmission slot
++ *  node 0: 0 us        2200 us (2*1100)
++ *  node 1: 2300 us     1100 us (1*1100)
++ *
++ *  InterframeTime is set as 200 us, thus the next slot times for the nodes are
++ *          tx start    transmission slot
++ *  node 0: 3700 us     2200 us (2*1100)
++ *  node 1: 6000 us     1100 us (1*1100)
++ *
++ *   so transmit and arrival times of each packet are as follows
++ *        tx time     arrival time
++ *  pkt0: 0 us        1033 us (0+1032+1)
++ *  pkt1: 1033 us     2058 us (1033+1024+1)
++ *  pkt2: 2300 us     3317 us (2300+1016+1)
++ *  pkt3: 6000 us     7009 us (6000+1008+1)
++ *
++ */
++void
++TdmaSlotAllocationTestCase::MacTxTrace (Ptr<Packet> packet, const WifiMacHeader *hdr)
++{
++  Time now = Simulator::Now ();
++  //validation of received packets based on their sizes
++  if (packet->GetSize () == m_packets.at (0)->GetSize ())
++    {
++      // pkt0
++      NS_TEST_ASSERT_MSG_EQ (now.GetMicroSeconds (),1033,"XXX");
++
++    }
++  else if (packet->GetSize () == m_packets.at (1)->GetSize ())
++    {
++      // pkt1
++      NS_TEST_ASSERT_MSG_EQ (now.GetMicroSeconds (),2058,"XXX");
++    }
++  else if (packet->GetSize () == m_packets.at (2)->GetSize ())
++    {
++      // pkt2
++      NS_TEST_ASSERT_MSG_EQ (now.GetMicroSeconds (),3317,"XXX");
++    }
++  else if (packet->GetSize () == m_packets.at (3)->GetSize ())
++    {
++      // pkt3
++      NS_TEST_ASSERT_MSG_EQ (now.GetMicroSeconds (),7009,"XXX");
++    }
++  else
++    {
++      // should not come here
++      NS_TEST_ASSERT_MSG_EQ (0,1,"XXX");
++    }
++}
++
++class TdmaTestSuite : public TestSuite
++{
++public:
++  TdmaTestSuite () : TestSuite ("tdma", SYSTEM)
++  {
++    AddTestCase (new TdmaSlotAllocationTestCase ());
++  }
++} g_tdmaTestSuite;
++}
+Index: src/simple-wireless-tdma/wscript
+===================================================================
+new file mode 100755
+--- /dev/null
++++ b/src/simple-wireless-tdma/wscript
+@@ -0,0 +1,42 @@
++## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
++
++def build(bld):
++    module = bld.create_ns3_module('simple-wireless-tdma', ['network', 'propagation', 'core'])
++    module.includes = '.'
++    module.source = [
++        'model/simple-wireless-channel.cc',
++        'model/tdma-mac.cc',
++        'model/tdma-central-mac.cc',
++        'model/tdma-mac-net-device.cc',
++        'model/tdma-mac-low.cc',
++        'model/tdma-controller.cc',
++        'model/tdma-mac-queue.cc',
++        'helper/tdma-slot-assignment-parser.cc',
++        'helper/tdma-controller-helper.cc',
++        'helper/tdma-helper.cc',
++        ]
++        
++    module_test = bld.create_ns3_module_test_library('simple-wireless-tdma')
++    module_test.source = [
++        'test/tdma-test.cc',
++        ]
++        
++    headers = bld.new_task_gen('ns3header')
++    headers.module = 'simple-wireless-tdma'
++    headers.source = [
++        'model/simple-wireless-channel.h',
++        'model/tdma-mac.h',
++        'model/tdma-central-mac.h',
++        'model/tdma-mac-net-device.h',
++        'model/tdma-mac-low.h',
++        'model/tdma-controller.h',
++        'model/tdma-mac-queue.h',
++        'helper/tdma-slot-assignment-parser.h',
++        'helper/tdma-controller-helper.h',
++        'helper/tdma-helper.h',        
++        ]
++
++    if (bld.env['ENABLE_EXAMPLES']):
++      bld.add_subdirs('examples')
++      
++    bld.ns3_python_bindings()
+Index: src/wifi/wscript
+===================================================================
+--- a/src/wifi/wscript
++++ b/src/wifi/wscript
+@@ -115,6 +115,7 @@
+         'model/wifi-mac-queue.h',
+         'model/dca-txop.h',
+         'model/wifi-mac-header.h',
++        'model/wifi-mac-trailer.h',
+         'model/qos-utils.h',
+         'model/edca-txop-n.h',
+         'model/msdu-aggregator.h',
+Index: src/wscript
+===================================================================
+--- a/src/wscript
++++ b/src/wscript
+@@ -40,6 +40,7 @@
+     'olsr',
+     'aodv',
+     'dsdv',
++    'simple-wireless-tdma',
+     'click',
+     'openflow',
+     'mobility',
