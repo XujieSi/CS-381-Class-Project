@@ -81,6 +81,7 @@ Doing so provides the following (which you should run in order):
 - ns3_get : prepares a repos directory in the NS3_HOME 
 - ns3_configure : configure ns3 for tests and examples
 - ns3_build : build ns3 
+- ns3_install : install ns3 
 - ns3_test : build ns3 
 - ns3_linkup : makes links from the source files into the ns-3-dev tree
 - ns3_unlinkup : reverses what linkup does (it removes the symbolic links)
@@ -89,10 +90,11 @@ A sample of running these can be found in 'configure-ns3.txt'
 EOM
 
 function ns3_linkup() {
-ln -s ./ns-3-dev/src/simple-wireless-tdma ${NS3_HOME}/src/simple-wireless-tdma 
-ln -s ./ns-3-dev/examples/wireless ${NS3_HOME}/examples/wireless/wifi-tdma.cc 
-ln -s ./ns-3-dev/tdma.h ${NS3_HOME}/tdma.h
-meld ./ns-3-dev/src/wifi/wscript ${NS3_HOME}/src/wifi/wscript
+CWD=$(pwd)
+ln -f -s ${CWD}/ns-3-dev/src/simple-wireless-tdma ${NS3_HOME}/src/simple-wireless-tdma 
+ln -f -s ${CWD}/ns-3-dev/examples/wireless ${NS3_HOME}/examples/wireless/wifi-tdma.cc 
+ln -f -s ${CWD}/ns-3-dev/tdma.h ${NS3_HOME}/tdma.h
+meld ns-3-dev/src/wifi/wscript ${NS3_HOME}/src/wifi/wscript
 }
 
 function ns3_unlinkup() {
