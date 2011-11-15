@@ -84,8 +84,8 @@ EOM
 function ns3_linkup() {
 ln -s ./ns-3-dev/src/simple-wireless-tdma ${NS3_HOME}/src/simple-wireless-tdma 
 ln -s ./ns-3-dev/examples/wireless ${NS3_HOME}/examples/wireless/wifi-tdma.cc 
-ln -s ./ns-3-dev/src/wifi/wscript ${NS3_HOME}/src/wifi/wscript
 ln -s ./ns-3-dev/tdma.h ${NS3_HOME}/tdma.h
+meld ./ns-3-dev/src/wifi/wscript ${NS3_HOME}/src/wifi/wscript
 }
 
 function ns3_unlinkup() {
