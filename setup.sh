@@ -61,6 +61,13 @@ function ns3_test() {
   popd
 }
 
+function cs381_sim_1() {
+  pushd "${NS3_HOME}"
+  echo "not yet implemented"
+  #./test.py 
+  popd
+}
+
 
 cat <<EOM
 Before sourcing this script set the NS3_REPOS environment 
@@ -70,7 +77,7 @@ to the interactive command shell by running
 > source setup.sh
 
 Doing so provides the following (which you should run in order):
-- install_dependancies : installs the ubuntu packages needed by ns-3
+- ns3_dependancies : installs the ubuntu packages needed by ns-3
 - ns3_get : prepares a repos directory in the NS3_HOME 
 - ns3_configure : configure ns3 for tests and examples
 - ns3_build : build ns3 
