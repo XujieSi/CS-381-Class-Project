@@ -63,8 +63,8 @@ function ns3_test() {
 
 
 cat <<EOM
-Before sourcing this script set the NS3_HOME environment 
-parameter otherwise it will default to ${NS3_HOME}.
+Before sourcing this script set the NS3_REPOS environment 
+parameter otherwise it will default to ${NS3_REPOS}.
 The functions in this script can be made available 
 to the interactive command shell by running
 > source setup.sh
