@@ -10,6 +10,7 @@ the problem and the ns-3 components.
 
 images : pictures used in presentations
 
+setup.sh : a script for configuring the work environment
 
 *.fodt & *.fodg :
 Flat xml open document (LibreOffice) files.
