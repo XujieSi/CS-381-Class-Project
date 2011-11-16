@@ -5,14 +5,19 @@ Work through the ns-3 tutorial
 Develop the following four modules based on work found here...
 http://codereview.appspot.com/4747046/#ps1
 
+(FPE)
 - A channel for serial networks
   - support for collision detection
   - 
+
+(XSJ)
 - A network device for serial communication
   - performs time slicing
 
+(XSJ)
 - A helper for building sample networks
 
+(FPE)
 - An application for a representative benchmark
 
 
