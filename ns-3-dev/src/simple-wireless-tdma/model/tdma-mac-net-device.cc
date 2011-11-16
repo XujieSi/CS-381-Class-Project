@@ -287,7 +287,7 @@ TdmaNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolN
   NS_LOG_FUNCTION (*packet << " Dest:" << dest << " ProtocolNo:" << protocolNumber);
   NS_ASSERT (Mac48Address::IsMatchingType (dest));
   Mac48Address realTo = Mac48Address::ConvertFrom (dest);
-  Mac48Address realFrom = Mac48Address::ConvertFrom (GetAddress ());
+  // Mac48Address realFrom = Mac48Address::ConvertFrom (GetAddress ());
   LlcSnapHeader llc;
   llc.SetType (protocolNumber);
   packet->AddHeader (llc);
