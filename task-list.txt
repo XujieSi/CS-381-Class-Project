@@ -8,7 +8,6 @@ http://codereview.appspot.com/4747046/#ps1
 (FPE)
 - A channel for serial networks
   - support for collision detection
-  - 
 
 (XSJ)
 - A network device for serial communication

@@ -9,6 +9,10 @@ export NS3_HOME="${NS3_REPOS}/ns-3-allinone/ns-3-dev"
 
 # missing texlive-pdf
 
+function ns3_source() {
+   source ./setup.sh
+}
+
 function ns3_dependancies() {
   sudo apt-get install \
     gcc g++ python python-dev mercurial bzr gdb valgrind gsl-bin libgsl0-dev libgsl0ldbl \
@@ -18,6 +22,8 @@ function ns3_dependancies() {
     texinfo dia texlive texlive-latex-extra texlive-extra-utils texlive-generic-recommended texi2html \
     python-pygraphviz python-kiwi python-pygoocanvas libgoocanvas-dev \
     libboost-signals-dev libboost-filesystem-dev
+
+ sudo apt-get install python-pygccxml gccxml
 }
 
 function ns3_get() {
