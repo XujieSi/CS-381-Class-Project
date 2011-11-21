@@ -2,18 +2,18 @@
 
 # copy the files to the ns-3 repository location
 
-if [ -z "$NS3_REPOS" ] ; then
+if [ -z "${NS3_REPOS}" ] ; then
 export NS3_REPOS=/opt/ns3/repos
 fi
 export NS3_HOME="${NS3_REPOS}/ns-3-allinone/ns-3-dev"
 
 # missing texlive-pdf
 
-function ns3_source() {
+function ns3-source() {
    source ./setup.sh
 }
 
-function ns3_dependancies() {
+function ns3-dependancies() {
   sudo apt-get install \
     gcc g++ python python-dev mercurial bzr gdb valgrind gsl-bin libgsl0-dev libgsl0ldbl \
     flex bison tcpdump sqlite sqlite3 libsqlite3-dev libxml2 libxml2-dev libgtk2.0-0 libgtk2.0-dev \
@@ -26,7 +26,7 @@ function ns3_dependancies() {
  sudo apt-get install python-pygccxml gccxml
 }
 
-function ns3_get() {
+function ns3-get() {
   mkdir -p ${NS3_REPOS}
   pushd ${NS3_REPOS}
   hg clone 'http://code.nsnam.org/ns-3-allinone'
@@ -35,45 +35,37 @@ function ns3_get() {
   popd
 }
 
-function ns3_update() {
+function ns3-update() {
   mkdir -p ${NS3_REPOS}
   pushd ${NS3_REPOS}
   hg update
   popd
 }
 
-function ns3_configure() {
+function ns3-configure() {
   pushd "${NS3_HOME}"
   ./waf configure --enable-examples --enable-tests --doxygen-no-build
   popd
 }
 
-function ns3_build() {
+function ns3-build() {
   pushd "${NS3_HOME}"
   ./waf 
   popd
 }
 
-function ns3_install() {
+function ns3-install() {
   pushd "${NS3_HOME}"
   # ./waf doxygen
   sudo ./waf install
   popd
 }
 
-function ns3_test() {
+function ns3-test() {
   pushd "${NS3_HOME}"
   ./test.py 
   popd
 }
-
-function cs381_sim_1() {
-  pushd "${NS3_HOME}"
-  echo "not yet implemented"
-  #./test.py 
-  popd
-}
-
 
 cat <<EOM
 Before sourcing this script set the NS3_REPOS environment 
@@ -83,19 +75,19 @@ to the interactive command shell by running
 > source setup.sh
 
 Doing so provides the following (which you should run in order):
-- ns3_dependancies : installs the ubuntu packages needed by ns-3
-- ns3_get : prepares a repos directory in the NS3_HOME 
-- ns3_configure : configure ns3 for tests and examples
-- ns3_build : build ns3 
-- ns3_install : install ns3 
-- ns3_test : build ns3 
-- ns3_linkup : makes links from the source files into the ns-3-dev tree
-- ns3_unlinkup : reverses what linkup does (it removes the symbolic links)
+- ns3-dependancies : installs the ubuntu packages needed by ns-3
+- ns3-get : prepares a repos directory in the NS3_HOME 
+- ns3-configure : configure ns3 for tests and examples
+- ns3-linkup : makes links from the source files into the ns-3-dev tree
+- ns3-build : build ns3 
+- ns3-install : install ns3 
+- ns3-test : build ns3 
+- ns3-unlinkup : reverses what linkup does (it removes the symbolic links)
 
 A sample of running these can be found in 'configure-ns3.txt' 
 EOM
 
-function ns3_linkup() {
+function ns3-linkup() {
 CWD=$(pwd)
 ln -f -s ${CWD}/ns-3-dev/src/simple-wireless-tdma ${NS3_HOME}/src/simple-wireless-tdma 
 ln -f -s ${CWD}/ns-3-dev/examples/wireless ${NS3_HOME}/examples/wireless/wifi-tdma.cc 
@@ -103,7 +95,7 @@ ln -f -s ${CWD}/ns-3-dev/tdma.h ${NS3_HOME}/tdma.h
 meld ns-3-dev/src/wifi/wscript ${NS3_HOME}/src/wifi/wscript
 }
 
-function ns3_unlinkup() {
+function ns3-unlinkup() {
 rm ${NS3_HOME}/src/simple-wireless-tdma 
 rm ${NS3_HOME}/examples/wireless/wifi-tdma.cc 
 rm ${NS3_HOME}/src/wifi/wscript
