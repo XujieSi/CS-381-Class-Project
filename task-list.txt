@@ -4,10 +4,18 @@ Work through the ns-3 tutorial
 
 Develop the following four modules based on work found here...
 http://codereview.appspot.com/4747046/#ps1
+That code has been integrated and nominally works.
+This will serve as the baseline in addition to the
+udp/ip baseline.
+
+Establish baseline measurements:
+- tdma 
+- UDP/ethernet
 
 (FPE)
 - A channel for serial networks
-  - support for collision detection
+  - support for collision detection either locally
+    or by slice owner.
 
 (XSJ)
 - A network device for serial communication
@@ -17,6 +25,9 @@ http://codereview.appspot.com/4747046/#ps1
 - A helper for building sample networks
 
 (FPE)
-- An application for a representative benchmark
-
+- Applications for a representative benchmark
+  - position and presence
+  - video
+  - messaging
+See application.txt for details
 
