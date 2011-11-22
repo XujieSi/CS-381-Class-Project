@@ -1,14 +1,36 @@
 
 README : This file describing the files in this repository.
 
+setup.sh:
+
+A script of functions to help the developer remember
+how to perform various tasks.
+
+sims.sh:
+
+A script of functions to run the application simulations.
+the outputs of these simulations are intended to be 
+placed in the history directory.
+
+== git directory ============
+contains configuration files for git.
+  
+== history directory ============
+
+Results of simulations, trace files from builds, etc.
+
+configure-ns3.txt : trace of how ns-3 is installed on Ubuntu 11.10
+
+==  directory ============
+
+== plan directory ============
 project_outline.fodt : outlining the project objectives and goals.
 
-configure-ns3.fodt : description of how ns-3 is installed on Ubuntu 11.10
 
 high-level-model.fodg : a diagram showing the basic configuration for 
 the problem and the ns-3 components.
 
-images : pictures used in presentations
+images/ : pictures used in presentations
 
 setup.sh : a script for configuring the work environment
 
@@ -18,4 +40,13 @@ These are used instead of binary files so they may
 be better mangaged by change tools used by configuration
 management systems.
 
+== repos directory ============
+
+The source code for ns3
+
+This is where the 'official' ns3 source code and build 
+environment are placed.
+The 'official' branch is intended to reflect the source
+code presented by mercurial in the official branch.
+The 'master' branch is where the class project work is kept.
 

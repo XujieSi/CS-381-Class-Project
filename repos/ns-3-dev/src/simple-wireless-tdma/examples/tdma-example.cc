@@ -290,7 +290,8 @@ void
 TdmaExample::SetupMobility ()
 {
   MobilityHelper mobility;
-/*  ObjectFactory pos;
+/*
+  ObjectFactory pos;
   pos.SetTypeId ("ns3::RandomRectanglePositionAllocator");
   pos.Set ("X", RandomVariableValue (UniformVariable (0, 1000)));
   pos.Set ("Y", RandomVariableValue (UniformVariable (0, 1000)));
@@ -298,7 +299,8 @@ TdmaExample::SetupMobility ()
   Ptr <PositionAllocator> positionAlloc = pos.Create ()->GetObject <PositionAllocator> ();
   mobility.SetMobilityModel ("ns3::RandomWaypointMobilityModel", "Speed", RandomVariableValue (ConstantVariable (m_nodeSpeed)),
       "Pause", RandomVariableValue (ConstantVariable (2.0)), "PositionAllocator", PointerValue (positionAlloc));
-  mobility.SetPositionAllocator (positionAlloc);*/
+  mobility.SetPositionAllocator (positionAlloc);
+*/
 
   ObjectFactory pos;
   pos.SetTypeId ("ns3::RandomRectanglePositionAllocator");
