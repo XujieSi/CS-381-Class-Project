@@ -6,3 +6,4 @@
 .waf*
 build/
 *.swp
+*.orig
