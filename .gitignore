@@ -1,3 +1,7 @@
 .hg
 # .gitignore
 # cs381/
+*.pyc
+.lock-wafbuild
+.waf*
+build/
