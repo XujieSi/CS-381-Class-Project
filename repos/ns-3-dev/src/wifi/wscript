@@ -115,6 +115,7 @@ def build(bld):
         'model/wifi-mac-queue.h',
         'model/dca-txop.h',
         'model/wifi-mac-header.h',
+        'model/wifi-mac-trailer.h',
         'model/qos-utils.h',
         'model/edca-txop-n.h',
         'model/msdu-aggregator.h',
