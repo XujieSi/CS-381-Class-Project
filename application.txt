@@ -1,0 +1,51 @@
+
+Application : Position and Presence
+
+This is characterized by every participant 
+sending his position on every cycle.
+The messages are small consisting of longitude an latitude 
+which can be effectively encoded in 32 bits each
+giving a resolution of ~1 cm.
+The encoding can be done in a number of ways 
+such as millionth of decimal degrees encoding, 
+  e.g. Nashville -86,680,000 36,120,000 = 36.12 degrees North & 86.68 degrees West
+Given a signed 32bit encoding ranges from +/- 2,147,483,647 these
+values are well within range.
+In the application the slot will contain values of this size.
+
+This application requires no additional behaviors 
+be added to TDMA.
+In basic TDMA a node owns a time slice which is divided
+into slack/send/slack regions.
+
+Application : Video
+
+This is characterized by some particular participant
+requesting every other participants slice.
+Essentially, when a node reliquishes its slice it is
+expressing interest and "casting its vote" for the stream.
+As the number of slices increase the number of video
+bits can be increased.  If adjacent slices are obtained
+the slack between slices can be used to send data.
+Once the stream is complete the slices are returned 
+to their owners.
+
+This application requires dynamic acquisition of slices. 
+Regarding collision detection some radios are capable
+of reading what they write and thus can detect collisions.
+Many of the less expensive radios do not support this.
+Nevertheless, collision detection is still possible by the receiver.
+Consider an owner of a time slice where that slice is
+divided into slack/solicit/slack/send/slack regions.
+The owner first listens over the solicit region for
+a solicitation for use of some of the owner's slice.
+The owner can reliquish some of its slices to the solicitor
+this is done during its send region (possibly in a subsequent
+round).  It is possible that their may be a collision during
+the solicitation read, which can be detected by the receiver.
+
+Application : Messaging
+
+This application is characterized by 
+
+
