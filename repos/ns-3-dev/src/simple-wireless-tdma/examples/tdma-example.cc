@@ -140,7 +140,7 @@ int main (int argc, char **argv)
   cmd.AddValue ("dataStart", "Time at which nodes start to transmit data[Default=50.0]", dataStart);
   cmd.AddValue ("CSVfileName", "The name of the CSV output file name[Default:TdmaExample.csv]", CSVfileName);
   cmd.AddValue ("txpDistance", "MaxRange for the node transmissions [Default:400.0]", txpDistance);
-  cmd.AddValue ("nSlots", "Number of slots per gframe [Default:nWifis]", nSlots);
+  cmd.AddValue ("nSlots", "Number of slots per frame [Default:nWifis]", nSlots);
   cmd.AddValue ("slotTime", "Slot transmission Time [Default(us):1000]", slotTime);
   cmd.AddValue ("gaurdTime", "Duration to wait between slots [Default(us):0]", gaurdTime);
   cmd.AddValue ("interFrameGap", "Duration between frames [Default(us):0]", interFrameGap);

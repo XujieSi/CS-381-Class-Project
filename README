@@ -12,6 +12,10 @@ A script of functions to run the application simulations.
 the outputs of these simulations are intended to be 
 placed in the history directory.
 
+== workspace directory ============
+
+When using Eclipse this describes the build configurations.
+
 == git directory ============
 contains configuration files for git.
   

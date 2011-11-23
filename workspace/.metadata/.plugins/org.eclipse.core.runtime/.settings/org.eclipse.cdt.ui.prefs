@@ -1,0 +1,36 @@
+#Tue Nov 22 17:52:18 CST 2011
+nameStyle.constant.suffix=
+nameStyle.getter.suffix=
+content_assist_proposals_foreground=255,165,0
+spelling_locale_initialized=true
+org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+nameStyle.cpp.test.wordDelimiter=
+nameStyle.setter.prefix=set
+nameStyle.variable.prefix=
+nameStyle.field.suffix=
+nameStyle.cpp.source.wordDelimiter=
+nameStyle.getter.prefixForBoolean=is
+useAnnotationsPrefPage=true
+eclipse.preferences.version=1
+nameStyle.variable.wordDelimiter=
+org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+nameStyle.getter.wordDelimiter=
+nameStyle.cpp.test.suffix=_test.cpp
+hoverModifiers=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;\!0;org.eclipse.cdt.ui.ProblemHover;\!0;org.eclipse.cdt.ui.CDocHover;\!0;org.eclipse.cdt.ui.CMacroExpansionHover;\!0;org.eclipse.cdt.ui.CSourceHover;Shift;org.eclipse.cdt.ui.AnnotationHover;\!0;
+nameStyle.cpp.header.prefix=
+nameStyle.constant.wordDelimiter=_
+nameStyle.cpp.source.prefix=
+nameStyle.field.wordDelimiter=
+hoverModifierMasks=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;0;org.eclipse.cdt.ui.ProblemHover;0;org.eclipse.cdt.ui.CDocHover;0;org.eclipse.cdt.ui.CMacroExpansionHover;0;org.eclipse.cdt.ui.CSourceHover;131072;org.eclipse.cdt.ui.AnnotationHover;0;
+nameStyle.variable.suffix=
+nameStyle.setter.suffix=
+content_assist_parameters_foreground=139,105,20
+nameStyle.getter.prefix=get
+nameStyle.constant.prefix=
+nameStyle.setter.wordDelimiter=
+nameStyle.cpp.header.wordDelimiter=
+nameStyle.cpp.header.suffix=.h
+useQuickDiffPrefPage=true
+nameStyle.field.prefix=
+nameStyle.cpp.source.suffix=.cpp
+nameStyle.cpp.test.prefix=

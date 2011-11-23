@@ -1,0 +1,22 @@
+#Tue Nov 22 18:32:36 CST 2011
+org.eclipse.cdt.core.showSourceRootsAtTopLevelOfProject=true
+indexer/indexOnOpen=false
+eclipse.preferences.version=1
+indexer/updatePolicy=0
+org.eclipse.cdt.core.taskTags=TODO,FIXME,XXX
+indexer/skipTypeReferences=false
+environment/workspace/appendContributed=true
+environment/workspace/append=true
+macros/workspace=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<macros/>\n
+indexer/useHeuristicIncludeResolution=true
+indexer/skipImplicitReferences=false
+indexer/skipReferences=false
+indexer/filesToParseUpFront=cstdarg, stdarg.h, stddef.h, sys/resource.h, ctime, sys/types.h, signal.h, cstdio
+indexer/skipFilesLargerThanMB=8
+indexer/indexAllFiles=true
+indexer/indexerId=org.eclipse.cdt.core.fastIndexer
+org.eclipse.cdt.core.taskPriorities=normal,normal,normal
+environment/workspace=
+errorparser.default.ids=org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.MakeErrorParser
+indexer/indexUnusedHeadersWithDefaultLang=false
+indexer/skipMacroReferences=false
