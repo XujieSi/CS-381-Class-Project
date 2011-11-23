@@ -56,6 +56,10 @@ enum LogLevel {
   LOG_PREFIX_NODE    = 0x20000000  // prefix all trace prints with simulation node
 };
 
+inline LogLevel operator|(LogLevel lhs, LogLevel rhs) {
+  return static_cast<LogLevel>(static_cast<int>(lhs) | static_cast<int>(rhs));
+}
+
 /**
  * \param name a log component name
  * \param level a logging level

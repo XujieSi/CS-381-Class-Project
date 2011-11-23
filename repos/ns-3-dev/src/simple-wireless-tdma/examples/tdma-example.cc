@@ -106,6 +106,14 @@ private:
 
 int main (int argc, char **argv)
 {
+	// set the default logging level
+	// for example, you can override this by setting by
+	// export 'NS_LOG=TdmaExampleApplication=level_all|pref_time'
+
+  LogComponentEnable("TdmaExample",
+			static_cast<LogLevel>(LOG_LEVEL_INFO | LOG_PREFIX_FUNC));
+
+  NS_LOG_INFO ("start");
   TdmaExample test;
   uint32_t nWifis = 4;
   uint32_t nSinks = 1;
@@ -126,6 +134,8 @@ int main (int argc, char **argv)
   uint32_t slotTime = 1000;
   uint32_t interFrameGap = 0;
   uint32_t gaurdTime = 0;
+
+  NS_LOG_INFO ("Setting Command Line");
 
   CommandLine cmd;
   cmd.AddValue ("nWifis", "Number of wifi nodes[Default:30]", nWifis);
@@ -160,9 +170,11 @@ int main (int argc, char **argv)
   Config::SetDefault ("ns3::OnOffApplication::DataRate", StringValue (rate));
 
   test = TdmaExample ();
+  NS_LOG_INFO ("Running Case");
   test.CaseRun (nWifis, nSinks, totalTime, rate, phyMode, nodeSpeed, periodicUpdateInterval,
                 settlingTime, dataStart,CSVfileName,usingWifi,txpDistance, nSlots, slotTime, gaurdTime, interFrameGap);
 
+  NS_LOG_INFO ("leave");
   return 0;
 }
 
@@ -175,6 +187,7 @@ TdmaExample::TdmaExample ()
 void
 TdmaExample::ReceivePacket (Ptr <Socket> socket)
 {
+	NS_LOG_INFO ("enter");
   NS_LOG_UNCOND (Simulator::Now ().GetSeconds () << " Received one packet!");
   Ptr <Packet> packet;
   while (packet = socket->Recv ())
@@ -182,11 +195,13 @@ TdmaExample::ReceivePacket (Ptr <Socket> socket)
       bytesTotal += packet->GetSize ();
       packetsReceived += 1;
     }
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::CheckThroughput ()
 {
+	NS_LOG_INFO ("enter");
   double kbs = (bytesTotal * 8.0) / 1000;
   bytesTotal = 0;
 
@@ -197,18 +212,19 @@ TdmaExample::CheckThroughput ()
   out.close ();
   packetsReceived = 0;
   Simulator::Schedule (Seconds (1.0), &TdmaExample::CheckThroughput, this);
+  NS_LOG_INFO ("leave");
 }
 
 Ptr <Socket>
 TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
 {
-
+	NS_LOG_INFO ("enter");
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   Ptr <Socket> sink = Socket::CreateSocket (node, tid);
   InetSocketAddress local = InetSocketAddress (addr, port);
   sink->Bind (local);
   sink->SetRecvCallback (MakeCallback ( &TdmaExample::ReceivePacket, this));
-
+  NS_LOG_INFO ("leave");
   return sink;
 }
 
@@ -218,6 +234,7 @@ TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::s
                       double dataStart, std::string csvFileName, bool usingWifi, double txpDistance, uint32_t nSlots,
                       uint32_t slotTime, uint32_t gaurdTime, uint32_t interFrameGap)
 {
+	NS_LOG_INFO ("enter");
   m_nWifis = nWifis;
   m_nSinks = nSinks;
   m_totalTime = totalTime;
@@ -276,19 +293,23 @@ TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::s
   Simulator::Stop (Seconds (m_totalTime));
   Simulator::Run ();
   Simulator::Destroy ();
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::CreateNodes ()
 {
+	NS_LOG_INFO ("enter");
   std::cout << "Creating " << (unsigned) m_nWifis << " nodes.\n";
   nodes.Create (m_nWifis);
   NS_ASSERT_MSG (m_nWifis > m_nSinks, "Sinks must be less or equal to the number of nodes in network");
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::SetupMobility ()
 {
+	NS_LOG_INFO ("ent3er");
   MobilityHelper mobility;
 /*
   ObjectFactory pos;
@@ -310,11 +331,13 @@ TdmaExample::SetupMobility ()
   mobility.SetPositionAllocator (positionAlloc);
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDistance)
 {
+	NS_LOG_INFO ("enter");
   if (usingWifi)
     {
       Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (m_phyMode));
@@ -378,11 +401,13 @@ TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDista
       Ptr<OutputStreamWrapper> stream = ascii.CreateFileStream (tr_name + ".tr");
       tdma.EnableAsciiAll (stream);
     }
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::InstallInternetStack ()
 {
+	NS_LOG_INFO ("enter");
   DsdvHelper dsdv;
   dsdv.Set ("PeriodicUpdateInterval", TimeValue (Seconds (m_periodicUpdateInterval)));
   dsdv.Set ("SettlingTime", TimeValue (Seconds (m_settlingTime)));
@@ -392,11 +417,13 @@ TdmaExample::InstallInternetStack ()
   Ipv4AddressHelper address;
   address.SetBase ("10.1.1.0", "255.255.255.0");
   interfaces = address.Assign (devices);
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::InstallApplications ()
 {
+	NS_LOG_INFO ("enter");
   for (uint32_t i = 0; i <= m_nSinks - 1; i++ )
     {
       Ptr<Node> node = NodeList::GetNode (i);
@@ -421,11 +448,13 @@ TdmaExample::InstallApplications ()
             }
         }
     }
+  NS_LOG_INFO ("leave");
 }
 
 void
 TdmaExample::InsertIntoTxp ()
 {
+	 NS_LOG_INFO ("enter");
   m_transmitRangeMap.insert (std::pair<double, double> (100.0, 1.2251));
   m_transmitRangeMap.insert (std::pair<double, double> (130.0, 3.5049));
   m_transmitRangeMap.insert (std::pair<double, double> (150.0, 4.7478));
@@ -445,5 +474,6 @@ TdmaExample::InsertIntoTxp ()
   m_transmitRangeMap.insert (std::pair<double, double> (950.0, 20.7796));
   m_transmitRangeMap.insert (std::pair<double, double> (1000.0, 21.2251));
   m_transmitRangeMap.insert (std::pair<double, double> (27800.0, 50.0));
+  NS_LOG_INFO ("leave");
 }
 
