@@ -9,3 +9,10 @@ build/
 *.orig
 *.log
 .lock
+
+*.tr
+*.csv
+repos/ns-3-dev/doc/html/
+repos/ns-3-dev/doc/introspected-doxygen.h
+repos/ns-3-dev/doc/latex/
+repos/ns-3-dev/doc/ns3-object.txt

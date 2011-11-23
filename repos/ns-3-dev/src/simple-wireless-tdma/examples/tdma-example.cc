@@ -59,7 +59,7 @@ public:
                 uint32_t periodicUpdateInterval,
                 uint32_t settlingTime,
                 double dataStart,
-                std::string CSVfileName,
+                std::string csvFileName,
                 bool usingWifi,
                 double txpDistance,
                 uint32_t nSlots,
@@ -215,7 +215,7 @@ TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
 void
 TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::string rate,
                       std::string phyMode, uint32_t nodeSpeed, uint32_t periodicUpdateInterval, uint32_t settlingTime,
-                      double dataStart, std::string CSVfileName, bool usingWifi, double txpDistance, uint32_t nSlots,
+                      double dataStart, std::string csvFileName, bool usingWifi, double txpDistance, uint32_t nSlots,
                       uint32_t slotTime, uint32_t gaurdTime, uint32_t interFrameGap)
 {
   m_nWifis = nWifis;
@@ -227,7 +227,7 @@ TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::s
   m_periodicUpdateInterval = periodicUpdateInterval;
   m_settlingTime = settlingTime;
   m_dataStart = dataStart;
-  m_CSVfileName = CSVfileName;
+  m_CSVfileName = csvFileName;
   m_slots = nSlots;
   m_slotTime = slotTime;
   m_gaurdTime = gaurdTime;
