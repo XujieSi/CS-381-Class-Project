@@ -50,12 +50,17 @@ public:
   {
     return m_slotArray;
   }
+  bool GetParseState()
+  {
+	  return m_parseStatus;
+  }
 
 private:
   std::string m_fileName;
   uint32_t m_numRows; /// Equivalent to number of nodes
-  uint32_t m_numCols; /// Equivalent to number of slots
+  uint32_t m_numCols; /// Equivalent to number of slots plus one
   std::vector<SlotArray> m_slotArray;
+  bool m_parseStatus;
 
 };
 // end namespace ns3

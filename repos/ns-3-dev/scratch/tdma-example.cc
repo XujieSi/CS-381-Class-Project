@@ -50,24 +50,10 @@ class TdmaExample
 {
 public:
   TdmaExample ();
-  void CaseRun (uint32_t nWifis,
-                uint32_t nSinks,
-                double totalTime,
-                std::string rate,
-                std::string phyMode,
-                uint32_t nodeSpeed,
-                uint32_t periodicUpdateInterval,
-                uint32_t settlingTime,
-                double dataStart,
-                std::string csvFileName,
-                bool usingWifi,
-                double txpDistance,
-                uint32_t nSlots,
-                uint32_t slotTime,
-                uint32_t gaurdTime,
-                uint32_t interFrameGap);
+  void CaseRun (bool usingWifi,
+                double txpDistance);
 
-private:
+public:
   uint32_t m_nWifis;
   uint32_t m_nSinks;
   double m_totalTime;
@@ -77,13 +63,16 @@ private:
   uint32_t m_periodicUpdateInterval;
   uint32_t m_settlingTime;
   double m_dataStart;
-  uint32_t bytesTotal;
-  uint32_t packetsReceived;
-  std::string m_CSVfileName;
+  uint32_t m_bytesTotal;
+  uint32_t m_packetsReceived;
+  std::string m_csvFileName;
+  std::string m_slotFileName;
   uint32_t m_slots;
   uint32_t m_slotTime;
   uint32_t m_gaurdTime;
   uint32_t m_interFrameGap;
+
+private:
 
   std::map<double, double> m_transmitRangeMap;
 
@@ -112,51 +101,55 @@ int main (int argc, char **argv)
 
   LogComponentEnable("TdmaExample",
 			static_cast<LogLevel>(LOG_LEVEL_INFO | LOG_PREFIX_FUNC));
+  TdmaHelper::EnableLogComponents();
 
-  NS_LOG_INFO ("start");
-  TdmaExample test;
-  uint32_t nWifis = 4;
-  uint32_t nSinks = 1;
-  double totalTime = 100.0;
-  std::string rate ("8kbps");
-  std::string phyMode ("DsssRate11Mbps");
-  uint32_t nodeSpeed = 10; //in m/s
+  NS_LOG_INFO ("enter" << argc);
+  TdmaExample test = TdmaExample ();
+
+  test.m_nWifis = 4;
+  test.m_nSinks = 1;
+  test.m_totalTime = 10.0;
+  test.m_rate = "8kbps";
+  test.m_phyMode = "DsssRate11Mbps";
+  test.m_nodeSpeed = 10; //in m/s
   std::string appl = "all";
-  uint32_t periodicUpdateInterval = 15;
-  uint32_t settlingTime = 6;
-  double dataStart = 50.0;
-  std::string CSVfileName = "TdmaExample.csv";
+  test.m_periodicUpdateInterval = 15;
+  test.m_settlingTime = 6;
+  test.m_dataStart = 50.0;
+  test.m_csvFileName = "TdmaExample.csv";
+  test.m_slotFileName = "TdmaSlots.txt";
   bool usingWifi = false;
   double txpDistance = 400.0;
 
   // tdma parameters
-  uint32_t nSlots = nWifis;
-  uint32_t slotTime = 1000;
-  uint32_t interFrameGap = 0;
-  uint32_t gaurdTime = 0;
+  test.m_slots = test.m_nWifis;
+  test.m_slotTime = 1000;
+  test.m_interFrameGap = 0;
+  test.m_gaurdTime = 0;
 
   NS_LOG_INFO ("Setting Command Line");
 
   CommandLine cmd;
-  cmd.AddValue ("nWifis", "Number of wifi nodes[Default:30]", nWifis);
-  cmd.AddValue ("nSinks", "Number of wifi sink nodes[Default:10]", nSinks);
+  cmd.AddValue ("nWifis", "Number of wifi nodes[Default:30]", test.m_nWifis);
+  cmd.AddValue ("nSinks", "Number of wifi sink nodes[Default:10]", test.m_nSinks);
   cmd.AddValue ("usingWifi", "Do you want to use WifiMac(1/0)[Default:false(0)]", usingWifi);
-  cmd.AddValue ("totalTime", "Total Simulation time[Default:100]", totalTime);
-  cmd.AddValue ("phyMode", "Wifi Phy mode[Default:DsssRate11Mbps]", phyMode);
-  cmd.AddValue ("rate", "CBR traffic rate[Default:8kbps]", rate);
-  cmd.AddValue ("nodeSpeed", "Node speed in RandomWayPoint model[Default:10]", nodeSpeed);
-  cmd.AddValue ("periodicUpdateInterval", "Periodic Interval Time[Default=15]", periodicUpdateInterval);
-  cmd.AddValue ("settlingTime", "Settling Time before sending out an update for changed metric[Default=6]", settlingTime);
-  cmd.AddValue ("dataStart", "Time at which nodes start to transmit data[Default=50.0]", dataStart);
-  cmd.AddValue ("CSVfileName", "The name of the CSV output file name[Default:TdmaExample.csv]", CSVfileName);
+  cmd.AddValue ("totalTime", "Total Simulation time[Default:100]", test.m_totalTime);
+  cmd.AddValue ("phyMode", "Wifi Phy mode[Default:DsssRate11Mbps]", test.m_phyMode);
+  cmd.AddValue ("rate", "CBR traffic rate[Default:8kbps]", test.m_rate);
+  cmd.AddValue ("nodeSpeed", "Node speed in RandomWayPoint model[Default:10]", test.m_nodeSpeed);
+  cmd.AddValue ("periodicUpdateInterval", "Periodic Interval Time[Default=15]", test.m_periodicUpdateInterval);
+  cmd.AddValue ("settlingTime", "Settling Time before sending out an update for changed metric[Default=6]", test.m_settlingTime);
+  cmd.AddValue ("dataStart", "Time at which nodes start to transmit data[Default=50.0]", test.m_dataStart);
+  cmd.AddValue ("csvFileName", "The name of the CSV output file name[Default:TdmaExample.csv]", test.m_csvFileName);
+  cmd.AddValue ("slotFileName", "The name of the input file name[Default:TdmaSlots.txt]", test.m_slotFileName);
   cmd.AddValue ("txpDistance", "MaxRange for the node transmissions [Default:400.0]", txpDistance);
-  cmd.AddValue ("nSlots", "Number of slots per frame [Default:nWifis]", nSlots);
-  cmd.AddValue ("slotTime", "Slot transmission Time [Default(us):1000]", slotTime);
-  cmd.AddValue ("gaurdTime", "Duration to wait between slots [Default(us):0]", gaurdTime);
-  cmd.AddValue ("interFrameGap", "Duration between frames [Default(us):0]", interFrameGap);
+  cmd.AddValue ("nSlots", "Number of slots per frame [Default:nWifis]", test.m_slots);
+  cmd.AddValue ("slotTime", "Slot transmission Time [Default(us):1000]", test.m_slotTime);
+  cmd.AddValue ("gaurdTime", "Duration to wait between slots [Default(us):0]", test.m_gaurdTime);
+  cmd.AddValue ("interFrameGap", "Duration between frames [Default(us):0]", test.m_interFrameGap);
   cmd.Parse (argc, argv);
 
-  std::ofstream out (CSVfileName.c_str ());
+  std::ofstream out (test.m_csvFileName.c_str ());
   out << "SimulationSecond," <<
   "ReceiveRate," <<
   "PacketsReceived," <<
@@ -167,33 +160,32 @@ int main (int argc, char **argv)
   SeedManager::SetSeed (12345);
 
   Config::SetDefault ("ns3::OnOffApplication::PacketSize", StringValue ("1000"));
-  Config::SetDefault ("ns3::OnOffApplication::DataRate", StringValue (rate));
+  Config::SetDefault ("ns3::OnOffApplication::DataRate", StringValue (test.m_rate));
 
-  test = TdmaExample ();
   NS_LOG_INFO ("Running Case");
-  test.CaseRun (nWifis, nSinks, totalTime, rate, phyMode, nodeSpeed, periodicUpdateInterval,
-                settlingTime, dataStart,CSVfileName,usingWifi,txpDistance, nSlots, slotTime, gaurdTime, interFrameGap);
+
+  test.CaseRun (usingWifi,txpDistance);
 
   NS_LOG_INFO ("leave");
   return 0;
 }
 
 TdmaExample::TdmaExample ()
-  : bytesTotal (0),
-    packetsReceived (0)
+  : m_bytesTotal (0),
+    m_packetsReceived (0)
 {
 }
 
 void
 TdmaExample::ReceivePacket (Ptr <Socket> socket)
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   NS_LOG_UNCOND (Simulator::Now ().GetSeconds () << " Received one packet!");
   Ptr <Packet> packet;
-  while (packet = socket->Recv ())
+  while (NULL != (packet = socket->Recv ()))
     {
-      bytesTotal += packet->GetSize ();
-      packetsReceived += 1;
+      m_bytesTotal += packet->GetSize ();
+      m_packetsReceived += 1;
     }
   NS_LOG_INFO ("leave");
 }
@@ -201,16 +193,16 @@ TdmaExample::ReceivePacket (Ptr <Socket> socket)
 void
 TdmaExample::CheckThroughput ()
 {
-	NS_LOG_INFO ("enter");
-  double kbs = (bytesTotal * 8.0) / 1000;
-  bytesTotal = 0;
+  NS_LOG_INFO ("enter");
+  double kbs = (m_bytesTotal * 8.0) / 1000;
+  m_bytesTotal = 0;
 
-  std::ofstream out (m_CSVfileName.c_str (), std::ios::app);
+  std::ofstream out (m_csvFileName.c_str (), std::ios::app);
 
-  out << (Simulator::Now ()).GetSeconds () << "," << kbs << "," << packetsReceived << "," << m_nSinks << std::endl;
+  out << Simulator::Now().GetSeconds() << "," << kbs << "," << m_packetsReceived << "," << m_nSinks << std::endl;
 
   out.close ();
-  packetsReceived = 0;
+  m_packetsReceived = 0;
   Simulator::Schedule (Seconds (1.0), &TdmaExample::CheckThroughput, this);
   NS_LOG_INFO ("leave");
 }
@@ -218,7 +210,7 @@ TdmaExample::CheckThroughput ()
 Ptr <Socket>
 TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   Ptr <Socket> sink = Socket::CreateSocket (node, tid);
   InetSocketAddress local = InetSocketAddress (addr, port);
@@ -229,26 +221,9 @@ TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
 }
 
 void
-TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::string rate,
-                      std::string phyMode, uint32_t nodeSpeed, uint32_t periodicUpdateInterval, uint32_t settlingTime,
-                      double dataStart, std::string csvFileName, bool usingWifi, double txpDistance, uint32_t nSlots,
-                      uint32_t slotTime, uint32_t gaurdTime, uint32_t interFrameGap)
+TdmaExample::CaseRun (bool usingWifi, double txpDistance)
 {
-	NS_LOG_INFO ("enter");
-  m_nWifis = nWifis;
-  m_nSinks = nSinks;
-  m_totalTime = totalTime;
-  m_rate = rate;
-  m_phyMode = phyMode;
-  m_nodeSpeed = nodeSpeed;
-  m_periodicUpdateInterval = periodicUpdateInterval;
-  m_settlingTime = settlingTime;
-  m_dataStart = dataStart;
-  m_CSVfileName = csvFileName;
-  m_slots = nSlots;
-  m_slotTime = slotTime;
-  m_gaurdTime = gaurdTime;
-  m_interFrameGap = interFrameGap;
+  NS_LOG_INFO ("enter");
 
   std::stringstream ss;
   ss << m_nWifis;
@@ -296,10 +271,11 @@ TdmaExample::CaseRun (uint32_t nWifis, uint32_t nSinks, double totalTime, std::s
   NS_LOG_INFO ("leave");
 }
 
+
 void
 TdmaExample::CreateNodes ()
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   std::cout << "Creating " << (unsigned) m_nWifis << " nodes.\n";
   nodes.Create (m_nWifis);
   NS_ASSERT_MSG (m_nWifis > m_nSinks, "Sinks must be less or equal to the number of nodes in network");
@@ -309,7 +285,7 @@ TdmaExample::CreateNodes ()
 void
 TdmaExample::SetupMobility ()
 {
-	NS_LOG_INFO ("ent3er");
+  NS_LOG_INFO ("ent3er");
   MobilityHelper mobility;
 /*
   ObjectFactory pos;
@@ -337,9 +313,10 @@ TdmaExample::SetupMobility ()
 void
 TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDistance)
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   if (usingWifi)
     {
+	  NS_LOG_INFO ("using wifi");
       Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", StringValue (m_phyMode));
       Config::SetDefault ("ns3::WifiRemoteStationManager::RtsCtsThreshold", StringValue ("2000"));
 
@@ -377,19 +354,26 @@ TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDista
     }
   else
     {
+	  NS_LOG_INFO ("using tdma");
       Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (txpDistance));
       // default allocation, each node gets a slot to transmit
-      TdmaHelper tdma = TdmaHelper (nodes.GetN (),nodes.GetN ()); // in this case selected, numSlots = nodes
-      /* can make custom allocation through simulation script
-       * will override default allocation
-       */
-      /*tdma.SetSlots(4,
-          0,1,1,0,0,
-          1,0,0,0,0,
-          2,0,0,1,0,
-          3,0,0,0,1);*/
+      TdmaHelper tdma = TdmaHelper(4,5,
+               0,1,1,0,0,0,
+               1,0,0,0,0,1,
+               2,0,0,1,0,0,
+               3,0,0,0,1,0);
+
       // if TDMA slot assignment is through a file
-      //TdmaHelper tdma = TdmaHelper ("tdmaSlots.txt");
+      if (this->m_slotFileName.length() > 0) {
+    	  TdmaHelper wip = TdmaHelper (this->m_slotFileName);
+    	  if (wip.GetParseState()) {
+    		  tdma = wip;
+    	  }
+      } else {
+          // in this case selected, numSlots = nodes
+    	  // tdma = TdmaHelper (nodes.GetN (),nodes.GetN ());
+      }
+
       TdmaControllerHelper controller;
       controller.Set ("SlotTime", TimeValue (MicroSeconds (1100)));
       controller.Set ("GaurdTime", TimeValue (MicroSeconds (100)));
@@ -407,7 +391,7 @@ TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDista
 void
 TdmaExample::InstallInternetStack ()
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   DsdvHelper dsdv;
   dsdv.Set ("PeriodicUpdateInterval", TimeValue (Seconds (m_periodicUpdateInterval)));
   dsdv.Set ("SettlingTime", TimeValue (Seconds (m_settlingTime)));
@@ -423,7 +407,7 @@ TdmaExample::InstallInternetStack ()
 void
 TdmaExample::InstallApplications ()
 {
-	NS_LOG_INFO ("enter");
+  NS_LOG_INFO ("enter");
   for (uint32_t i = 0; i <= m_nSinks - 1; i++ )
     {
       Ptr<Node> node = NodeList::GetNode (i);

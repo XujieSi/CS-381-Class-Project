@@ -94,6 +94,26 @@ public:
    * 3:0,0,0,0,1
    */
   TdmaHelper (std::string fileName);
+  /**
+    * \brief used to set the TDMA slots from the simulation script
+    * useful for low number of nodes. If the number of nodes is more, it is
+    * advisable to use the external file to set TDMA slots.
+    * For example, assume tdma is a TdmaHelper object, the slot assignment
+    * for 4 nodes can be set as follows. We have a total of 5 slots,
+    * out of which first two slots are assigned to node 1 and the other nodes
+    * are assigned single slots as shown below
+    * tdma.SetSlots(4,5,
+    *               0,1,1,0,0,0,
+    *               1,0,0,1,0,0,
+    *               2,0,0,0,1,0,
+    *               3,0,0,0,0,1);
+    */
+  TdmaHelper (int numNodes, int numSlots, ...);
+
+  bool GetParseState() {
+	  return m_parser->GetParseState();
+  }
+
   ~TdmaHelper ();
 
   /**
@@ -118,21 +138,7 @@ public:
    * \brief Set the TdmaController for this TdamHelper class
    */
   void SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelper);
-  /**
-   * \brief used to set the TDMA slots from the simulation script
-   * useful for low number of nodes. If the number of nodes is more, it is
-   * advisable to use the external file to set TDMA slots.
-   * For example, assume tdma is a TdmaHelper object, the slot assigment
-   * for 4 nodes can be set as follows. We have a total of 5 slots,
-   * out of which first two slots are assigned to node 1 and the other nodes
-   * are assigned single slots as shown below
-   * tdma.SetSlots(4,
-   *               0,1,1,0,0,0,
-   *               1,0,0,1,0,0,
-   *               2,0,0,0,1,0,
-   *               3,0,0,0,0,1);   *
-   */
-  void SetSlots (int NodeNum, ...);
+
   /**
    * Helper to enable all TdmaNetDevice log components with one statement
    */
@@ -156,7 +162,7 @@ private:
   /**
    * \brief print the TDMA slot assignment for debugging purposes.
    */
-  void PrintSlotAllotmentArray (void) const;
+  std::string PrintSlotAllotmentArray (void) const;
   /**
    * \brief Assigns a single TDMA slot in a frame for each node installed
    * by the TDMA helper.

@@ -47,7 +47,8 @@ TypeId TdmaSlotAssignmentFileParser::GetTypeId (void)
 }
 
 TdmaSlotAssignmentFileParser::TdmaSlotAssignmentFileParser (std::string fileName) : m_numRows (0),
-                                                                                    m_numCols (0)
+                                                                                    m_numCols (0),
+                                                                                    m_parseStatus(true)
 {
   NS_LOG_FUNCTION (fileName);
   m_fileName = fileName;
@@ -68,8 +69,10 @@ TdmaSlotAssignmentFileParser::ParseTdmaSlotInformation ()
   if (!topgen.is_open ())
     {
       NS_LOG_WARN ("Couldn't open the file " << m_fileName);
+      m_parseStatus = false;
+      return;
     }
-
+  int numCells = 0;
   while (!topgen.eof ())
     {
       SlotArray word;
@@ -98,16 +101,16 @@ TdmaSlotAssignmentFileParser::ParseTdmaSlotInformation ()
           line = line.substr (pos + 1);
           word.push_back (atoi (field.c_str ()));
           NS_LOG_DEBUG ("field:" << word.back ());
-          m_numCols++;
+          numCells++;
         }
       NS_ASSERT_MSG (line == "0" || line == "1", "slots should only be either 0 or 1");
       word.push_back (atoi (line.c_str ()));
       NS_LOG_DEBUG ("field:" << word.back ());
       m_slotArray.push_back (word);
-      m_numCols++;
+      numCells++;
     }
-  NS_ASSERT (m_numCols % m_numRows == 0);
-  m_numCols = m_numCols / m_numRows;
+  NS_ASSERT (numCells % m_numRows == 0);
+  m_numCols = numCells / m_numRows;
   NS_LOG_DEBUG ("Nodes in TDMA: " << m_numRows << " slots per frame: " << m_numCols);
 }
 

@@ -96,13 +96,45 @@ TdmaHelper::TdmaHelper (std::string filename) : m_controller (0),
                                                 m_slotAllotmentArray (0),
                                                 m_filename (filename)
 {
+  NS_LOG_FUNCTION (this << m_filename);
   m_mac.SetTypeId ("ns3::TdmaCentralMac");
   m_channel = CreateObject<SimpleWirelessChannel> ();
   m_parser = CreateObject<TdmaSlotAssignmentFileParser> (m_filename);
+  if (! m_parser->GetParseState()) return;
   m_numRows = m_parser->GetNodeCount ();
   m_numCols = m_parser->GetTotalSlots () + 1; // +1 for nodeid in first column
   Allocate2D ();
   SetSlots ();
+}
+
+TdmaHelper::TdmaHelper (int numNodes, int numSlots, ...)
+      : m_controller (0),
+        m_controllerHelper (0),
+        m_slotAllotmentArray (0),
+        m_numRows (numNodes),
+        m_numCols (numSlots + 1)
+{
+  NS_LOG_FUNCTION (this << numNodes << numSlots);
+  va_list args;
+  va_start (args, numSlots);
+  m_mac.SetTypeId ("ns3::TdmaCentralMac");
+  m_channel = CreateObject<SimpleWirelessChannel> ();
+  Allocate2D ();
+  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
+  for (uint32_t i = 0; i < m_numRows; i++)
+    {
+      NS_LOG_DEBUG ("new row");
+      m_slotAllotmentArray[i][0] = va_arg (args, int);
+      for (uint32_t j = 1; j < m_numCols; j++)
+        {
+          NS_LOG_DEBUG ("new column");
+          NS_LOG_DEBUG ("before: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
+          m_slotAllotmentArray[i][j] = va_arg (args, int);
+          NS_LOG_DEBUG ("after: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
+        }
+    }
+  va_end (args);
+  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols << PrintSlotAllotmentArray() );
 }
 
 TdmaHelper::~TdmaHelper ()
@@ -136,6 +168,11 @@ void TdmaHelper::Deallocate2D (void)
   free (m_slotAllotmentArray);
 }
 
+/**
+ * Allocate a 2 dimensional array with the
+ * number of rows and columns specified.
+ * Initialize it to 0
+ */
 void TdmaHelper::Allocate2D (void)
 {
   NS_LOG_FUNCTION (this);
@@ -154,16 +191,22 @@ void TdmaHelper::Allocate2D (void)
     }
 }
 
+/**
+ * The number of rows is equal to the number of nodes.
+ * The number of columns is one more than the number of slots.
+ * If the number of slots exceeds the number of nodes
+ * consecutive slots should be used for the same node as
+ * much as possible, to give continuous slots for a node.
+ */
 void
 TdmaHelper::SetDefaultSlots (void)
 {
   NS_LOG_FUNCTION (this);
-  //PrintSlotAllotmentArray ();
   int continuousSlots = (m_numCols - 1) / m_numRows;
+  NS_LOG_DEBUG ("continuousSlots:" << continuousSlots
+           << " m_numRows:" << m_numRows << " m_numCols:" << m_numCols);
   for (uint32_t i = 0; i < m_numRows; i++)
     {
-      NS_LOG_DEBUG ("i:" << i << " continuousSlots:" << continuousSlots
-                         << " m_numRows:" << m_numRows << " m_numCols:" << m_numCols);
       int tmp = 0;
       while (tmp < continuousSlots)
         {
@@ -181,13 +224,17 @@ TdmaHelper::SetDefaultSlots (void)
     {
       m_slotAllotmentArray[i][continuousSlots * m_numRows + i + 1] = 1;
     }
-  //PrintSlotAllotmentArray ();
+  NS_LOG_INFO(PrintSlotAllotmentArray ());
 }
 
+/**
+ * Update the slot allotment array from the
+ * arrays produced by the slot assignment parser.
+ */
 void
 TdmaHelper::SetSlots (void)
 {
-  //PrintSlotAllotmentArray();
+  NS_LOG_INFO("was " << PrintSlotAllotmentArray ());
   std::vector<SlotArray> & slotArrays = m_parser->GetSlotArrays ();
   for (uint32_t i = 0; i < m_numRows; i++)
     {
@@ -197,31 +244,7 @@ TdmaHelper::SetSlots (void)
           m_slotAllotmentArray[i][j] = slotArrays[i][j];
         }
     }
-  //PrintSlotAllotmentArray();
-}
-
-void
-TdmaHelper::SetSlots (int numNodes, ...)
-{
-  NS_LOG_FUNCTION (this);
-  va_list args;
-  va_start (args, numNodes);
-  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
-  for (uint32_t i = 0; i < m_numRows; i++)
-    {
-      NS_LOG_DEBUG ("new row");
-      m_slotAllotmentArray[i][0] = va_arg (args, int);
-      for (uint32_t j = 1; j < m_numCols; j++)
-        {
-          NS_LOG_DEBUG ("new column");
-          NS_LOG_DEBUG ("before: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
-          m_slotAllotmentArray[i][j] = va_arg (args, int);
-          NS_LOG_DEBUG ("after: value at i: " << i << " j: " << j << " is " << m_slotAllotmentArray[i][j]);
-        }
-    }
-  va_end (args);
-  NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
-  //PrintSlotAllotmentArray();
+  NS_LOG_INFO(PrintSlotAllotmentArray ());
 }
 
 void
@@ -255,19 +278,21 @@ TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
     }
 }
 
-void
+std::string
 TdmaHelper::PrintSlotAllotmentArray (void) const
 {
-  std::cout << "Printing SlotAllotmentArray\n";
+  std::stringstream ss;
+  ss << "Slot Allotment Array\n";
   for (uint32_t i = 0; i < m_numRows; i++)
     {
-      std::cout << m_slotAllotmentArray[i][0] << " : \t";
+      ss << m_slotAllotmentArray[i][0] << " : \t";
       for (uint32_t j = 1; j < m_numCols; j++)
         {
-          std::cout << m_slotAllotmentArray[i][j] << ",\t";
+          ss << m_slotAllotmentArray[i][j] << ",\t";
         }
-      std::cout << "\n";
+      ss << "\n";
     }
+  return ss.str();
 }
 
 NetDeviceContainer
@@ -318,6 +343,7 @@ TdmaHelper::EnableLogComponents (void)
   LogComponentEnable ("TdmaMacQueue", LOG_LEVEL_ALL);
   LogComponentEnable ("TdmaNetDevice", LOG_LEVEL_ALL);
   LogComponentEnable ("SimpleWirelessChannel", LOG_LEVEL_ALL);
+  LogComponentEnable ("TdmaSlotAssignmentFileParser", LOG_LEVEL_ALL);
 }
 
 void

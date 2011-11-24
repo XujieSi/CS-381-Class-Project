@@ -30,6 +30,9 @@
  */
 #include "tdma-controller-helper.h"
 #include "ns3/tdma-controller.h"
+#include "ns3/log.h"
+
+NS_LOG_COMPONENT_DEFINE ("TdmaControllerHelper");
 
 namespace ns3 {
 

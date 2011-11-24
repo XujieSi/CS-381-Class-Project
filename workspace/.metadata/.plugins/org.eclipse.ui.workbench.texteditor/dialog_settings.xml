@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="370" key="DIALOG_WIDTH"/>
+		<item value="264" key="DIALOG_Y_ORIGIN"/>
+		<item value="1352" key="DIALOG_X_ORIGIN"/>
+		<item value="496" key="DIALOG_HEIGHT"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
+		<item value="true" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="frame" key="selection"/>
+		<item value="TdmaSlotAss" key="selection"/>
 		<list key="findhistory">
-			<item value="frame"/>
-			<item value="gframe"/>
+			<item value="TdmaSlotAss"/>
+			<item value="m_numCols"/>
+			<item value="Allocate2D"/>
+			<item value="m_slotAllotmentArray"/>
+			<item value="new row"/>
+			<item value="Helper"/>
+			<item value="delete"/>
+			<item value="\tNS"/>
 		</list>
 		<list key="replacehistory">
+			<item value="  NS"/>
+			<item value="  "/>
+			<item value="slotFileName"/>
 		</list>
 	</section>
 </section>

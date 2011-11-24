@@ -22,6 +22,7 @@
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="repos/ns-3-dev/build/scratch/tdma-example"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="cs381"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="cdt.managedbuild.config.gnu.exe.debug.1457861941"/>
+<booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/cs381"/>
 </listAttribute>
