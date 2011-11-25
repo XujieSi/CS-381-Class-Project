@@ -35,7 +35,7 @@
 #include "ns3/config-store-module.h"
 #include "ns3/wifi-module.h"
 #include "ns3/internet-module.h"
-#include "ns3/simple-wireless-tdma-module.h"
+#include "ns3/serial-module.h"
 #include "ns3/dsdv-module.h"
 #include <iostream>
 #include <cmath>
@@ -44,12 +44,12 @@ using namespace ns3;
 
 uint16_t port = 9;
 
-NS_LOG_COMPONENT_DEFINE ("TdmaExample");
+NS_LOG_COMPONENT_DEFINE ("SerialExample");
 
-class TdmaExample
+class SerialExample
 {
 public:
-  TdmaExample ();
+  SerialExample ();
   void CaseRun (bool usingWifi,
                 double txpDistance);
 
@@ -97,14 +97,14 @@ int main (int argc, char **argv)
 {
 	// set the default logging level
 	// for example, you can override this by setting by
-	// export 'NS_LOG=TdmaExampleApplication=level_all|pref_time'
+	// export 'NS_LOG=SerialExampleApplication=level_all|pref_time'
 
-  LogComponentEnable("TdmaExample",
+  LogComponentEnable("SerialExample",
 			static_cast<LogLevel>(LOG_LEVEL_INFO | LOG_PREFIX_FUNC));
-  TdmaHelper::EnableLogComponents();
+  SerialHelper::EnableLogComponents();
 
   NS_LOG_INFO ("enter" << argc);
-  TdmaExample test = TdmaExample ();
+  SerialExample test = SerialExample ();
 
   test.m_nWifis = 4;
   test.m_nSinks = 1;
@@ -116,12 +116,12 @@ int main (int argc, char **argv)
   test.m_periodicUpdateInterval = 15;
   test.m_settlingTime = 6;
   test.m_dataStart = 50.0;
-  test.m_csvFileName = "TdmaExample.csv";
-  test.m_slotFileName = "TdmaSlots.txt";
+  test.m_csvFileName = "SerialExample.csv";
+  test.m_slotFileName = "SerialSlots.txt";
   bool usingWifi = false;
   double txpDistance = 400.0;
 
-  // tdma parameters
+  // serial parameters
   test.m_slots = test.m_nWifis;
   test.m_slotTime = 1000;
   test.m_interFrameGap = 0;
@@ -140,8 +140,8 @@ int main (int argc, char **argv)
   cmd.AddValue ("periodicUpdateInterval", "Periodic Interval Time[Default=15]", test.m_periodicUpdateInterval);
   cmd.AddValue ("settlingTime", "Settling Time before sending out an update for changed metric[Default=6]", test.m_settlingTime);
   cmd.AddValue ("dataStart", "Time at which nodes start to transmit data[Default=50.0]", test.m_dataStart);
-  cmd.AddValue ("csvFileName", "The name of the CSV output file name[Default:TdmaExample.csv]", test.m_csvFileName);
-  cmd.AddValue ("slotFileName", "The name of the input file name[Default:TdmaSlots.txt]", test.m_slotFileName);
+  cmd.AddValue ("csvFileName", "The name of the CSV output file name[Default:SerialExample.csv]", test.m_csvFileName);
+  cmd.AddValue ("slotFileName", "The name of the input file name[Default:SerialSlots.txt]", test.m_slotFileName);
   cmd.AddValue ("txpDistance", "MaxRange for the node transmissions [Default:400.0]", txpDistance);
   cmd.AddValue ("nSlots", "Number of slots per frame [Default:nWifis]", test.m_slots);
   cmd.AddValue ("slotTime", "Slot transmission Time [Default(us):1000]", test.m_slotTime);
@@ -170,14 +170,14 @@ int main (int argc, char **argv)
   return 0;
 }
 
-TdmaExample::TdmaExample ()
+SerialExample::SerialExample ()
   : m_bytesTotal (0),
     m_packetsReceived (0)
 {
 }
 
 void
-TdmaExample::ReceivePacket (Ptr <Socket> socket)
+SerialExample::ReceivePacket (Ptr <Socket> socket)
 {
   NS_LOG_INFO ("enter");
   NS_LOG_UNCOND (Simulator::Now ().GetSeconds () << " Received one packet!");
@@ -191,7 +191,7 @@ TdmaExample::ReceivePacket (Ptr <Socket> socket)
 }
 
 void
-TdmaExample::CheckThroughput ()
+SerialExample::CheckThroughput ()
 {
   NS_LOG_INFO ("enter");
   double kbs = (m_bytesTotal * 8.0) / 1000;
@@ -203,25 +203,25 @@ TdmaExample::CheckThroughput ()
 
   out.close ();
   m_packetsReceived = 0;
-  Simulator::Schedule (Seconds (1.0), &TdmaExample::CheckThroughput, this);
+  Simulator::Schedule (Seconds (1.0), &SerialExample::CheckThroughput, this);
   NS_LOG_INFO ("leave");
 }
 
 Ptr <Socket>
-TdmaExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
+SerialExample::SetupPacketReceive (Ipv4Address addr, Ptr <Node> node)
 {
   NS_LOG_INFO ("enter");
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
   Ptr <Socket> sink = Socket::CreateSocket (node, tid);
   InetSocketAddress local = InetSocketAddress (addr, port);
   sink->Bind (local);
-  sink->SetRecvCallback (MakeCallback ( &TdmaExample::ReceivePacket, this));
+  sink->SetRecvCallback (MakeCallback ( &SerialExample::ReceivePacket, this));
   NS_LOG_INFO ("leave");
   return sink;
 }
 
 void
-TdmaExample::CaseRun (bool usingWifi, double txpDistance)
+SerialExample::CaseRun (bool usingWifi, double txpDistance)
 {
   NS_LOG_INFO ("enter");
 
@@ -244,7 +244,7 @@ TdmaExample::CaseRun (bool usingWifi, double txpDistance)
     }
   else
     {
-      macProtocol = "tdma";
+      macProtocol = "serial";
     }
 
   std::string tr_name = "Dsdv_Manet_"
@@ -273,7 +273,7 @@ TdmaExample::CaseRun (bool usingWifi, double txpDistance)
 
 
 void
-TdmaExample::CreateNodes ()
+SerialExample::CreateNodes ()
 {
   NS_LOG_INFO ("enter");
   std::cout << "Creating " << (unsigned) m_nWifis << " nodes.\n";
@@ -283,7 +283,7 @@ TdmaExample::CreateNodes ()
 }
 
 void
-TdmaExample::SetupMobility ()
+SerialExample::SetupMobility ()
 {
   NS_LOG_INFO ("ent3er");
   MobilityHelper mobility;
@@ -311,7 +311,7 @@ TdmaExample::SetupMobility ()
 }
 
 void
-TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDistance)
+SerialExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDistance)
 {
   NS_LOG_INFO ("enter");
   if (usingWifi)
@@ -354,42 +354,42 @@ TdmaExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDista
     }
   else
     {
-	  NS_LOG_INFO ("using tdma");
+	  NS_LOG_INFO ("using serial");
       Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (txpDistance));
       // default allocation, each node gets a slot to transmit
-      TdmaHelper tdma = TdmaHelper(4,5,
+      SerialHelper serial = SerialHelper(4,5,
                0,1,1,0,0,0,
                1,0,0,0,0,1,
                2,0,0,1,0,0,
                3,0,0,0,1,0);
 
-      // if TDMA slot assignment is through a file
+      // if SERIAL slot assignment is through a file
       if (this->m_slotFileName.length() > 0) {
-    	  TdmaHelper wip = TdmaHelper (this->m_slotFileName);
+    	  SerialHelper wip = SerialHelper (this->m_slotFileName);
     	  if (wip.GetParseState()) {
-    		  tdma = wip;
+    		  serial = wip;
     	  }
       } else {
           // in this case selected, numSlots = nodes
-    	  // tdma = TdmaHelper (nodes.GetN (),nodes.GetN ());
+    	  // serial = SerialHelper (nodes.GetN (),nodes.GetN ());
       }
 
-      TdmaControllerHelper controller;
+      SerialControllerHelper controller;
       controller.Set ("SlotTime", TimeValue (MicroSeconds (1100)));
       controller.Set ("GaurdTime", TimeValue (MicroSeconds (100)));
       controller.Set ("InterFrameTime", TimeValue (MicroSeconds (0)));
-      tdma.SetTdmaControllerHelper (controller);
-      devices = tdma.Install (nodes);
+      serial.SetSerialControllerHelper (controller);
+      devices = serial.Install (nodes);
 
       AsciiTraceHelper ascii;
       Ptr<OutputStreamWrapper> stream = ascii.CreateFileStream (tr_name + ".tr");
-      tdma.EnableAsciiAll (stream);
+      serial.EnableAsciiAll (stream);
     }
   NS_LOG_INFO ("leave");
 }
 
 void
-TdmaExample::InstallInternetStack ()
+SerialExample::InstallInternetStack ()
 {
   NS_LOG_INFO ("enter");
   DsdvHelper dsdv;
@@ -405,7 +405,7 @@ TdmaExample::InstallInternetStack ()
 }
 
 void
-TdmaExample::InstallApplications ()
+SerialExample::InstallApplications ()
 {
   NS_LOG_INFO ("enter");
   for (uint32_t i = 0; i <= m_nSinks - 1; i++ )
@@ -439,7 +439,7 @@ TdmaExample::InstallApplications ()
  * Set a mapping for transmission power over a particular distance.
  */
 void
-TdmaExample::InsertIntoTxp ()
+SerialExample::InsertIntoTxp ()
 {
 	 NS_LOG_INFO ("enter");
   m_transmitRangeMap.insert (std::pair<double, double> (100.0, 1.2251));

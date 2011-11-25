@@ -28,38 +28,38 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_CENTRAL_MAC_H
-#define TDMA_CENTRAL_MAC_H
+#ifndef SERIAL_CENTRAL_MAC_H
+#define SERIAL_CENTRAL_MAC_H
 
 #include "ns3/data-rate.h"
 #include "ns3/nstime.h"
-#include "tdma-mac.h"
-#include "tdma-mac-low.h"
-#include "tdma-mac-queue.h"
+#include "serial.h"
+#include "serial-low.h"
+#include "serial-queue.h"
 
 namespace ns3 {
 
 class WifiMacHeader;
-class TdmaController;
-class TdmaMacLow;
+class SerialController;
+class SerialMacLow;
 
 /**
- * \brief Tdma Mac that supports centralized tdma controller
+ * \brief Serial Mac that supports centralized serial controller
  *
- * Tdma Controller drives the transmission of packets in a round-robin
+ * Serial Controller drives the transmission of packets in a round-robin
  * manner depending on the number of slots allocated to a node and the
  * slot interval. Mac also be made to request for more slots or change in
  * slot interval which would take affect from the next epoch.
  */
-class TdmaCentralMac : public TdmaMac
+class SerialCentralMac : public SerialMac
 {
 public:
   static TypeId GetTypeId (void);
 
-  TdmaCentralMac ();
-  ~TdmaCentralMac ();
+  SerialCentralMac ();
+  ~SerialCentralMac ();
 
-  // inherited from TdmaMac.
+  // inherited from SerialMac.
   virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from);
   virtual void Enqueue (Ptr<const Packet> packet, Mac48Address to);
   virtual bool SupportsSendFrom (void) const;
@@ -71,10 +71,10 @@ public:
   virtual void SetAddress (Mac48Address address);
   virtual void SetSsid (Ssid ssid);
   virtual Mac48Address GetBssid (void) const;
-  virtual void SetTdmaController (Ptr<TdmaController> controller);
-  virtual Ptr<TdmaController> GetTdmaController (void) const;
-  virtual void SetDevice (Ptr<TdmaNetDevice> device);
-  virtual Ptr<TdmaNetDevice> GetDevice (void) const;
+  virtual void SetSerialController (Ptr<SerialController> controller);
+  virtual Ptr<SerialController> GetSerialController (void) const;
+  virtual void SetDevice (Ptr<SerialNetDevice> device);
+  virtual Ptr<SerialNetDevice> GetDevice (void) const;
   virtual void SetChannel (Ptr<SimpleWirelessChannel> channel);
   virtual void StartTransmission (uint64_t transmissionTime);
   virtual void NotifyTx (Ptr<const Packet> packet);
@@ -98,7 +98,7 @@ public:
   void SetMaxQueueSize (uint32_t size);
   void SetMaxQueueDelay (Time delay);
   Ptr<SimpleWirelessChannel> GetChannel (void) const;
-  Ptr<TdmaMacLow> GetTdmaMacLow (void) const;
+  Ptr<SerialMacLow> GetSerialMacLow (void) const;
   void RequestForChannelAccess (void);
 
 private:
@@ -108,8 +108,8 @@ private:
   void TxFailed (const WifiMacHeader &hdr);
   virtual void DoDispose (void);
   virtual void DoStart (void);
-  TdmaCentralMac (const TdmaCentralMac & ctor_arg);
-  TdmaCentralMac &operator = (const TdmaCentralMac &o);
+  SerialCentralMac (const SerialCentralMac & ctor_arg);
+  SerialCentralMac &operator = (const SerialCentralMac &o);
   void TxQueueStart (uint32_t index);
   void TxQueueStop (uint32_t index);
   void SendPacketDown (Time remainingTime);
@@ -160,17 +160,17 @@ private:
   Callback<bool,uint32_t> m_queueStart;
   Callback<bool,uint32_t> m_queueStop;
   std::vector<uint32_t> m_slots;
-  Ptr<TdmaController> m_tdmaController;
-  Ptr<TdmaNetDevice> m_device;
-  Ptr<TdmaMacQueue> m_queue;
-  Ptr<TdmaMacLow> m_low;
+  Ptr<SerialController> m_serialController;
+  Ptr<SerialNetDevice> m_device;
+  Ptr<SerialMacQueue> m_queue;
+  Ptr<SerialMacLow> m_low;
   Ptr<SimpleWirelessChannel> m_channel;
   Ssid m_ssid;
   Ptr<Node> m_nodePtr;
-  bool m_isTdmaRunning;
+  bool m_isSerialRunning;
 };
 
 } // namespace ns3
 
 
-#endif /* TDMA_CENTRAL_MAC_H */
+#endif /* SERIAL_CENTRAL_MAC_H */

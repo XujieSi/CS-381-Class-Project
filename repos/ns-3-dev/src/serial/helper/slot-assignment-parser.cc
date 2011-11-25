@@ -28,39 +28,39 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#include "tdma-slot-assignment-parser.h"
 #include <fstream>
 #include "ns3/log.h"
 #include "ns3/uinteger.h"
+#include "slot-assignment-parser.h"
 
 namespace ns3 {
 
-NS_LOG_COMPONENT_DEFINE ("TdmaSlotAssignmentFileParser");
+NS_LOG_COMPONENT_DEFINE ("SerialSlotAssignmentFileParser");
 
-NS_OBJECT_ENSURE_REGISTERED (TdmaSlotAssignmentFileParser);
+NS_OBJECT_ENSURE_REGISTERED (SerialSlotAssignmentFileParser);
 
-TypeId TdmaSlotAssignmentFileParser::GetTypeId (void)
+TypeId SerialSlotAssignmentFileParser::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::TdmaSlotAssignmentFileParser")
+  static TypeId tid = TypeId ("ns3::SerialSlotAssignmentFileParser")
     .SetParent<Object> ();
   return tid;
 }
 
-TdmaSlotAssignmentFileParser::TdmaSlotAssignmentFileParser (std::string fileName) : m_numRows (0),
+SerialSlotAssignmentFileParser::SerialSlotAssignmentFileParser (std::string fileName) : m_numRows (0),
                                                                                     m_numCols (0),
                                                                                     m_parseStatus(true)
 {
   NS_LOG_FUNCTION (fileName);
   m_fileName = fileName;
-  ParseTdmaSlotInformation ();
+  ParseSerialSlotInformation ();
 }
 
-TdmaSlotAssignmentFileParser::~TdmaSlotAssignmentFileParser ()
+SerialSlotAssignmentFileParser::~SerialSlotAssignmentFileParser ()
 {
 }
 
 void
-TdmaSlotAssignmentFileParser::ParseTdmaSlotInformation ()
+SerialSlotAssignmentFileParser::ParseSerialSlotInformation ()
 {
   NS_LOG_FUNCTION (this);
   std::ifstream topgen;
@@ -111,17 +111,17 @@ TdmaSlotAssignmentFileParser::ParseTdmaSlotInformation ()
     }
   NS_ASSERT (numCells % m_numRows == 0);
   m_numCols = numCells / m_numRows;
-  NS_LOG_DEBUG ("Nodes in TDMA: " << m_numRows << " slots per frame: " << m_numCols);
+  NS_LOG_DEBUG ("Nodes in SERIAL: " << m_numRows << " slots per frame: " << m_numCols);
 }
 
 uint32_t
-TdmaSlotAssignmentFileParser::GetNodeCount (void)
+SerialSlotAssignmentFileParser::GetNodeCount (void)
 {
   return m_numRows;
 }
 
 uint32_t
-TdmaSlotAssignmentFileParser::GetTotalSlots (void)
+SerialSlotAssignmentFileParser::GetTotalSlots (void)
 {
   return m_numCols;
 }

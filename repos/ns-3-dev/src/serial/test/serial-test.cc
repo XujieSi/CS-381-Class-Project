@@ -19,14 +19,15 @@
 #include "ns3/test.h"
 #include "ns3/simulator.h"
 #include "ns3/random-variable.h"
-#include "ns3/tdma-helper.h"
+#include "ns3/serial-helper.h"
 #include "ns3/double.h"
 #include "ns3/uinteger.h"
 #include "ns3/string.h"
 #include "ns3/boolean.h"
-#include "ns3/tdma-controller.h"
-#include "ns3/tdma-central-mac.h"
-#include "ns3/tdma-mac.h"
+#include "ns3/serial-low.h"
+#include "ns3/serial-controller.h"
+#include "ns3/serial-central.h"
+#include "ns3/serial-net-device.h"
 #include "ns3/simple-wireless-channel.h"
 #include "ns3/names.h"
 #include "ns3/callback.h"
@@ -35,11 +36,11 @@
 #include "ns3/mobility-helper.h"
 
 namespace ns3 {
-class TdmaSlotAllocationTestCase : public TestCase
+class SerialSlotAllocationTestCase : public TestCase
 {
 public:
-  TdmaSlotAllocationTestCase ();
-  ~TdmaSlotAllocationTestCase ();
+  SerialSlotAllocationTestCase ();
+  ~SerialSlotAllocationTestCase ();
   virtual void DoRun (void);
   void MacTxTrace (Ptr<Packet> packet, const WifiMacHeader *hdr);
   void CreateNodes ();
@@ -48,18 +49,18 @@ private:
   std::vector<Ptr<Packet> > m_packets;
 };
 
-TdmaSlotAllocationTestCase::TdmaSlotAllocationTestCase (void)
-  : TestCase ("Tdma slot allocation test case"),
+SerialSlotAllocationTestCase::SerialSlotAllocationTestCase (void)
+  : TestCase ("Serial slot allocation test case"),
     m_nodes (0)
 {
 }
-TdmaSlotAllocationTestCase::~TdmaSlotAllocationTestCase ()
+SerialSlotAllocationTestCase::~SerialSlotAllocationTestCase ()
 {
   delete m_nodes;
   m_packets.clear ();
 }
 void
-TdmaSlotAllocationTestCase::DoRun ()
+SerialSlotAllocationTestCase::DoRun ()
 {
   // set the tx range of a node
   Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (303));
@@ -68,31 +69,31 @@ TdmaSlotAllocationTestCase::DoRun ()
    * **required by simple-wireless-channel to identify distance between them**
    */
   CreateNodes ();
-  Ptr<TdmaController> tdmaController = CreateObject<TdmaController> ();
-  tdmaController->SetSlotTime (MicroSeconds (1100));
-  tdmaController->SetGaurdTime (MicroSeconds (100));
-  tdmaController->SetInterFrameTimeInterval (MicroSeconds (200));
-  tdmaController->SetTotalSlotsAllowed (3);
+  Ptr<SerialController> serialController = CreateObject<SerialController> ();
+  serialController->SetSlotTime (MicroSeconds (1100));
+  serialController->SetGaurdTime (MicroSeconds (100));
+  serialController->SetInterFrameTimeInterval (MicroSeconds (200));
+  serialController->SetTotalSlotsAllowed (3);
   Ptr<SimpleWirelessChannel> channel = CreateObject<SimpleWirelessChannel> ();
 
   //create and initialize node1
-  Ptr<TdmaNetDevice> device1 = CreateObject<TdmaNetDevice> ();
+  Ptr<SerialNetDevice> device1 = CreateObject<SerialNetDevice> ();
   device1->SetNode (m_nodes->Get (0));
-  Ptr<TdmaCentralMac> mac1 = CreateObject<TdmaCentralMac> ();
+  Ptr<SerialCentralMac> mac1 = CreateObject<SerialCentralMac> ();
   mac1->SetAddress (Mac48Address::Allocate ());
   device1->SetMac (mac1);
-  device1->SetTdmaController (tdmaController);
+  device1->SetSerialController (serialController);
   device1->SetChannel (channel);
-  mac1->GetTdmaMacLow ()->SetRxCallback (MakeCallback (&TdmaSlotAllocationTestCase::MacTxTrace, this));
+  mac1->GetSerialMacLow ()->SetRxCallback (MakeCallback (&SerialSlotAllocationTestCase::MacTxTrace, this));
 
-  Ptr<TdmaNetDevice> device2 = CreateObject<TdmaNetDevice> ();
+  Ptr<SerialNetDevice> device2 = CreateObject<SerialNetDevice> ();
   device2->SetNode (m_nodes->Get (1));
-  Ptr<TdmaCentralMac> mac2 = CreateObject<TdmaCentralMac> ();
+  Ptr<SerialCentralMac> mac2 = CreateObject<SerialCentralMac> ();
   mac2->SetAddress (Mac48Address::Allocate ());
   device2->SetMac (mac2);
-  device2->SetTdmaController (tdmaController);
+  device2->SetSerialController (serialController);
   device2->SetChannel (channel);
-  mac2->GetTdmaMacLow ()->SetRxCallback (MakeCallback (&TdmaSlotAllocationTestCase::MacTxTrace, this));
+  mac2->GetSerialMacLow ()->SetRxCallback (MakeCallback (&SerialSlotAllocationTestCase::MacTxTrace, this));
 
   //creating and enqueueing packets to the macs
   uint32_t pktSize = 1420;
@@ -103,19 +104,19 @@ TdmaSlotAllocationTestCase::DoRun ()
       pktSize -= 11;
       if (it > 1)
         {
-          mac2->Enqueue (pkt,mac1->GetAddress ());
+          mac2->Enqueue (pkt);
         }
       else
         {
-          mac1->Enqueue (pkt,mac2->GetAddress ());
+          mac1->Enqueue (pkt);
         }
     }
 
-  // setting slots in the TdmaController
-  tdmaController->AddTdmaSlot (0,mac1);
-  tdmaController->AddTdmaSlot (1,mac1);
-  tdmaController->AddTdmaSlot (2,mac2);
-  tdmaController->StartTdmaSessions ();
+  // setting slots in the SerialController
+  serialController->AddSerialSlot (0,mac1);
+  serialController->AddSerialSlot (1,mac1);
+  serialController->AddSerialSlot (2,mac2);
+  serialController->StartSerialSessions ();
 
   Simulator::Stop (MilliSeconds (8));
   Simulator::Run ();
@@ -125,7 +126,7 @@ TdmaSlotAllocationTestCase::DoRun ()
 }
 
 void
-TdmaSlotAllocationTestCase::CreateNodes ()
+SerialSlotAllocationTestCase::CreateNodes ()
 {
   m_nodes = new NodeContainer;
   m_nodes->Create (2);
@@ -171,7 +172,7 @@ TdmaSlotAllocationTestCase::CreateNodes ()
  *
  */
 void
-TdmaSlotAllocationTestCase::MacTxTrace (Ptr<Packet> packet, const WifiMacHeader *hdr)
+SerialSlotAllocationTestCase::MacTxTrace (Ptr<Packet> packet, const WifiMacHeader *hdr)
 {
   Time now = Simulator::Now ();
   //validation of received packets based on their sizes
@@ -203,12 +204,12 @@ TdmaSlotAllocationTestCase::MacTxTrace (Ptr<Packet> packet, const WifiMacHeader 
     }
 }
 
-class TdmaTestSuite : public TestSuite
+class SerialTestSuite : public TestSuite
 {
 public:
-  TdmaTestSuite () : TestSuite ("tdma", SYSTEM)
+  SerialTestSuite () : TestSuite ("serial", SYSTEM)
   {
-    AddTestCase (new TdmaSlotAllocationTestCase ());
+    AddTestCase (new SerialSlotAllocationTestCase ());
   }
-} g_tdmaTestSuite;
+} g_serialTestSuite;
 }

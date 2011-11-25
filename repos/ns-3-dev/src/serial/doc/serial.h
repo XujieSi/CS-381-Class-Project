@@ -28,15 +28,15 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_H_
-#define TDMA_H_
+#ifndef SERIAL_H_
+#define SERIAL_H_
 
 /**
- * \defgroup tdma TDMA MAC protocol
+ * \defgroup serial SERIAL MAC protocol
  *
- * This section documents the API of the ns-3 TDMA module. For a
+ * This section documents the API of the ns-3 SERIAL module. For a
  * generic functional description, please refer to the ns-3 model
  * library document.
  */
 
-#endif /* TDMA_H_ */
+#endif /* SERIAL_H_ */

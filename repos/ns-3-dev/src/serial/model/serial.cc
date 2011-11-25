@@ -28,44 +28,44 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#include "tdma-mac.h"
 #include "ns3/uinteger.h"
 #include "ns3/pointer.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/log.h"
+#include "serial.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaMac");
+NS_LOG_COMPONENT_DEFINE ("SerialMac");
 
 namespace ns3 {
 
-NS_OBJECT_ENSURE_REGISTERED (TdmaMac);
+NS_OBJECT_ENSURE_REGISTERED (SerialMac);
 
 Time
-TdmaMac::GetDefaultMaxPropagationDelay (void)
+SerialMac::GetDefaultMaxPropagationDelay (void)
 {
   // 1000m
   return Seconds (1000.0 / 300000000.0);
 }
 
 TypeId
-TdmaMac::GetTypeId (void)
+SerialMac::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3:TdmaMac")
+  static TypeId tid = TypeId ("ns3:SerialMac")
     .SetParent<Object> ()
     .AddAttribute ("MaxPropagationDelay", "The maximum propagation delay. Unused for now.",
                    TimeValue (GetDefaultMaxPropagationDelay ()),
-                   MakeTimeAccessor (&TdmaMac::m_maxPropagationDelay),
+                   MakeTimeAccessor (&SerialMac::m_maxPropagationDelay),
                    MakeTimeChecker ())
     .AddAttribute ("Ssid", "The ssid we want to belong to.",
                    SsidValue (Ssid ("default")),
-                   MakeSsidAccessor (&TdmaMac::GetSsid,
-                                     &TdmaMac::SetSsid),
+                   MakeSsidAccessor (&SerialMac::GetSsid,
+                                     &SerialMac::SetSsid),
                    MakeSsidChecker ())
 #if 0
     // Not currently implemented in this device
     .AddTraceSource ("Sniffer",
                      "Trace source simulating a non-promiscuous packet sniffer attached to the device",
-                     MakeTraceSourceAccessor (&TdmaMac::m_snifferTrace))
+                     MakeTraceSourceAccessor (&SerialMac::m_snifferTrace))
 #endif
   ;
 
@@ -73,12 +73,12 @@ TdmaMac::GetTypeId (void)
 }
 
 void
-TdmaMac::SetMaxPropagationDelay (Time delay)
+SerialMac::SetMaxPropagationDelay (Time delay)
 {
   m_maxPropagationDelay = delay;
 }
 Time
-TdmaMac::GetMaxPropagationDelay (void) const
+SerialMac::GetMaxPropagationDelay (void) const
 {
   return m_maxPropagationDelay;
 }

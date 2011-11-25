@@ -20,8 +20,8 @@
  * Thanks to the students and our professor Dr.James P.G. Sterbenz in the ResiliNets group
  * at The University of Kansas, https://wiki.ittc.ku.edu/resilinets/Main_Page
  */
-#ifndef TDMA_MAC_H
-#define TDMA_MAC_H
+#ifndef SERIAL_MAC_H
+#define SERIAL_MAC_H
 
 #include <stdint.h>
 #include "ns3/traced-callback.h"
@@ -30,13 +30,13 @@
 #include "ns3/mac48-address.h"
 #include "ns3/ssid.h"
 #include "ns3/node.h"
-#include "tdma-controller.h"
+#include "serial-controller.h"
 
 namespace ns3 {
 
 class SimpleWirelessChannel;
-class TdmaNetDevice;
-class TdmaController;
+class SerialNetDevice;
+class SerialController;
 
 /**
  * \brief base class for all MAC-level wifi objects.
@@ -46,7 +46,7 @@ class TdmaController;
  * (association/disassociation state machines).
  *
  */
-class TdmaMac : public Object
+class SerialMac : public Object
 {
 public:
   static TypeId GetTypeId (void);
@@ -79,10 +79,10 @@ public:
    * \returns the bssid of the network this device belongs to.
    */
   virtual Mac48Address GetBssid (void) const = 0;
-  virtual void SetTdmaController (Ptr<TdmaController> controller) = 0;
-  virtual Ptr<TdmaController> GetTdmaController (void) const = 0;
+  virtual void SetSerialController (Ptr<SerialController> controller) = 0;
+  virtual Ptr<SerialController> GetSerialController (void) const = 0;
   virtual void SetChannel (Ptr<SimpleWirelessChannel> channel) = 0;
-  virtual void SetDevice (Ptr<TdmaNetDevice> device) = 0;
+  virtual void SetDevice (Ptr<SerialNetDevice> device) = 0;
 
   /**
    * \param packet the packet to send.

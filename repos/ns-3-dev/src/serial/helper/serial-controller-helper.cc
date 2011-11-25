@@ -28,39 +28,39 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#include "tdma-controller-helper.h"
-#include "ns3/tdma-controller.h"
+#include "serial-controller-helper.h"
+#include "ns3/serial-controller.h"
 #include "ns3/log.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaControllerHelper");
+NS_LOG_COMPONENT_DEFINE ("SerialControllerHelper");
 
 namespace ns3 {
 
-TdmaControllerHelper::TdmaControllerHelper ()
+SerialControllerHelper::SerialControllerHelper ()
 {
-  m_agentFactory.SetTypeId ("ns3:TdmaController");
+  m_agentFactory.SetTypeId ("ns3:SerialController");
 }
 
-TdmaControllerHelper::~TdmaControllerHelper ()
+SerialControllerHelper::~SerialControllerHelper ()
 {
 
 }
 
-TdmaControllerHelper*
-TdmaControllerHelper::Copy (void) const
+SerialControllerHelper*
+SerialControllerHelper::Copy (void) const
 {
-  return new TdmaControllerHelper (*this);
+  return new SerialControllerHelper (*this);
 }
 
-Ptr<TdmaController>
-TdmaControllerHelper::Create (void) const
+Ptr<SerialController>
+SerialControllerHelper::Create (void) const
 {
-  Ptr<TdmaController> agent = m_agentFactory.Create<TdmaController> ();
+  Ptr<SerialController> agent = m_agentFactory.Create<SerialController> ();
   return agent;
 }
 
 void
-TdmaControllerHelper::Set (std::string name, const AttributeValue &value)
+SerialControllerHelper::Set (std::string name, const AttributeValue &value)
 {
   m_agentFactory.Set (name, value);
 }

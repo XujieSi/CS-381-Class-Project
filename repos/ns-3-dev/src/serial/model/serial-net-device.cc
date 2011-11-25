@@ -28,8 +28,8 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#include "tdma-mac.h"
-#include "tdma-mac-net-device.h"
+#include "serial.h"
+#include "serial-net-device.h"
 #include "ns3/llc-snap-header.h"
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
@@ -38,135 +38,135 @@
 #include "ns3/trace-source-accessor.h"
 #include "ns3/log.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaNetDevice");
+NS_LOG_COMPONENT_DEFINE ("SerialNetDevice");
 
 namespace ns3 {
 
-NS_OBJECT_ENSURE_REGISTERED (TdmaNetDevice);
+NS_OBJECT_ENSURE_REGISTERED (SerialNetDevice);
 
 TypeId
-TdmaNetDevice::GetTypeId (void)
+SerialNetDevice::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::TdmaNetDevice")
+  static TypeId tid = TypeId ("ns3::SerialNetDevice")
     .SetParent<NetDevice> ()
-    .AddConstructor<TdmaNetDevice> ()
+    .AddConstructor<SerialNetDevice> ()
     .AddAttribute ("Mtu", "The MAC-level Maximum Transmission Unit",
                    UintegerValue (MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
-                   MakeUintegerAccessor (&TdmaNetDevice::SetMtu,
-                                         &TdmaNetDevice::GetMtu),
+                   MakeUintegerAccessor (&SerialNetDevice::SetMtu,
+                                         &SerialNetDevice::GetMtu),
                    MakeUintegerChecker<uint16_t> (1,MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH))
     .AddAttribute ("Mac", "The MAC layer attached to this device.",
                    PointerValue (),
-                   MakePointerAccessor (&TdmaNetDevice::GetMac,
-                                        &TdmaNetDevice::SetMac),
-                   MakePointerChecker<TdmaMac> ())
+                   MakePointerAccessor (&SerialNetDevice::GetMac,
+                                        &SerialNetDevice::SetMac),
+                   MakePointerChecker<SerialMac> ())
     .AddAttribute ("Channel", "The channel attached to this device",
                    PointerValue (),
-                   MakePointerAccessor (&TdmaNetDevice::DoGetChannel,
-                                        &TdmaNetDevice::SetChannel),
+                   MakePointerAccessor (&SerialNetDevice::DoGetChannel,
+                                        &SerialNetDevice::SetChannel),
                    MakePointerChecker<SimpleWirelessChannel> ())
-    .AddAttribute ("TdmaController", "The tdma controller attached to this device",
+    .AddAttribute ("SerialController", "The serial controller attached to this device",
                    PointerValue (),
-                   MakePointerAccessor (&TdmaNetDevice::GetTdmaController,
-                                        &TdmaNetDevice::SetTdmaController),
-                   MakePointerChecker<TdmaController> ());
+                   MakePointerAccessor (&SerialNetDevice::GetSerialController,
+                                        &SerialNetDevice::SetSerialController),
+                   MakePointerChecker<SerialController> ());
   return tid;
 }
 
-TdmaNetDevice::TdmaNetDevice ()
+SerialNetDevice::SerialNetDevice ()
   : m_configComplete (false)
 {
   NS_LOG_FUNCTION_NOARGS ();
 }
-TdmaNetDevice::~TdmaNetDevice ()
+SerialNetDevice::~SerialNetDevice ()
 {
   NS_LOG_FUNCTION_NOARGS ();
 }
 
 void
-TdmaNetDevice::DoDispose (void)
+SerialNetDevice::DoDispose (void)
 {
   m_node = 0;
   m_mac->Dispose ();
   m_mac = 0;
   m_channel = 0;
-  m_tdmaController = 0;
+  m_serialController = 0;
   // chain up.
   NetDevice::DoDispose ();
 }
 
 void
-TdmaNetDevice::DoStart (void)
+SerialNetDevice::DoStart (void)
 {
   m_mac->Start ();
   NetDevice::DoStart ();
 }
 
 void
-TdmaNetDevice::CompleteConfig (void)
+SerialNetDevice::CompleteConfig (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
   if (m_mac == 0
       || m_node == 0
       || m_channel == 0
-      || m_tdmaController == 0
+      || m_serialController == 0
       || m_configComplete)
     {
       return;
     }
   //setup mac
-  m_mac->SetTdmaController (m_tdmaController);
+  m_mac->SetSerialController (m_serialController);
   m_mac->SetChannel (m_channel);
   // setup callbacks
-  m_mac->SetForwardUpCallback (MakeCallback (&TdmaNetDevice::ForwardUp, this));
-  m_mac->SetLinkUpCallback (MakeCallback (&TdmaNetDevice::LinkUp, this));
-  m_mac->SetLinkDownCallback (MakeCallback (&TdmaNetDevice::LinkDown, this));
-  m_mac->SetTxQueueStartCallback (MakeCallback (&TdmaNetDevice::TxQueueStart, this));
-  m_mac->SetTxQueueStopCallback (MakeCallback (&TdmaNetDevice::TxQueueStop, this));
+  m_mac->SetForwardUpCallback (MakeCallback (&SerialNetDevice::ForwardUp, this));
+  m_mac->SetLinkUpCallback (MakeCallback (&SerialNetDevice::LinkUp, this));
+  m_mac->SetLinkDownCallback (MakeCallback (&SerialNetDevice::LinkDown, this));
+  m_mac->SetTxQueueStartCallback (MakeCallback (&SerialNetDevice::TxQueueStart, this));
+  m_mac->SetTxQueueStopCallback (MakeCallback (&SerialNetDevice::TxQueueStop, this));
   m_configComplete = true;
 }
 
 void
-TdmaNetDevice::SetMac (Ptr<TdmaMac> mac)
+SerialNetDevice::SetMac (Ptr<SerialMac> mac)
 {
   m_mac = mac;
   m_mac->SetDevice (this);
   CompleteConfig ();
 }
-Ptr<TdmaMac>
-TdmaNetDevice::GetMac (void) const
+Ptr<SerialMac>
+SerialNetDevice::GetMac (void) const
 {
   return m_mac;
 }
 
 void
-TdmaNetDevice::SetTdmaController (Ptr<TdmaController> controller)
+SerialNetDevice::SetSerialController (Ptr<SerialController> controller)
 {
-  m_tdmaController = controller;
+  m_serialController = controller;
   CompleteConfig ();
 }
 
-Ptr<TdmaController>
-TdmaNetDevice::GetTdmaController (void) const
+Ptr<SerialController>
+SerialNetDevice::GetSerialController (void) const
 {
-  return m_tdmaController;
+  return m_serialController;
 }
 
 Ptr<Node>
-TdmaNetDevice::GetNode (void) const
+SerialNetDevice::GetNode (void) const
 {
   return m_node;
 }
 
 void
-TdmaNetDevice::SetNode (Ptr<Node> node)
+SerialNetDevice::SetNode (Ptr<Node> node)
 {
   m_node = node;
   CompleteConfig ();
 }
 
 void
-TdmaNetDevice::SetChannel (Ptr<SimpleWirelessChannel> channel)
+SerialNetDevice::SetChannel (Ptr<SimpleWirelessChannel> channel)
 {
   if (channel != 0)
     {
@@ -176,43 +176,43 @@ TdmaNetDevice::SetChannel (Ptr<SimpleWirelessChannel> channel)
 }
 
 Ptr<Channel>
-TdmaNetDevice::GetChannel (void) const
+SerialNetDevice::GetChannel (void) const
 {
   return m_channel;
 }
 
 Ptr<SimpleWirelessChannel>
-TdmaNetDevice::DoGetChannel (void) const
+SerialNetDevice::DoGetChannel (void) const
 {
   return m_channel;
 }
 
 void
-TdmaNetDevice::SetIfIndex (const uint32_t index)
+SerialNetDevice::SetIfIndex (const uint32_t index)
 {
   m_ifIndex = index;
 }
 
 uint32_t
-TdmaNetDevice::GetIfIndex (void) const
+SerialNetDevice::GetIfIndex (void) const
 {
   return m_ifIndex;
 }
 
 void
-TdmaNetDevice::SetAddress (Address address)
+SerialNetDevice::SetAddress (Address address)
 {
   m_mac->SetAddress (Mac48Address::ConvertFrom (address));
 }
 
 Address
-TdmaNetDevice::GetAddress (void) const
+SerialNetDevice::GetAddress (void) const
 {
   return m_mac->GetAddress ();
 }
 
 bool
-TdmaNetDevice::SetMtu (const uint16_t mtu)
+SerialNetDevice::SetMtu (const uint16_t mtu)
 {
   if (mtu > MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH)
     {
@@ -223,66 +223,66 @@ TdmaNetDevice::SetMtu (const uint16_t mtu)
 }
 
 uint16_t
-TdmaNetDevice::GetMtu (void) const
+SerialNetDevice::GetMtu (void) const
 {
   return m_mtu;
 }
 
 bool
-TdmaNetDevice::IsLinkUp (void) const
+SerialNetDevice::IsLinkUp (void) const
 {
   return m_linkUp;
 }
 
 void
-TdmaNetDevice::AddLinkChangeCallback (Callback<void> callback)
+SerialNetDevice::AddLinkChangeCallback (Callback<void> callback)
 {
   m_linkChanges.ConnectWithoutContext (callback);
 }
 
 bool
-TdmaNetDevice::IsBroadcast (void) const
+SerialNetDevice::IsBroadcast (void) const
 {
   return true;
 }
 
 Address
-TdmaNetDevice::GetBroadcast (void) const
+SerialNetDevice::GetBroadcast (void) const
 {
   return Mac48Address::GetBroadcast ();
 }
 
 bool
-TdmaNetDevice::IsMulticast (void) const
+SerialNetDevice::IsMulticast (void) const
 {
   return true;
 }
 
 Address
-TdmaNetDevice::GetMulticast (Ipv4Address multicastGroup) const
+SerialNetDevice::GetMulticast (Ipv4Address multicastGroup) const
 {
   return Mac48Address::GetMulticast (multicastGroup);
 }
 
-Address TdmaNetDevice::GetMulticast (Ipv6Address addr) const
+Address SerialNetDevice::GetMulticast (Ipv6Address addr) const
 {
   return Mac48Address::GetMulticast (addr);
 }
 
 bool
-TdmaNetDevice::IsPointToPoint (void) const
+SerialNetDevice::IsPointToPoint (void) const
 {
   return false;
 }
 
 bool
-TdmaNetDevice::IsBridge (void) const
+SerialNetDevice::IsBridge (void) const
 {
   return false;
 }
 
 bool
-TdmaNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber)
+SerialNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber)
 {
   NS_LOG_FUNCTION (*packet << " Dest:" << dest << " ProtocolNo:" << protocolNumber);
   NS_ASSERT (Mac48Address::IsMatchingType (dest));
@@ -296,19 +296,19 @@ TdmaNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolN
 }
 
 bool
-TdmaNetDevice::NeedsArp (void) const
+SerialNetDevice::NeedsArp (void) const
 {
   return true;
 }
 
 void
-TdmaNetDevice::SetReceiveCallback (NetDevice::ReceiveCallback cb)
+SerialNetDevice::SetReceiveCallback (NetDevice::ReceiveCallback cb)
 {
   m_forwardUp = cb;
 }
 
 void
-TdmaNetDevice::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
+SerialNetDevice::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
 {
   NS_LOG_FUNCTION (*packet << from << to);
   LlcSnapHeader llc;
@@ -349,21 +349,21 @@ TdmaNetDevice::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to
 }
 
 void
-TdmaNetDevice::LinkUp (void)
+SerialNetDevice::LinkUp (void)
 {
   m_linkUp = true;
   m_linkChanges ();
 }
 
 void
-TdmaNetDevice::LinkDown (void)
+SerialNetDevice::LinkDown (void)
 {
   m_linkUp = false;
   m_linkChanges ();
 }
 
 bool
-TdmaNetDevice::SendFrom (Ptr<Packet> packet, const Address& source, const Address& dest, uint16_t protocolNumber)
+SerialNetDevice::SendFrom (Ptr<Packet> packet, const Address& source, const Address& dest, uint16_t protocolNumber)
 {
   NS_LOG_FUNCTION_NOARGS ();
   NS_ASSERT (Mac48Address::IsMatchingType (dest));
@@ -378,45 +378,45 @@ TdmaNetDevice::SendFrom (Ptr<Packet> packet, const Address& source, const Addres
 }
 
 void
-TdmaNetDevice::SetPromiscReceiveCallback (PromiscReceiveCallback cb)
+SerialNetDevice::SetPromiscReceiveCallback (PromiscReceiveCallback cb)
 {
   m_promiscRx = cb;
 }
 
 bool
-TdmaNetDevice::SupportsSendFrom (void) const
+SerialNetDevice::SupportsSendFrom (void) const
 {
   return m_mac->SupportsSendFrom ();
 }
 
 bool
-TdmaNetDevice::TxQueueStart (uint32_t index)
+SerialNetDevice::TxQueueStart (uint32_t index)
 {
   m_queueStateChanges (index);
   return true;
 }
 
 bool
-TdmaNetDevice::TxQueueStop (uint32_t index)
+SerialNetDevice::TxQueueStop (uint32_t index)
 {
   m_queueStateChanges (index);
   return true;
 }
 
 uint32_t
-TdmaNetDevice::GetQueueState (uint32_t index)
+SerialNetDevice::GetQueueState (uint32_t index)
 {
   return m_mac->GetQueueState (index);
 }
 
 uint32_t
-TdmaNetDevice::GetNQueues (void)
+SerialNetDevice::GetNQueues (void)
 {
   return m_mac->GetNQueues ();
 }
 
 void
-TdmaNetDevice::SetQueueStateChangeCallback (Callback<void,uint32_t> callback)
+SerialNetDevice::SetQueueStateChangeCallback (Callback<void,uint32_t> callback)
 {
   m_queueStateChanges.ConnectWithoutContext (callback);
 }

@@ -3,10 +3,12 @@ s/tdma-central-mac/serial-central/g
 s/tdma-controller-helper/serial-controller-helper/g
 s/tdma-controller/serial-controller/g
 s/tdma-helper/serial-helper/g
-s/tdma-mac-low/serial/g
+s/tdma-mac-low/serial-low/g
 s/tdma-mac-net-device/serial-net-device/g
 s/tdma-mac-queue/serial-queue/g
 s/tdma-mac/serial/g
 s/tdma-example/serial-example/g
 s/Tdma/Serial/g
 s/tdma/serial/g
+s/TDMA/TDMA/g
+s/CENTRALIZED/SENTRALIZED/g

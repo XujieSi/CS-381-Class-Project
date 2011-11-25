@@ -28,11 +28,11 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMACONTROLLERHELPER_H_
-#define TDMACONTROLLERHELPER_H_
+#ifndef SERIALCONTROLLERHELPER_H_
+#define SERIALCONTROLLERHELPER_H_
 
 #include "ns3/object-factory.h"
-#include "ns3/tdma-controller.h"
+#include "ns3/serial-controller.h"
 
 
 namespace ns3 {
@@ -40,13 +40,13 @@ namespace ns3 {
  * \ingroup aodv
  * \brief Helper class that adds AODV routing to nodes.
  */
-class TdmaControllerHelper
+class SerialControllerHelper
 {
 public:
-  TdmaControllerHelper ();
-  ~TdmaControllerHelper ();
+  SerialControllerHelper ();
+  ~SerialControllerHelper ();
 
-  Ptr<TdmaController> Create (void) const;
+  Ptr<SerialController> Create (void) const;
   /**
    * \param name the name of the attribute to set
    * \param value the value of the attribute to set.
@@ -54,11 +54,11 @@ public:
    * This method controls the attributes of ns3::aodv::RoutingProtocol
    */
   void Set (std::string name, const AttributeValue &value);
-  TdmaControllerHelper* Copy (void) const;
+  SerialControllerHelper* Copy (void) const;
 
 private:
   ObjectFactory m_agentFactory;
 };
 
 }
-#endif /* TDMACONTROLLERHELPER_H_ */
+#endif /* SERIALCONTROLLERHELPER_H_ */

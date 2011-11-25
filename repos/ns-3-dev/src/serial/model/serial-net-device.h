@@ -28,52 +28,52 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_NET_DEVICE_H
-#define TDMA_NET_DEVICE_H
+#ifndef SERIAL_NET_DEVICE_H
+#define SERIAL_NET_DEVICE_H
 
+#include <string>
 #include "ns3/net-device.h"
 #include "ns3/packet.h"
 #include "ns3/traced-callback.h"
 #include "ns3/mac48-address.h"
-#include "ns3/tdma-mac.h"
+#include "ns3/serial.h"
 #include "ns3/simple-wireless-channel.h"
-#include "tdma-controller.h"
-#include <string>
+#include "serial-controller.h"
 
 namespace ns3 {
 
 class SimpleWirelessChannel;
-class TdmaController;
+class SerialController;
 /**
- * \brief Hold together all Tdma-related objects.
+ * \brief Hold together all Serial-related objects.
  *
  * This class holds together ns3::SimpleWirelessChannel and
- * ns3::TdmaMac
+ * ns3::SerialMac
  */
-class TdmaNetDevice : public NetDevice
+class SerialNetDevice : public NetDevice
 {
 public:
   static TypeId GetTypeId (void);
 
-  TdmaNetDevice ();
-  virtual ~TdmaNetDevice ();
+  SerialNetDevice ();
+  virtual ~SerialNetDevice ();
 
   /**
    * \param mac the mac layer to use.
    */
-  void SetMac (Ptr<TdmaMac> mac);
+  void SetMac (Ptr<SerialMac> mac);
   /**
    * \returns the mac we are currently using.
    */
-  Ptr<TdmaMac> GetMac (void) const;
+  Ptr<SerialMac> GetMac (void) const;
   /**
    * \param channel The channel this device is attached to
    */
   void SetChannel (Ptr<SimpleWirelessChannel> channel);
   /**
-   * \param controller The tdma controller this device is attached to
+   * \param controller The serial controller this device is attached to
    */
-  void SetTdmaController (Ptr<TdmaController> controller);
+  void SetSerialController (Ptr<SerialController> controller);
 
   // inherited from NetDevice base class.
   virtual void SetIfIndex (const uint32_t index);
@@ -118,13 +118,13 @@ private:
   void LinkDown (void);
   void Setup (void);
   Ptr<SimpleWirelessChannel> DoGetChannel (void) const;
-  Ptr<TdmaController> GetTdmaController (void) const;
+  Ptr<SerialController> GetSerialController (void) const;
   void CompleteConfig (void);
 
   Ptr<Node> m_node;
-  Ptr<TdmaMac> m_mac;
+  Ptr<SerialMac> m_mac;
   Ptr<SimpleWirelessChannel> m_channel;
-  Ptr<TdmaController> m_tdmaController;
+  Ptr<SerialController> m_serialController;
   NetDevice::ReceiveCallback m_forwardUp;
   NetDevice::PromiscReceiveCallback m_promiscRx;
 
@@ -144,4 +144,4 @@ private:
 
 } // namespace ns3
 
-#endif /* TDMA_NET_DEVICE_H */
+#endif /* SERIAL_NET_DEVICE_H */

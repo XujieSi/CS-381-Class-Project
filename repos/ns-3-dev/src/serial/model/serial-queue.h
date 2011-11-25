@@ -28,20 +28,20 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_MAC_QUEUE_H
-#define TDMA_MAC_QUEUE_H
+#ifndef SERIAL_MAC_QUEUE_H
+#define SERIAL_MAC_QUEUE_H
 
 #include <list>
 #include "ns3/packet.h"
 #include "ns3/nstime.h"
 #include "ns3/object.h"
-#include "ns3/tdma-mac.h"
+#include "ns3/serial.h"
 #include "ns3/wifi-mac-header.h"
 
 
 namespace ns3 {
 /**
- * \brief a TDMA MAC queue.
+ * \brief a SERIAL MAC queue.
  *
  * This queue implements what is needed for the 802.11e standard
  * Specifically, it refers to 802.11e/D9, section 9.9.1.6, paragraph 6.
@@ -54,31 +54,31 @@ namespace ns3 {
  * to verify whether or not it should be dropped. If m_maxDelay has
  * elapsed, it is dropped. Otherwise, it is returned to the caller.
  */
-class TdmaMacQueue : public Object
+class SerialMacQueue : public Object
 {
 public:
-  typedef Callback<void, Ptr<const Packet> > TdmaMacTxDropCallback;
+  typedef Callback<void, Ptr<const Packet> > SerialMacTxDropCallback;
 
   static TypeId GetTypeId (void);
-  TdmaMacQueue ();
-  ~TdmaMacQueue ();
+  SerialMacQueue ();
+  ~SerialMacQueue ();
 
-  void SetMacPtr (Ptr<TdmaMac> macPtr);
+  void SetMacPtr (Ptr<SerialMac> macPtr);
   /**
-   * \brief sets max size of a TdmaMacQueue
+   * \brief sets max size of a SerialMacQueue
    */
   void SetMaxSize (uint32_t maxSize);
   /**
-   * \brief sets max time a packet could stay in TdmaMacQueue
+   * \brief sets max time a packet could stay in SerialMacQueue
    */
   void SetMaxDelay (Time delay);
   /**
-   * \brief returns max size of TdmaMacQueue. Packets trying to enqueue after
+   * \brief returns max size of SerialMacQueue. Packets trying to enqueue after
    * reaching max size will be dropped
    */
   uint32_t GetMaxSize (void) const;
   /**
-   * \brief returns max time a packet could stay in TdmaMacQueue
+   * \brief returns max time a packet could stay in SerialMacQueue
    */
   Time GetMaxDelay (void) const;
 
@@ -86,7 +86,7 @@ public:
   /**
    * \brief Dequeues a packet based on the header passed to it
    *
-   * \param hdr header to be dequeued from the TdmaMacQueue
+   * \param hdr header to be dequeued from the SerialMacQueue
    */
   Ptr<const Packet> Dequeue (WifiMacHeader *hdr);
   Ptr<const Packet> Peek (WifiMacHeader *hdr);
@@ -96,14 +96,14 @@ public:
    * performed in linear time (O(n)).
    */
   bool Remove (Ptr<const Packet> packet);
-  void SetTdmaMacTxDropCallback (Callback<void,Ptr<const Packet> > callback);
+  void SetSerialMacTxDropCallback (Callback<void,Ptr<const Packet> > callback);
   void Flush (void);
   /**
-   * \brief returns true is TdmaMacQueue is empty
+   * \brief returns true is SerialMacQueue is empty
    */
   bool IsEmpty (void);
   /**
-   * \brief returns size of TdmaMacQueue
+   * \brief returns size of SerialMacQueue
    */
   uint32_t GetSize (void);
 private:
@@ -131,8 +131,8 @@ private:
   uint32_t m_maxSize;
   Time m_maxDelay;
   uint32_t m_count;
-  Ptr<TdmaMac> m_macPtr;
-  TdmaMacTxDropCallback m_txDropCallback;
+  Ptr<SerialMac> m_macPtr;
+  SerialMacTxDropCallback m_txDropCallback;
 };
 
 } // namespace ns3

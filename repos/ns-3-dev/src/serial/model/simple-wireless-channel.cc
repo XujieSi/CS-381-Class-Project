@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Modified by Hemanth Narra <hemanthnarra222@gmail.com> to suit the
- * TDMA implementation.
+ * SERIAL implementation.
  */
 #include "simple-wireless-channel.h"
 #include "ns3/simulator.h"
@@ -55,12 +55,12 @@ SimpleWirelessChannel::SimpleWirelessChannel ()
 }
 
 void
-SimpleWirelessChannel::Send (Ptr<const Packet> p, Ptr<TdmaMacLow> sender)
+SimpleWirelessChannel::Send (Ptr<const Packet> p, Ptr<SerialMacLow> sender)
 {
   NS_LOG_FUNCTION (p << sender);
-  for (TdmaMacLowList::const_iterator i = m_tdmaMacLowList.begin (); i != m_tdmaMacLowList.end (); ++i)
+  for (SerialMacLowList::const_iterator i = m_serialMacLowList.begin (); i != m_serialMacLowList.end (); ++i)
     {
-      Ptr<TdmaMacLow> tmp = *i;
+      Ptr<SerialMacLow> tmp = *i;
       if (tmp->GetDevice () == sender->GetDevice ())
         {
           continue;
@@ -80,27 +80,27 @@ SimpleWirelessChannel::Send (Ptr<const Packet> p, Ptr<TdmaMacLow> sender)
                     tmp->GetDevice ()->GetNode ()->GetId () << " at distance " << distance <<
                     " meters; arriving time (ns): " << propagationTime);
       Simulator::ScheduleWithContext (tmp->GetDevice ()->GetNode ()->GetId (),(propagationTime),
-                                      &TdmaMacLow::Receive, tmp, p->Copy ());
+                                      &SerialMacLow::Receive, tmp, p->Copy ());
     }
 }
 
 void
-SimpleWirelessChannel::Add (Ptr<TdmaMacLow> tdmaMacLow)
+SimpleWirelessChannel::Add (Ptr<SerialMacLow> serialMacLow)
 {
-  NS_LOG_DEBUG (this << " " << tdmaMacLow);
-  m_tdmaMacLowList.push_back (tdmaMacLow);
-  NS_LOG_DEBUG ("current m_tdmaMacLowList size: " << m_tdmaMacLowList.size ());
+  NS_LOG_DEBUG (this << " " << serialMacLow);
+  m_serialMacLowList.push_back (serialMacLow);
+  NS_LOG_DEBUG ("current m_serialMacLowList size: " << m_serialMacLowList.size ());
 }
 
 uint32_t
 SimpleWirelessChannel::GetNDevices (void) const
 {
-  return m_tdmaMacLowList.size ();
+  return m_serialMacLowList.size ();
 }
 Ptr<NetDevice>
 SimpleWirelessChannel::GetDevice (uint32_t i) const
 {
-  return m_tdmaMacLowList[i]->GetDevice ();
+  return m_serialMacLowList[i]->GetDevice ();
 }
 
 double

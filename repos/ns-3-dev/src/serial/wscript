@@ -1,39 +1,39 @@
 ## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
 
 def build(bld):
-    module = bld.create_ns3_module('simple-wireless-tdma', ['network', 'propagation', 'core'])
+    module = bld.create_ns3_module('serial', ['network', 'propagation', 'core'])
     module.includes = '.'
     module.source = [
         'model/simple-wireless-channel.cc',
-        'model/tdma-mac.cc',
-        'model/tdma-central-mac.cc',
-        'model/tdma-mac-net-device.cc',
-        'model/tdma-mac-low.cc',
-        'model/tdma-controller.cc',
-        'model/tdma-mac-queue.cc',
-        'helper/tdma-slot-assignment-parser.cc',
-        'helper/tdma-controller-helper.cc',
-        'helper/tdma-helper.cc',
+        'model/serial.cc',
+        'model/serial-central.cc',
+        'model/serial-net-device.cc',
+        'model/serial-low.cc',
+        'model/serial-controller.cc',
+        'model/serial-queue.cc',
+        'helper/slot-assignment-parser.cc',
+        'helper/serial-controller-helper.cc',
+        'helper/serial-helper.cc',
         ]
         
-    module_test = bld.create_ns3_module_test_library('simple-wireless-tdma')
+    module_test = bld.create_ns3_module_test_library('serial')
     module_test.source = [
-        'test/tdma-test.cc',
+        'test/serial-test.cc',
         ]
         
     headers = bld.new_task_gen(features=['ns3header'])
-    headers.module = 'simple-wireless-tdma'
+    headers.module = 'serial'
     headers.source = [
         'model/simple-wireless-channel.h',
-        'model/tdma-mac.h',
-        'model/tdma-central-mac.h',
-        'model/tdma-mac-net-device.h',
-        'model/tdma-mac-low.h',
-        'model/tdma-controller.h',
-        'model/tdma-mac-queue.h',
-        'helper/tdma-slot-assignment-parser.h',
-        'helper/tdma-controller-helper.h',
-        'helper/tdma-helper.h',        
+        'model/serial.h',
+        'model/serial-low.h',
+        'model/serial-central.h',
+        'model/serial-net-device.h',
+        'model/serial-controller.h',
+        'model/serial-queue.h',
+        'helper/slot-assignment-parser.h',
+        'helper/serial-controller-helper.h',
+        'helper/serial-helper.h',        
         ]
 
     if (bld.env['ENABLE_EXAMPLES']):

@@ -28,8 +28,8 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#include "tdma-helper.h"
-#include "ns3/tdma-mac-net-device.h"
+#include "serial-helper.h"
+#include "ns3/serial-net-device.h"
 #include "ns3/simple-wireless-channel.h"
 #include "ns3/channel.h"
 #include "ns3/mobility-model.h"
@@ -38,7 +38,7 @@
 #include "ns3/simulator.h"
 #include "ns3/names.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaHelper");
+NS_LOG_COMPONENT_DEFINE ("SerialHelper");
 
 namespace ns3 {
 
@@ -78,28 +78,28 @@ static void AsciiMacTxDropEventWithoutContext (Ptr<OutputStreamWrapper> stream, 
   *stream->GetStream () << "d " << Simulator::Now ().GetSeconds () << " " << *packet << std::endl;
 }
 
-TdmaHelper::TdmaHelper (uint32_t numNodes, uint32_t numSlots) : m_controller (0),
+SerialHelper::SerialHelper (uint32_t numNodes, uint32_t numSlots) : m_controller (0),
                                                                 m_controllerHelper (0),
                                                                 m_slotAllotmentArray (0),
                                                                 m_numRows (numNodes),
                                                                 m_numCols (numSlots + 1)
 {
   NS_LOG_FUNCTION (this << numNodes << numSlots);
-  m_mac.SetTypeId ("ns3::TdmaCentralMac");
+  m_mac.SetTypeId ("ns3::SerialCentralMac");
   m_channel = CreateObject<SimpleWirelessChannel> ();
   Allocate2D ();
   SetDefaultSlots ();
 }
 
-TdmaHelper::TdmaHelper (std::string filename) : m_controller (0),
+SerialHelper::SerialHelper (std::string filename) : m_controller (0),
                                                 m_controllerHelper (0),
                                                 m_slotAllotmentArray (0),
                                                 m_filename (filename)
 {
   NS_LOG_FUNCTION (this << m_filename);
-  m_mac.SetTypeId ("ns3::TdmaCentralMac");
+  m_mac.SetTypeId ("ns3::SerialCentralMac");
   m_channel = CreateObject<SimpleWirelessChannel> ();
-  m_parser = CreateObject<TdmaSlotAssignmentFileParser> (m_filename);
+  m_parser = CreateObject<SerialSlotAssignmentFileParser> (m_filename);
   if (! m_parser->GetParseState()) return;
   m_numRows = m_parser->GetNodeCount ();
   m_numCols = m_parser->GetTotalSlots () + 1; // +1 for nodeid in first column
@@ -107,7 +107,7 @@ TdmaHelper::TdmaHelper (std::string filename) : m_controller (0),
   SetSlots ();
 }
 
-TdmaHelper::TdmaHelper (int numNodes, int numSlots, ...)
+SerialHelper::SerialHelper (int numNodes, int numSlots, ...)
       : m_controller (0),
         m_controllerHelper (0),
         m_slotAllotmentArray (0),
@@ -117,7 +117,7 @@ TdmaHelper::TdmaHelper (int numNodes, int numSlots, ...)
   NS_LOG_FUNCTION (this << numNodes << numSlots);
   va_list args;
   va_start (args, numSlots);
-  m_mac.SetTypeId ("ns3::TdmaCentralMac");
+  m_mac.SetTypeId ("ns3::SerialCentralMac");
   m_channel = CreateObject<SimpleWirelessChannel> ();
   Allocate2D ();
   NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
@@ -137,20 +137,20 @@ TdmaHelper::TdmaHelper (int numNodes, int numSlots, ...)
   NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols << PrintSlotAllotmentArray() );
 }
 
-TdmaHelper::~TdmaHelper ()
+SerialHelper::~SerialHelper ()
 {
   NS_LOG_FUNCTION (this);
   Deallocate2D ();
 }
 
 void
-TdmaHelper::SetFileName (std::string filename)
+SerialHelper::SetFileName (std::string filename)
 {
   m_filename = filename;
 }
 
 void
-TdmaHelper::SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelper)
+SerialHelper::SetSerialControllerHelper (const SerialControllerHelper &controllerHelper)
 {
   NS_LOG_FUNCTION (this);
   delete m_controllerHelper;
@@ -159,7 +159,7 @@ TdmaHelper::SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelpe
   m_controller->SetTotalSlotsAllowed (m_numCols - 1);
 }
 
-void TdmaHelper::Deallocate2D (void)
+void SerialHelper::Deallocate2D (void)
 {
   for (uint32_t i = 0; i < m_numRows; i++)
     {
@@ -173,7 +173,7 @@ void TdmaHelper::Deallocate2D (void)
  * number of rows and columns specified.
  * Initialize it to 0
  */
-void TdmaHelper::Allocate2D (void)
+void SerialHelper::Allocate2D (void)
 {
   NS_LOG_FUNCTION (this);
   m_slotAllotmentArray = (uint32_t**)malloc (m_numRows * sizeof(int*));
@@ -199,7 +199,7 @@ void TdmaHelper::Allocate2D (void)
  * much as possible, to give continuous slots for a node.
  */
 void
-TdmaHelper::SetDefaultSlots (void)
+SerialHelper::SetDefaultSlots (void)
 {
   NS_LOG_FUNCTION (this);
   int continuousSlots = (m_numCols - 1) / m_numRows;
@@ -232,7 +232,7 @@ TdmaHelper::SetDefaultSlots (void)
  * arrays produced by the slot assignment parser.
  */
 void
-TdmaHelper::SetSlots (void)
+SerialHelper::SetSlots (void)
 {
   NS_LOG_INFO("was " << PrintSlotAllotmentArray ());
   std::vector<SlotArray> & slotArrays = m_parser->GetSlotArrays ();
@@ -248,7 +248,7 @@ TdmaHelper::SetSlots (void)
 }
 
 void
-TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
+SerialHelper::AssignSerialSlots (Ptr<SerialMac> mac, uint32_t nodeId) const
 {
   NS_LOG_FUNCTION (this << mac << nodeId);
   for (uint32_t i = 0; i < m_numRows; i++)
@@ -259,7 +259,7 @@ TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
             {
               //validation of the slots
               NS_ASSERT_MSG (((m_slotAllotmentArray[i][j] == 0) || (m_slotAllotmentArray[i][j] == 1)),
-                             "Tdma slots should be assigned with only 0 or 1");
+                             "Serial slots should be assigned with only 0 or 1");
               for (uint32_t k = 0; k < m_numRows; k++)
                 {
                   if (k == i)
@@ -271,7 +271,7 @@ TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
                 }
               if (m_slotAllotmentArray[i][j] == 1)
                 {
-                  m_controller->AddTdmaSlot (j - 1,mac);
+                  m_controller->AddSerialSlot (j - 1,mac);
                 }
             }
         }
@@ -279,7 +279,7 @@ TdmaHelper::AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const
 }
 
 std::string
-TdmaHelper::PrintSlotAllotmentArray (void) const
+SerialHelper::PrintSlotAllotmentArray (void) const
 {
   std::stringstream ss;
   ss << "Slot Allotment Array\n";
@@ -296,7 +296,7 @@ TdmaHelper::PrintSlotAllotmentArray (void) const
 }
 
 NetDeviceContainer
-TdmaHelper::Install (NodeContainer c) const
+SerialHelper::Install (NodeContainer c) const
 {
   NS_LOG_FUNCTION (this);
   NetDeviceContainer devices;
@@ -304,13 +304,13 @@ TdmaHelper::Install (NodeContainer c) const
   for (NodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
     {
       Ptr<Node> node = *i;
-      Ptr<TdmaNetDevice> device = CreateObject<TdmaNetDevice> ();
-      Ptr<TdmaMac> mac = m_mac.Create<TdmaMac> ();
+      Ptr<SerialNetDevice> device = CreateObject<SerialNetDevice> ();
+      Ptr<SerialMac> mac = m_mac.Create<SerialMac> ();
       mac->SetAddress (Mac48Address::Allocate ());
-      AssignTdmaSlots (mac,node->GetId ());
+      AssignSerialSlots (mac,node->GetId ());
       device->SetMac (mac);
       device->SetChannel (m_channel);
-      device->SetTdmaController (m_controller);
+      device->SetSerialController (m_controller);
       node->AddDevice (device);
       devices.Add (device);
     }
@@ -318,14 +318,14 @@ TdmaHelper::Install (NodeContainer c) const
 }
 
 NetDeviceContainer
-TdmaHelper::Install (Ptr<Node> node) const
+SerialHelper::Install (Ptr<Node> node) const
 {
   NS_LOG_FUNCTION (this << node);
   return Install (NodeContainer (node));
 }
 
 NetDeviceContainer
-TdmaHelper::Install (std::string nodeName) const
+SerialHelper::Install (std::string nodeName) const
 {
   NS_LOG_FUNCTION (this << nodeName);
   Ptr<Node> node = Names::Find<Node> (nodeName);
@@ -333,30 +333,30 @@ TdmaHelper::Install (std::string nodeName) const
 }
 
 void
-TdmaHelper::EnableLogComponents (void)
+SerialHelper::EnableLogComponents (void)
 {
-  LogComponentEnable ("TdmaHelper", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaControllerHelper", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaCentralMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaMacLow", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaController", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaMacQueue", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaNetDevice", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialHelper", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialControllerHelper", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialCentralMac", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialMacLow", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialController", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialMacQueue", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialNetDevice", LOG_LEVEL_ALL);
   LogComponentEnable ("SimpleWirelessChannel", LOG_LEVEL_ALL);
-  LogComponentEnable ("TdmaSlotAssignmentFileParser", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialSlotAssignmentFileParser", LOG_LEVEL_ALL);
 }
 
 void
-TdmaHelper::EnableAsciiInternal (
+SerialHelper::EnableAsciiInternal (
   Ptr<OutputStreamWrapper> stream,
   std::string prefix,
   Ptr<NetDevice> nd,
   bool explicitFilename)
 {
-  Ptr<TdmaNetDevice> device = nd->GetObject<TdmaNetDevice> ();
+  Ptr<SerialNetDevice> device = nd->GetObject<SerialNetDevice> ();
   if (device == 0)
     {
-      NS_LOG_INFO ("TdmaHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::TdmaNetDevice");
+      NS_LOG_INFO ("SerialHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::SerialNetDevice");
       return;
     }
 
@@ -403,17 +403,17 @@ TdmaHelper::EnableAsciiInternal (
       // creation time, it doesn't seem much of a price to pay.
       //
       oss.str ("");
-      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacRx";
+      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacRx";
       Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacRxOkEventWithoutContext, theStream));
 
       oss.str ("");
 
-      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTx";
+      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacTx";
       Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacTxEventWithoutContext, theStream));
 
       oss.str ("");
 
-      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTxDrop";
+      oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacTxDrop";
       Config::ConnectWithoutContext (oss.str (), MakeBoundCallback (&AsciiMacTxDropEventWithoutContext, theStream));
 
       return;
@@ -426,17 +426,17 @@ TdmaHelper::EnableAsciiInternal (
   // compatibility and simplicity, we just use Config::Connect and let it deal
   // with coming up with a context.
   //
-  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacRx";
+  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacRx";
   Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacRxOkEventWithContext, stream));
 
   oss.str ("");
 
-  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTx";
+  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacTx";
   Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacTxEventWithContext, stream));
 
   oss.str ("");
 
-  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::TdmaNetDevice/Mac/MacTxDrop";
+  oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::SerialNetDevice/Mac/MacTxDrop";
   Config::Connect (oss.str (), MakeBoundCallback (&AsciiMacTxDropEventWithContext, stream));
 }
 } // namespace ns3

@@ -31,15 +31,15 @@
 #include "ns3/simulator.h"
 #include "ns3/uinteger.h"
 #include "ns3/log.h"
-#include "tdma-mac-queue.h"
+#include "serial-queue.h"
 
 using namespace std;
-NS_LOG_COMPONENT_DEFINE ("TdmaMacQueue");
+NS_LOG_COMPONENT_DEFINE ("SerialMacQueue");
 namespace ns3 {
 
-NS_OBJECT_ENSURE_REGISTERED (TdmaMacQueue);
+NS_OBJECT_ENSURE_REGISTERED (SerialMacQueue);
 
-TdmaMacQueue::Item::Item (Ptr<const Packet> packet,
+SerialMacQueue::Item::Item (Ptr<const Packet> packet,
                           const WifiMacHeader &hdr,
                           Time tstamp)
   : packet (packet),
@@ -49,73 +49,73 @@ TdmaMacQueue::Item::Item (Ptr<const Packet> packet,
 }
 
 TypeId
-TdmaMacQueue::GetTypeId (void)
+SerialMacQueue::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::TdmaMacQueue")
+  static TypeId tid = TypeId ("ns3::SerialMacQueue")
     .SetParent<Object> ()
-    .AddConstructor<TdmaMacQueue> ()
+    .AddConstructor<SerialMacQueue> ()
     .AddAttribute ("MaxPacketNumber", "If a packet arrives when there are already this number of packets, it is dropped.",
                    UintegerValue (400),
-                   MakeUintegerAccessor (&TdmaMacQueue::m_maxSize),
+                   MakeUintegerAccessor (&SerialMacQueue::m_maxSize),
                    MakeUintegerChecker<uint32_t> ())
     .AddAttribute ("MaxDelay", "If a packet stays longer than this delay in the queue, it is dropped.",
                    TimeValue (Seconds (10.0)),
-                   MakeTimeAccessor (&TdmaMacQueue::m_maxDelay),
+                   MakeTimeAccessor (&SerialMacQueue::m_maxDelay),
                    MakeTimeChecker ())
   ;
   return tid;
 }
 
-TdmaMacQueue::TdmaMacQueue ()
+SerialMacQueue::SerialMacQueue ()
   : m_size (0),
     m_count (0)
 {
   NS_LOG_FUNCTION_NOARGS ();
 }
 
-TdmaMacQueue::~TdmaMacQueue ()
+SerialMacQueue::~SerialMacQueue ()
 {
   Flush ();
 }
 
 void
-TdmaMacQueue::SetMaxSize (uint32_t maxSize)
+SerialMacQueue::SetMaxSize (uint32_t maxSize)
 {
   m_maxSize = maxSize;
 }
 
 void
-TdmaMacQueue::SetMacPtr (Ptr<TdmaMac> macPtr)
+SerialMacQueue::SetMacPtr (Ptr<SerialMac> macPtr)
 {
   m_macPtr = macPtr;
 }
 
 void
-TdmaMacQueue::SetMaxDelay (Time delay)
+SerialMacQueue::SetMaxDelay (Time delay)
 {
   m_maxDelay = delay;
 }
 
 void
-TdmaMacQueue::SetTdmaMacTxDropCallback (Callback<void,Ptr<const Packet> > callback)
+SerialMacQueue::SetSerialMacTxDropCallback (Callback<void,Ptr<const Packet> > callback)
 {
   m_txDropCallback = callback;
 }
 
 uint32_t
-TdmaMacQueue::GetMaxSize (void) const
+SerialMacQueue::GetMaxSize (void) const
 {
   return m_maxSize;
 }
 
 Time
-TdmaMacQueue::GetMaxDelay (void) const
+SerialMacQueue::GetMaxDelay (void) const
 {
   return m_maxDelay;
 }
 
 bool
-TdmaMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
+SerialMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
 {
   NS_LOG_DEBUG ("Queue Size: " << GetSize () << " Max Size: " << GetMaxSize ());
   Cleanup ();
@@ -132,7 +132,7 @@ TdmaMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
 }
 
 void
-TdmaMacQueue::Cleanup (void)
+SerialMacQueue::Cleanup (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
   if (m_queue.empty ())
@@ -163,7 +163,7 @@ TdmaMacQueue::Cleanup (void)
 }
 
 Ptr<const Packet>
-TdmaMacQueue::Dequeue (WifiMacHeader *hdr)
+SerialMacQueue::Dequeue (WifiMacHeader *hdr)
 {
   NS_LOG_FUNCTION_NOARGS ();
   Cleanup ();
@@ -180,7 +180,7 @@ TdmaMacQueue::Dequeue (WifiMacHeader *hdr)
 }
 
 Ptr<const Packet>
-TdmaMacQueue::Peek (WifiMacHeader *hdr)
+SerialMacQueue::Peek (WifiMacHeader *hdr)
 {
   NS_LOG_FUNCTION_NOARGS ();
   Cleanup ();
@@ -194,27 +194,27 @@ TdmaMacQueue::Peek (WifiMacHeader *hdr)
 }
 
 bool
-TdmaMacQueue::IsEmpty (void)
+SerialMacQueue::IsEmpty (void)
 {
   Cleanup ();
   return m_queue.empty ();
 }
 
 uint32_t
-TdmaMacQueue::GetSize (void)
+SerialMacQueue::GetSize (void)
 {
   return m_size;
 }
 
 void
-TdmaMacQueue::Flush (void)
+SerialMacQueue::Flush (void)
 {
   m_queue.erase (m_queue.begin (), m_queue.end ());
   m_size = 0;
 }
 
 Mac48Address
-TdmaMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI it)
+SerialMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI it)
 {
   if (type == WifiMacHeader::ADDR1)
     {
@@ -232,7 +232,7 @@ TdmaMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQ
 }
 
 bool
-TdmaMacQueue::Remove (Ptr<const Packet> packet)
+SerialMacQueue::Remove (Ptr<const Packet> packet)
 {
   PacketQueueI it = m_queue.begin ();
   for (; it != m_queue.end (); it++)

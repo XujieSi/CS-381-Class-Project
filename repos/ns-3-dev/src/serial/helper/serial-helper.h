@@ -28,64 +28,65 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_HELPER_H
-#define TDMA_HELPER_H
+#ifndef SERIAL_HELPER_H
+#define SERIAL_HELPER_H
 
 #include <string>
 #include <stdarg.h>
 #include "ns3/attribute.h"
-#include "ns3/tdma-mac.h"
+#include "ns3/serial.h"
+#include "ns3/serial-low.h"
 #include "ns3/object-factory.h"
 #include "ns3/node-container.h"
 #include "ns3/net-device-container.h"
 #include "ns3/trace-helper.h"
-#include "ns3/tdma-controller-helper.h"
-#include "tdma-slot-assignment-parser.h"
+#include "ns3/serial-controller-helper.h"
+#include "slot-assignment-parser.h"
 
 namespace ns3 {
 
-class TdmaMac;
-class TdmaNetDevice;
+class SerialMac;
+class SerialNetDevice;
 class Node;
-class TdmaController;
+class SerialController;
 
 /**
  * \brief create MAC objects
  *
  * This base class must be implemented by new MAC implementation which wish to integrate
- * with the \ref ns3::TdmaHelper class.
+ * with the \ref ns3::SerialHelper class.
  */
-class TdmaMacHelper
+class SerialMacHelper
 {
 public:
-  virtual ~TdmaMacHelper ();
+  virtual ~SerialMacHelper ();
   /**
    * \returns a new MAC object.
    *
-   * Subclasses must implement this method to allow the ns3::TdmaHelper class
-   * to create MAC objects from ns3::TdmaHelper::Install.
+   * Subclasses must implement this method to allow the ns3::SerialHelper class
+   * to create MAC objects from ns3::SerialHelper::Install.
    */
-  virtual Ptr<TdmaMac> Create (void) const = 0;
+  virtual Ptr<SerialMac> Create (void) const = 0;
 };
 
 /**
- * \brief helps to create TdmaNetDevice objects and ensures creation of a centralized
- * TdmaController which takes care of the slot scheduling
+ * \brief helps to create SerialNetDevice objects and ensures creation of a centralized
+ * SerialController which takes care of the slot scheduling
  */
-class TdmaHelper : public AsciiTraceHelperForDevice
+class SerialHelper : public AsciiTraceHelperForDevice
 {
 public:
   /**
    * Constructor with two attributes
    *
-   * \param numNodes number of nodes in the TDMA frame
+   * \param numNodes number of nodes in the SERIAL frame
    * \param numSlots total number of slots per frame
    */
-  TdmaHelper (uint32_t numNodes, uint32_t numSlots);
+  SerialHelper (uint32_t numNodes, uint32_t numSlots);
   /**
    * Constructor with filename for slot assignment
    *
-   * \param fileName file name that contains the TDMA slot assignment.
+   * \param fileName file name that contains the SERIAL slot assignment.
    * Slot file must be of the format specified below. nodeId followed by
    * ':' and then slot assignment with ',' seperating the slots
    * 0:1,1,0,0,0
@@ -93,28 +94,28 @@ public:
    * 2:0,0,0,1,0
    * 3:0,0,0,0,1
    */
-  TdmaHelper (std::string fileName);
+  SerialHelper (std::string fileName);
   /**
-    * \brief used to set the TDMA slots from the simulation script
+    * \brief used to set the SERIAL slots from the simulation script
     * useful for low number of nodes. If the number of nodes is more, it is
-    * advisable to use the external file to set TDMA slots.
-    * For example, assume tdma is a TdmaHelper object, the slot assignment
+    * advisable to use the external file to set SERIAL slots.
+    * For example, assume serial is a SerialHelper object, the slot assignment
     * for 4 nodes can be set as follows. We have a total of 5 slots,
     * out of which first two slots are assigned to node 1 and the other nodes
     * are assigned single slots as shown below
-    * tdma.SetSlots(4,5,
+    * serial.SetSlots(4,5,
     *               0,1,1,0,0,0,
     *               1,0,0,1,0,0,
     *               2,0,0,0,1,0,
     *               3,0,0,0,0,1);
     */
-  TdmaHelper (int numNodes, int numSlots, ...);
+  SerialHelper (int numNodes, int numSlots, ...);
 
   bool GetParseState() {
 	  return m_parser->GetParseState();
   }
 
-  ~TdmaHelper ();
+  ~SerialHelper ();
 
   /**
    * \returns a device container which contains all the devices created by this method.
@@ -123,7 +124,7 @@ public:
   /**
    * \param mac the MAC helper to create MAC objects
    * \param node the node on which a aero device must be created
-   * \param controller the TdmaController to add to these devices
+   * \param controller the SerialController to add to these devices
    * \returns a device container which contains all the devices created by this method.
    */
   NetDeviceContainer Install (Ptr<Node> node) const;
@@ -135,12 +136,12 @@ public:
 
   void SetFileName (std::string filename);
   /**
-   * \brief Set the TdmaController for this TdamHelper class
+   * \brief Set the SerialController for this TdamHelper class
    */
-  void SetTdmaControllerHelper (const TdmaControllerHelper &controllerHelper);
+  void SetSerialControllerHelper (const SerialControllerHelper &controllerHelper);
 
   /**
-   * Helper to enable all TdmaNetDevice log components with one statement
+   * Helper to enable all SerialNetDevice log components with one statement
    */
   static void EnableLogComponents (void);
 private:
@@ -160,15 +161,15 @@ private:
                                     Ptr<NetDevice> nd,
                                     bool explicitFilename);
   /**
-   * \brief print the TDMA slot assignment for debugging purposes.
+   * \brief print the SERIAL slot assignment for debugging purposes.
    */
   std::string PrintSlotAllotmentArray (void) const;
   /**
-   * \brief Assigns a single TDMA slot in a frame for each node installed
-   * by the TDMA helper.
+   * \brief Assigns a single SERIAL slot in a frame for each node installed
+   * by the SERIAL helper.
    * \internal
    * Slot assignment is done in ascending order of the node id of nodes
-   * present in the node container that was passed to the TdmaHelper
+   * present in the node container that was passed to the SerialHelper
    * install method
    */
   void SetDefaultSlots (void);
@@ -187,23 +188,23 @@ private:
    */
   void Deallocate2D (void);
   /**
-   * \brief Populate the m_slotArray in the TdmaController class with the
+   * \brief Populate the m_slotArray in the SerialController class with the
    * mac pointers of nodes assigned to those slots
    *
-   * \param mac mac pointer of the node assigned to this TDMA slot
-   * \param nodeId node id assigned to this TDMA slot
+   * \param mac mac pointer of the node assigned to this SERIAL slot
+   * \param nodeId node id assigned to this SERIAL slot
    */
-  void AssignTdmaSlots (Ptr<TdmaMac> mac, uint32_t nodeId) const;
+  void AssignSerialSlots (Ptr<SerialMac> mac, uint32_t nodeId) const;
 
   ObjectFactory m_mac;
   Ptr<SimpleWirelessChannel> m_channel;
-  Ptr<TdmaController> m_controller;
-  const TdmaControllerHelper *m_controllerHelper;
+  Ptr<SerialController> m_controller;
+  const SerialControllerHelper *m_controllerHelper;
   uint32_t **m_slotAllotmentArray;
   uint32_t m_numRows;
   uint32_t m_numCols;
   std::string m_filename;
-  Ptr<TdmaSlotAssignmentFileParser> m_parser;
+  Ptr<SerialSlotAssignmentFileParser> m_parser;
 };
 
 } // namespace ns3

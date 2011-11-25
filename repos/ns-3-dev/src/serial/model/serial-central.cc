@@ -33,176 +33,176 @@
 #include "ns3/simulator.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/wifi-mac-header.h"
-#include "tdma-central-mac.h"
+#include "serial-central.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaCentralMac");
+NS_LOG_COMPONENT_DEFINE ("SerialCentralMac");
 
 namespace ns3 {
 
-NS_OBJECT_ENSURE_REGISTERED (TdmaCentralMac);
+NS_OBJECT_ENSURE_REGISTERED (SerialCentralMac);
 
 #undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT if (m_low != 0) {std::clog << "[TdmaMac=" << m_low->GetAddress () << "] "; }
+#define NS_LOG_APPEND_CONTEXT if (m_low != 0) {std::clog << "[SerialMac=" << m_low->GetAddress () << "] "; }
 
 TypeId
-TdmaCentralMac::GetTypeId (void)
+SerialCentralMac::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::TdmaCentralMac")
-    .SetParent<TdmaMac> ()
-    .AddConstructor<TdmaCentralMac> ()
+  static TypeId tid = TypeId ("ns3::SerialCentralMac")
+    .SetParent<SerialMac> ()
+    .AddConstructor<SerialCentralMac> ()
     .AddTraceSource ("MacTx",
                      "A packet has been received from higher layers and is being processed in preparation for "
                      "queueing for transmission.",
-                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macTxTrace))
+                     MakeTraceSourceAccessor (&SerialCentralMac::m_macTxTrace))
     .AddTraceSource ("MacTxDrop",
                      "A packet has been dropped in the MAC layer before being queued for transmission.",
-                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macTxDropTrace))
+                     MakeTraceSourceAccessor (&SerialCentralMac::m_macTxDropTrace))
     .AddTraceSource ("MacPromiscRx",
                      "A packet has been received by this device, has been passed up from the physical layer "
                      "and is being forwarded up the local protocol stack.  This is a promiscuous trace,",
-                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macPromiscRxTrace))
+                     MakeTraceSourceAccessor (&SerialCentralMac::m_macPromiscRxTrace))
     .AddTraceSource ("MacRx",
                      "A packet has been received by this device, has been passed up from the physical layer "
                      "and is being forwarded up the local protocol stack.  This is a non-promiscuous trace,",
-                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macRxTrace))
+                     MakeTraceSourceAccessor (&SerialCentralMac::m_macRxTrace))
     .AddTraceSource ("MacRxDrop",
                      "A packet has been dropped in the MAC layer after it has been passed up from the physical "
                      "layer.",
-                     MakeTraceSourceAccessor (&TdmaCentralMac::m_macRxDropTrace))
+                     MakeTraceSourceAccessor (&SerialCentralMac::m_macRxDropTrace))
   ;
   return tid;
 }
 
-TdmaCentralMac::TdmaCentralMac ()
+SerialCentralMac::SerialCentralMac ()
 {
   NS_LOG_FUNCTION (this);
-  m_isTdmaRunning = false;
-  m_low = CreateObject<TdmaMacLow> ();
-  m_queue = CreateObject<TdmaMacQueue> ();
-  m_queue->SetTdmaMacTxDropCallback (MakeCallback (&TdmaCentralMac::NotifyTxDrop, this));
+  m_isSerialRunning = false;
+  m_low = CreateObject<SerialMacLow> ();
+  m_queue = CreateObject<SerialMacQueue> ();
+  m_queue->SetSerialMacTxDropCallback (MakeCallback (&SerialCentralMac::NotifyTxDrop, this));
 }
-TdmaCentralMac::~TdmaCentralMac ()
+SerialCentralMac::~SerialCentralMac ()
 {
 }
 
 void
-TdmaCentralMac::DoDispose (void)
+SerialCentralMac::DoDispose (void)
 {
   m_low->Dispose ();
   m_low = 0;
   m_device = 0;
   m_queue = 0;
-  m_tdmaController = 0;
-  TdmaMac::DoDispose ();
+  m_serialController = 0;
+  SerialMac::DoDispose ();
 }
 
 void
-TdmaCentralMac::NotifyTx (Ptr<const Packet> packet)
+SerialCentralMac::NotifyTx (Ptr<const Packet> packet)
 {
   m_macTxTrace (packet);
 }
 
 void
-TdmaCentralMac::NotifyTxDrop (Ptr<const Packet> packet)
+SerialCentralMac::NotifyTxDrop (Ptr<const Packet> packet)
 {
   m_macTxDropTrace (packet);
 }
 
 void
-TdmaCentralMac::NotifyRx (Ptr<const Packet> packet)
+SerialCentralMac::NotifyRx (Ptr<const Packet> packet)
 {
   m_macRxTrace (packet);
 }
 
 void
-TdmaCentralMac::NotifyPromiscRx (Ptr<const Packet> packet)
+SerialCentralMac::NotifyPromiscRx (Ptr<const Packet> packet)
 {
   m_macPromiscRxTrace (packet);
 }
 
 void
-TdmaCentralMac::NotifyRxDrop (Ptr<const Packet> packet)
+SerialCentralMac::NotifyRxDrop (Ptr<const Packet> packet)
 {
   m_macRxDropTrace (packet);
 }
 
 void
-TdmaCentralMac::SetChannel (Ptr<SimpleWirelessChannel> channel)
+SerialCentralMac::SetChannel (Ptr<SimpleWirelessChannel> channel)
 {
   if (channel != 0)
     {
       m_channel = channel;
-      m_tdmaController->SetChannel (channel);
+      m_serialController->SetChannel (channel);
       m_low->SetChannel (m_channel);
     }
 }
 
 Ptr<SimpleWirelessChannel>
-TdmaCentralMac::GetChannel (void) const
+SerialCentralMac::GetChannel (void) const
 {
   return m_channel;
 }
 
 void
-TdmaCentralMac::SetTdmaController (Ptr<TdmaController> controller)
+SerialCentralMac::SetSerialController (Ptr<SerialController> controller)
 {
-  m_tdmaController = controller;
+  m_serialController = controller;
 }
 
-Ptr<TdmaController>
-TdmaCentralMac::GetTdmaController (void) const
+Ptr<SerialController>
+SerialCentralMac::GetSerialController (void) const
 {
-  return m_tdmaController;
+  return m_serialController;
 }
 
 void
-TdmaCentralMac::SetDevice (Ptr<TdmaNetDevice> device)
+SerialCentralMac::SetDevice (Ptr<SerialNetDevice> device)
 {
   m_device = device;
   m_low->SetDevice (m_device);
 }
 
-Ptr<TdmaNetDevice>
-TdmaCentralMac::GetDevice (void) const
+Ptr<SerialNetDevice>
+SerialCentralMac::GetDevice (void) const
 {
   return m_device;
 }
 
-Ptr<TdmaMacLow>
-TdmaCentralMac::GetTdmaMacLow (void) const
+Ptr<SerialMacLow>
+SerialCentralMac::GetSerialMacLow (void) const
 {
   return m_low;
 }
 
 void
-TdmaCentralMac::SetForwardUpCallback (Callback<void,Ptr<Packet>, Mac48Address, Mac48Address> upCallback)
+SerialCentralMac::SetForwardUpCallback (Callback<void,Ptr<Packet>, Mac48Address, Mac48Address> upCallback)
 {
   NS_LOG_FUNCTION (this);
   m_upCallback = upCallback;
 }
 
 void
-TdmaCentralMac::SetLinkUpCallback (Callback<void> linkUp)
+SerialCentralMac::SetLinkUpCallback (Callback<void> linkUp)
 {
   linkUp ();
 }
 
 void
-TdmaCentralMac::SetTxQueueStartCallback (Callback<bool,uint32_t> queueStart)
+SerialCentralMac::SetTxQueueStartCallback (Callback<bool,uint32_t> queueStart)
 {
   NS_LOG_FUNCTION (this);
   m_queueStart = queueStart;
 }
 
 void
-TdmaCentralMac::SetTxQueueStopCallback (Callback<bool,uint32_t> queueStop)
+SerialCentralMac::SetTxQueueStopCallback (Callback<bool,uint32_t> queueStop)
 {
   NS_LOG_FUNCTION (this);
   m_queueStop = queueStop;
 }
 
 uint32_t
-TdmaCentralMac::GetQueueState (uint32_t index)
+SerialCentralMac::GetQueueState (uint32_t index)
 {
   if (m_queue->GetMaxSize () == m_queue->GetSize ())
     {
@@ -215,62 +215,63 @@ TdmaCentralMac::GetQueueState (uint32_t index)
 }
 
 uint32_t
-TdmaCentralMac::GetNQueues (void)
+SerialCentralMac::GetNQueues (void)
 {
-  //TDMA currently has only one queue
+  //SERIAL currently has only one queue
   return 1;
 }
 
 void
-TdmaCentralMac::SetLinkDownCallback (Callback<void> linkDown)
+SerialCentralMac::SetLinkDownCallback (Callback<void> linkDown)
 {
 }
 
 void
-TdmaCentralMac::SetMaxQueueSize (uint32_t size)
+SerialCentralMac::SetMaxQueueSize (uint32_t size)
 {
   NS_LOG_FUNCTION (this << size);
   m_queue->SetMaxSize (size);
 }
 void
-TdmaCentralMac::SetMaxQueueDelay (Time delay)
+SerialCentralMac::SetMaxQueueDelay (Time delay)
 {
   NS_LOG_FUNCTION (this << delay);
   m_queue->SetMaxDelay (delay);
 }
 
-
 Mac48Address
-TdmaCentralMac::GetAddress (void) const
+SerialCentralMac::GetAddress (void) const
 {
   return m_low->GetAddress ();
 }
+
 Ssid
-TdmaCentralMac::GetSsid (void) const
+SerialCentralMac::GetSsid (void) const
 {
   return m_ssid;
 }
 void
-TdmaCentralMac::SetAddress (Mac48Address address)
+SerialCentralMac::SetAddress (Mac48Address address)
 {
   NS_LOG_FUNCTION (address);
   m_low->SetAddress (address);
   m_low->SetBssid (address);
 }
 void
-TdmaCentralMac::SetSsid (Ssid ssid)
+SerialCentralMac::SetSsid (Ssid ssid)
 {
   NS_LOG_FUNCTION (ssid);
   m_ssid = ssid;
 }
+
 Mac48Address
-TdmaCentralMac::GetBssid (void) const
+SerialCentralMac::GetBssid (void) const
 {
   return m_low->GetBssid ();
 }
 
 void
-TdmaCentralMac::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
+SerialCentralMac::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to)
 {
   NS_LOG_FUNCTION (this << packet << from);
   //NotifyRx(packet);
@@ -278,19 +279,19 @@ TdmaCentralMac::ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address t
 }
 
 void
-TdmaCentralMac::Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
+SerialCentralMac::Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
 {
   NS_LOG_FUNCTION (this << packet << &hdr);
   if (!m_queue->Enqueue (packet, hdr))
     {
       NotifyTxDrop (packet);
     }
-  //Cannot request for channel access in tdma. Tdma schedules every node in round robin manner
+  //Cannot request for channel access in serial. Serial schedules every node in round robin manner
   //RequestForChannelAccess();
 }
 
 void
-TdmaCentralMac::StartTransmission (uint64_t transmissionTimeUs)
+SerialCentralMac::StartTransmission (uint64_t transmissionTimeUs)
 {
   NS_LOG_DEBUG (transmissionTimeUs << " usec");
   Time totalTransmissionSlot = MicroSeconds (transmissionTimeUs);
@@ -301,12 +302,12 @@ TdmaCentralMac::StartTransmission (uint64_t transmissionTimeUs)
     }
   WifiMacHeader header;
   Ptr<const Packet> peekPacket = m_queue->Peek (&header);
-  Time packetTransmissionTime = m_tdmaController->CalculateTxTime (peekPacket);
+  Time packetTransmissionTime = m_serialController->CalculateTxTime (peekPacket);
   NS_LOG_DEBUG ("Packet TransmissionTime(microSeconds): " << packetTransmissionTime.GetMicroSeconds () << "usec");
   if (packetTransmissionTime < totalTransmissionSlot)
     {
       totalTransmissionSlot -= packetTransmissionTime;
-      Simulator::Schedule (packetTransmissionTime, &TdmaCentralMac::SendPacketDown, this,totalTransmissionSlot);
+      Simulator::Schedule (packetTransmissionTime, &SerialCentralMac::SendPacketDown, this,totalTransmissionSlot);
     }
   else
     {
@@ -315,7 +316,7 @@ TdmaCentralMac::StartTransmission (uint64_t transmissionTimeUs)
 }
 
 void
-TdmaCentralMac::SendPacketDown (Time remainingTime)
+SerialCentralMac::SendPacketDown (Time remainingTime)
 {
   WifiMacHeader header;
   Ptr<const Packet> packet = m_queue->Dequeue (&header);
@@ -327,7 +328,7 @@ TdmaCentralMac::SendPacketDown (Time remainingTime)
 }
 
 void
-TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from)
+SerialCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from)
 {
   NS_LOG_FUNCTION (this << packet << to << from);
   WifiMacHeader hdr;
@@ -340,7 +341,7 @@ TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address
   Queue (packet, hdr);
 }
 void
-TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
+SerialCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
 {
   NS_LOG_FUNCTION (this << packet << to);
   WifiMacHeader hdr;
@@ -354,48 +355,48 @@ TdmaCentralMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
   NS_LOG_FUNCTION (this << packet << to);
 }
 bool
-TdmaCentralMac::SupportsSendFrom (void) const
+SerialCentralMac::SupportsSendFrom (void) const
 {
   return true;
 }
 
 void
-TdmaCentralMac::TxOk (const WifiMacHeader &hdr)
+SerialCentralMac::TxOk (const WifiMacHeader &hdr)
 {
 }
 void
-TdmaCentralMac::TxFailed (const WifiMacHeader &hdr)
+SerialCentralMac::TxFailed (const WifiMacHeader &hdr)
 {
 }
 
 void
-TdmaCentralMac::TxQueueStart (uint32_t index)
+SerialCentralMac::TxQueueStart (uint32_t index)
 {
   NS_ASSERT (index < GetNQueues ());
   m_queueStart (index);
 }
 void
-TdmaCentralMac::TxQueueStop (uint32_t index)
+SerialCentralMac::TxQueueStop (uint32_t index)
 {
   NS_ASSERT (index < GetNQueues ());
   m_queueStop (index);
 }
 
 void
-TdmaCentralMac::Receive (Ptr<Packet> packet, const WifiMacHeader *hdr)
+SerialCentralMac::Receive (Ptr<Packet> packet, const WifiMacHeader *hdr)
 {
   ForwardUp (packet, hdr->GetAddr3 (), hdr->GetAddr1 ());
 }
 
 void
-TdmaCentralMac::DoStart (void)
+SerialCentralMac::DoStart (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
-  m_isTdmaRunning = true;
+  m_isSerialRunning = true;
   m_queue->SetMacPtr (this);
-  m_tdmaController->Start ();
-  m_low->SetRxCallback (MakeCallback (&TdmaCentralMac::Receive, this));
-  TdmaMac::DoStart ();
+  m_serialController->Start ();
+  m_low->SetRxCallback (MakeCallback (&SerialCentralMac::Receive, this));
+  SerialMac::DoStart ();
 }
 
 } // namespace ns3

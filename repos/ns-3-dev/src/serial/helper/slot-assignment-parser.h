@@ -28,22 +28,22 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef __TDMA_PARSER_H__
-#define __TDMA_PARSER_H__
+#ifndef __SERIAL_PARSER_H__
+#define __SERIAL_PARSER_H__
 
 #include "ns3/object.h"
 
 namespace ns3 {
 typedef std::vector<uint32_t> SlotArray;
-class TdmaHelper;
+class SerialHelper;
 
-class TdmaSlotAssignmentFileParser : public Object
+class SerialSlotAssignmentFileParser : public Object
 {
 public:
   static TypeId GetTypeId (void);
-  ~TdmaSlotAssignmentFileParser ();
-  TdmaSlotAssignmentFileParser (std::string fileName);
-  void ParseTdmaSlotInformation (void);
+  ~SerialSlotAssignmentFileParser ();
+  SerialSlotAssignmentFileParser (std::string fileName);
+  void ParseSerialSlotInformation (void);
   uint32_t GetNodeCount (void);
   uint32_t GetTotalSlots (void);
   std::vector<SlotArray> & GetSlotArrays ()
@@ -65,4 +65,4 @@ private:
 };
 // end namespace ns3
 }
-#endif // __TDMA_PARSER_H__
+#endif // __SERIAL_PARSER_H__

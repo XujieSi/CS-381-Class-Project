@@ -16,22 +16,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Modified by Hemanth Narra <hemanthnarra222@gmail.com> to suit the
- * TDMA implementation.
+ * SERIAL implementation.
  */
 #ifndef SIMPLE_WIRELESS_CHANNEL_H
 #define SIMPLE_WIRELESS_CHANNEL_H
 
+#include <vector>
 #include "ns3/channel.h"
-#include "ns3/mac48-address.h"
 #include "ns3/nstime.h"
 #include "ns3/data-rate.h"
-#include "tdma-mac-low.h"
-#include "tdma-mac-net-device.h"
-#include <vector>
+#include "serial-low.h"
+#include "serial-net-device.h"
 
 namespace ns3 {
 
-class TdmaMacLow;
+class SerialMacLow;
 class Packet;
 
 /**
@@ -41,7 +40,7 @@ class Packet;
 class SimpleWirelessChannel : public Channel
 {
 public:
-  typedef std::vector<Ptr<TdmaMacLow> > TdmaMacLowList;
+  typedef std::vector<Ptr<SerialMacLow> > SerialMacLowList;
   static TypeId GetTypeId (void);
   SimpleWirelessChannel ();
 
@@ -54,14 +53,14 @@ public:
    * \param sender sending NetDevice
    * \param txTime transmission time (seconds)
    */
-  void Send (Ptr<const Packet> p, Ptr<TdmaMacLow> sender);
+  void Send (Ptr<const Packet> p, Ptr<SerialMacLow> sender);
 
   /**
    * Add a device to the channel
    *
    * \param device Device to add
    */
-  void Add (Ptr<TdmaMacLow> tdmaMacLow);
+  void Add (Ptr<SerialMacLow> serialMacLow);
   double GetMaxRange (void) const;
 
   // inherited from ns3::Channel
@@ -69,7 +68,7 @@ public:
   virtual Ptr<NetDevice> GetDevice (uint32_t i) const;
 
 private:
-  TdmaMacLowList m_tdmaMacLowList;
+  SerialMacLowList m_serialMacLowList;
   double m_range;
 };
 

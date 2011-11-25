@@ -28,8 +28,8 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_CONTROLLER_H
-#define TDMA_CONTROLLER_H
+#ifndef SERIAL_CONTROLLER_H
+#define SERIAL_CONTROLLER_H
 
 #include "ns3/nstime.h"
 #include "ns3/event-id.h"
@@ -42,23 +42,23 @@
 
 namespace ns3 {
 
-enum TdmaMode
+enum SerialMode
 {
-  CENTRALIZED = 1,
+  SENTRALIZED = 1,
 };
 
-class TdmaMac;
-class TdmaMacLow;
+class SerialMac;
+class SerialMacLow;
 class SimpleWirelessChannel;
 
-class TdmaController : public Object
+class SerialController : public Object
 {
 public:
   static TypeId GetTypeId (void);
-  TdmaController ();
-  ~TdmaController ();
+  SerialController ();
+  ~SerialController ();
 
-  typedef std::map<uint32_t,Ptr<TdmaMac> > TdmaMacPtrMap;
+  typedef std::map<uint32_t,Ptr<SerialMac> > SerialMacPtrMap;
 
   /**
    * \param slotTime the duration of a slot.
@@ -75,7 +75,7 @@ public:
   void SetDataRate (DataRate bps);
   /**
    */
-  void AddTdmaSlot (uint32_t slot, Ptr<TdmaMac> macPtr);
+  void AddSerialSlot (uint32_t slot, Ptr<SerialMac> macPtr);
   /**
    */
   void SetInterFrameTimeInterval (Time interFrameTime);
@@ -123,7 +123,7 @@ public:
    */
   void NotifyTxStartNow (Time duration);
   Time CalculateTxTime (Ptr<const Packet> packet);
-  void StartTdmaSessions (void);
+  void StartSerialSessions (void);
   void SetChannel (Ptr<SimpleWirelessChannel> c);
   virtual void Start (void);
 private:
@@ -135,7 +135,7 @@ private:
   void DoGrantAccess (void);
   bool IsBusy (void) const;
   void UpdateFrameLength (void);
-  void ScheduleTdmaSession (const uint32_t slotNum);
+  void ScheduleSerialSession (const uint32_t slotNum);
   Ptr<SimpleWirelessChannel> GetChannel (void) const;
 
 //  Time m_lastRxStart;
@@ -148,15 +148,15 @@ private:
   DataRate m_bps;
   uint32_t m_slotTime;
   uint32_t m_gaurdTime;
-  uint32_t m_tdmaFrameLength; //total frameLength in microseconds
-  uint32_t m_tdmaInterFrameTime;
+  uint32_t m_serialFrameLength; //total frameLength in microseconds
+  uint32_t m_serialInterFrameTime;
   uint32_t m_totalSlotsAllowed;
   bool m_activeEpoch;
-  TdmaMode m_tdmaMode;
-  TdmaMacPtrMap m_slotPtrs;
+  SerialMode m_serialMode;
+  SerialMacPtrMap m_slotPtrs;
   Ptr<SimpleWirelessChannel> m_channel;
 };
 
 } // namespace ns3
 
-#endif /* AERO_TDMA_CONTROLLER_H */
+#endif /* AERO_SERIAL_CONTROLLER_H */

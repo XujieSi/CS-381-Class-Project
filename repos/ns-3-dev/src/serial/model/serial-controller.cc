@@ -32,83 +32,83 @@
 #include "ns3/enum.h"
 #include "ns3/log.h"
 #include "ns3/simulator.h"
-#include "tdma-central-mac.h"
-#include "tdma-controller.h"
-#include "tdma-mac.h"
-#include "tdma-mac-low.h"
+#include "serial-central.h"
+#include "serial-controller.h"
+#include "serial.h"
+#include "serial-low.h"
 #include "ns3/abort.h"
 
-NS_LOG_COMPONENT_DEFINE ("TdmaController");
+NS_LOG_COMPONENT_DEFINE ("SerialController");
 
 #define MY_DEBUG(x) \
   NS_LOG_DEBUG (Simulator::Now () << " " << this << " " << x)
 
 namespace ns3 {
-NS_OBJECT_ENSURE_REGISTERED (TdmaController);
+NS_OBJECT_ENSURE_REGISTERED (SerialController);
 
 Time
-TdmaController::GetDefaultSlotTime (void)
+SerialController::GetDefaultSlotTime (void)
 {
   return MicroSeconds (1100);
 }
 
 Time
-TdmaController::GetDefaultGaurdTime (void)
+SerialController::GetDefaultGaurdTime (void)
 {
   return MicroSeconds (100);
 }
 
 DataRate
-TdmaController::GetDefaultDataRate (void)
+SerialController::GetDefaultDataRate (void)
 {
   NS_LOG_DEBUG ("Setting default");
   return DataRate ("11000000b/s");
 }
 
 /*************************************************************
- * Tdma Controller Class Functions
+ * Serial Controller Class Functions
  ************************************************************/
 TypeId
-TdmaController::GetTypeId (void)
+SerialController::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3:TdmaController")
+  static TypeId tid = TypeId ("ns3:SerialController")
     .SetParent<Object> ()
-    .AddConstructor<TdmaController> ()
+    .AddConstructor<SerialController> ()
     .AddAttribute ("DataRate",
                    "The default data rate for point to point links",
                    DataRateValue (GetDefaultDataRate ()),
-                   MakeDataRateAccessor (&TdmaController::SetDataRate,
-                                         &TdmaController::GetDataRate),
+                   MakeDataRateAccessor (&SerialController::SetDataRate,
+                                         &SerialController::GetDataRate),
                    MakeDataRateChecker ())
     .AddAttribute ("SlotTime", "The duration of a Slot in microseconds.",
                    TimeValue (GetDefaultSlotTime ()),
-                   MakeTimeAccessor (&TdmaController::SetSlotTime,
-                                     &TdmaController::GetSlotTime),
+                   MakeTimeAccessor (&SerialController::SetSlotTime,
+                                     &SerialController::GetSlotTime),
                    MakeTimeChecker ())
-    .AddAttribute ("GaurdTime", "GaurdTime between TDMA slots in microseconds.",
+    .AddAttribute ("GaurdTime", "GaurdTime between SERIAL slots in microseconds.",
                    TimeValue (GetDefaultGaurdTime ()),
-                   MakeTimeAccessor (&TdmaController::SetGaurdTime,
-                                     &TdmaController::GetGaurdTime),
+                   MakeTimeAccessor (&SerialController::SetGaurdTime,
+                                     &SerialController::GetGaurdTime),
                    MakeTimeChecker ())
-    .AddAttribute ("InterFrameTime", "The wait time between consecutive tdma frames.",
+    .AddAttribute ("InterFrameTime", "The wait time between consecutive serial frames.",
                    TimeValue (MicroSeconds (0)),
-                   MakeTimeAccessor (&TdmaController::SetInterFrameTimeInterval,
-                                     &TdmaController::GetInterFrameTimeInterval),
+                   MakeTimeAccessor (&SerialController::SetInterFrameTimeInterval,
+                                     &SerialController::GetInterFrameTimeInterval),
                    MakeTimeChecker ())
-    .AddAttribute ("TdmaMode","Tdma Mode, Centralized",
-                   EnumValue (CENTRALIZED),
-                   MakeEnumAccessor (&TdmaController::m_tdmaMode),
-                   MakeEnumChecker (CENTRALIZED, "Centralized"));
+    .AddAttribute ("SerialMode","Serial Mode, Centralized",
+                   EnumValue (SENTRALIZED),
+                   MakeEnumAccessor (&SerialController::m_serialMode),
+                   MakeEnumChecker (SENTRALIZED, "Centralized"));
   return tid;
 }
 
-TdmaController::TdmaController () : m_activeEpoch (false),
+SerialController::SerialController () : m_activeEpoch (false),
                                     m_channel (0)
 {
   NS_LOG_FUNCTION (this);
 }
 
-TdmaController::~TdmaController ()
+SerialController::~SerialController ()
 {
   m_channel = 0;
   m_bps = 0;
@@ -116,28 +116,28 @@ TdmaController::~TdmaController ()
 }
 
 void
-TdmaController::Start (void)
+SerialController::Start (void)
 {
   NS_LOG_FUNCTION (this);
   if (!m_activeEpoch)
     {
       m_activeEpoch = true;
-      Simulator::Schedule (NanoSeconds (10),&TdmaController::StartTdmaSessions, this);
+      Simulator::Schedule (NanoSeconds (10),&SerialController::StartSerialSessions, this);
     }
 }
 
 void
-TdmaController::StartTdmaSessions (void)
+SerialController::StartSerialSessions (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
-  ScheduleTdmaSession (0);
+  ScheduleSerialSession (0);
 }
 
 void
-TdmaController::AddTdmaSlot (uint32_t slotPos, Ptr<TdmaMac> macPtr)
+SerialController::AddSerialSlot (uint32_t slotPos, Ptr<SerialMac> macPtr)
 {
   NS_LOG_FUNCTION (slotPos << macPtr);
-  std::pair<std::map<uint32_t, Ptr<TdmaMac> >::iterator, bool> result =
+  std::pair<std::map<uint32_t, Ptr<SerialMac> >::iterator, bool> result =
     m_slotPtrs.insert (std::make_pair (slotPos,macPtr));
   if (result.second == true)
     {
@@ -150,33 +150,33 @@ TdmaController::AddTdmaSlot (uint32_t slotPos, Ptr<TdmaMac> macPtr)
 }
 
 void
-TdmaController::SetSlotTime (Time slotTime)
+SerialController::SetSlotTime (Time slotTime)
 {
   NS_LOG_FUNCTION (this << slotTime);
   m_slotTime = slotTime.GetMicroSeconds ();
 }
 
 Time
-TdmaController::GetSlotTime (void) const
+SerialController::GetSlotTime (void) const
 {
   return MicroSeconds (m_slotTime);
 }
 
 void
-TdmaController::SetDataRate (DataRate bps)
+SerialController::SetDataRate (DataRate bps)
 {
   NS_LOG_FUNCTION (this << bps);
   m_bps = bps;
 }
 
 DataRate
-TdmaController::GetDataRate (void) const
+SerialController::GetDataRate (void) const
 {
   return m_bps;
 }
 
 void
-TdmaController::SetChannel (Ptr<SimpleWirelessChannel> c)
+SerialController::SetChannel (Ptr<SimpleWirelessChannel> c)
 {
   NS_LOG_FUNCTION (this << c);
   m_channel = c;
@@ -184,14 +184,14 @@ TdmaController::SetChannel (Ptr<SimpleWirelessChannel> c)
 
 
 Ptr<SimpleWirelessChannel>
-TdmaController::GetChannel (void) const
+SerialController::GetChannel (void) const
 {
   NS_LOG_FUNCTION (this);
   return m_channel;
 }
 
 void
-TdmaController::SetGaurdTime (Time gaurdTime)
+SerialController::SetGaurdTime (Time gaurdTime)
 {
   NS_LOG_FUNCTION (this << gaurdTime);
   //gaurdTime is based on the SimpleWirelessChannel's max range
@@ -206,50 +206,50 @@ TdmaController::SetGaurdTime (Time gaurdTime)
 }
 
 Time
-TdmaController::GetGaurdTime (void) const
+SerialController::GetGaurdTime (void) const
 {
   return MicroSeconds (m_gaurdTime);
 }
 
 void
-TdmaController::SetInterFrameTimeInterval (Time interFrameTime)
+SerialController::SetInterFrameTimeInterval (Time interFrameTime)
 {
   NS_LOG_FUNCTION (interFrameTime);
-  m_tdmaInterFrameTime = interFrameTime.GetMicroSeconds ();
+  m_serialInterFrameTime = interFrameTime.GetMicroSeconds ();
 }
 
 Time
-TdmaController::GetInterFrameTimeInterval (void) const
+SerialController::GetInterFrameTimeInterval (void) const
 {
-  return MicroSeconds (m_tdmaInterFrameTime);
+  return MicroSeconds (m_serialInterFrameTime);
 }
 
 void
-TdmaController::SetTotalSlotsAllowed (uint32_t slotsAllowed)
+SerialController::SetTotalSlotsAllowed (uint32_t slotsAllowed)
 {
   m_totalSlotsAllowed = slotsAllowed;
   m_slotPtrs.clear ();
 }
 
 uint32_t
-TdmaController::GetTotalSlotsAllowed (void) const
+SerialController::GetTotalSlotsAllowed (void) const
 {
   return m_totalSlotsAllowed;
 }
 
 void
-TdmaController::ScheduleTdmaSession (const uint32_t slotNum)
+SerialController::ScheduleSerialSession (const uint32_t slotNum)
 {
   NS_LOG_FUNCTION (slotNum);
-  std::map<uint32_t, Ptr<TdmaMac> >::iterator it = m_slotPtrs.find (slotNum);
+  std::map<uint32_t, Ptr<SerialMac> >::iterator it = m_slotPtrs.find (slotNum);
   if (it == m_slotPtrs.end ())
     {
-      NS_LOG_WARN ("No MAC ptrs in TDMA controller");
+      NS_LOG_WARN ("No MAC ptrs in SERIAL controller");
     }
   uint32_t numOfSlotsAllotted = 1;
   while (1)
     {
-      std::map<uint32_t, Ptr<TdmaMac> >::iterator j = m_slotPtrs.find (slotNum + numOfSlotsAllotted);
+      std::map<uint32_t, Ptr<SerialMac> >::iterator j = m_slotPtrs.find (slotNum + numOfSlotsAllotted);
       if (j != m_slotPtrs.end ())
         {
           if (it->second == j->second)
@@ -274,17 +274,17 @@ TdmaController::ScheduleTdmaSession (const uint32_t slotNum)
   if ((slotNum + numOfSlotsAllotted) == GetTotalSlotsAllowed ())
     {
       NS_LOG_DEBUG ("Starting over all sessions again");
-      Simulator::Schedule ((totalTransmissionTimeUs + GetInterFrameTimeInterval ()), &TdmaController::StartTdmaSessions, this);
+      Simulator::Schedule ((totalTransmissionTimeUs + GetInterFrameTimeInterval ()), &SerialController::StartSerialSessions, this);
     }
   else
     {
       NS_LOG_DEBUG ("Scheduling next session");
-      Simulator::Schedule (totalTransmissionTimeUs, &TdmaController::ScheduleTdmaSession, this, (slotNum + numOfSlotsAllotted));
+      Simulator::Schedule (totalTransmissionTimeUs, &SerialController::ScheduleSerialSession, this, (slotNum + numOfSlotsAllotted));
     }
 }
 
 Time
-TdmaController::CalculateTxTime (Ptr<const Packet> packet)
+SerialController::CalculateTxTime (Ptr<const Packet> packet)
 {
   NS_LOG_FUNCTION (*packet);
   NS_ASSERT_MSG (packet->GetSize () < 1500,"PacketSize must be less than 1500B, it is: " << packet->GetSize ());
