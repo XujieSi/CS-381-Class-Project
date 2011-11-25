@@ -435,6 +435,9 @@ TdmaExample::InstallApplications ()
   NS_LOG_INFO ("leave");
 }
 
+/**
+ * Set a mapping for transmission power over a particular distance.
+ */
 void
 TdmaExample::InsertIntoTxp ()
 {

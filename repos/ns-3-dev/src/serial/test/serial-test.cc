@@ -104,11 +104,11 @@ SerialSlotAllocationTestCase::DoRun ()
       pktSize -= 11;
       if (it > 1)
         {
-          mac2->Enqueue (pkt);
+          mac2->Enqueue (pkt,mac1->GetAddress ());
         }
       else
         {
-          mac1->Enqueue (pkt);
+          mac1->Enqueue (pkt,mac1->GetAddress ());
         }
     }
 

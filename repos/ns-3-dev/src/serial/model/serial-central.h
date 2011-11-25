@@ -36,6 +36,7 @@
 #include "serial.h"
 #include "serial-low.h"
 #include "serial-queue.h"
+#include "serial-net-device.h"
 
 namespace ns3 {
 

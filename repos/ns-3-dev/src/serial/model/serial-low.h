@@ -28,8 +28,8 @@
  * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
  * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef TDMA_MAC_LOW_H
-#define TDMA_MAC_LOW_H
+#ifndef SERIAL_MAC_LOW_H
+#define SERIAL_MAC_LOW_H
 
 #include <vector>
 #include <stdint.h>
@@ -116,4 +116,4 @@ private:
 
 } // namespace ns3
 
-#endif /* TDMA_MAC_LOW_H */
+#endif /* SERIAL_MAC_LOW_H */

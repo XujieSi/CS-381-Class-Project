@@ -10,5 +10,5 @@ s/tdma-mac/serial/g
 s/tdma-example/serial-example/g
 s/Tdma/Serial/g
 s/tdma/serial/g
-s/TDMA/TDMA/g
+s/TDMA/SERIAL/g
 s/CENTRALIZED/SENTRALIZED/g
