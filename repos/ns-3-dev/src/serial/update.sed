@@ -13,7 +13,9 @@
 # s/TDMA/SERIAL/g
 # s/CENTRALIZED/SENTRALIZED/g
 # s/Hemanth Narra <hemanthnarra222@gmail.com>/Fred Eisele <phreed@gmail.com>/g
-
 # find . \( -name '*.cc' -or -name '*.h' \) -exec sed -f ./update.sed -i {} \;   
-s/SimpleWirelessChannel/SerialChannel/g
+# s/SimpleWirelessChannel/SerialChannel/g
+s/Copyright (c) 2010 Vanderbilt/Copyright (c) 2011 Vanderbilt University/g
+s/Copyright (c) 2011 Hemanth Narra/Copyright (c) 2011 Vanderbilt University/g
+
 
