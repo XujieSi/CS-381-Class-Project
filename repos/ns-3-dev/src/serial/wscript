@@ -4,7 +4,7 @@ def build(bld):
     module = bld.create_ns3_module('serial', ['network', 'propagation', 'core'])
     module.includes = '.'
     module.source = [
-        'model/simple-wireless-channel.cc',
+        'model/serial-channel.cc',
         'model/serial.cc',
         'model/serial-central.cc',
         'model/serial-net-device.cc',
@@ -24,7 +24,7 @@ def build(bld):
     headers = bld.new_task_gen(features=['ns3header'])
     headers.module = 'serial'
     headers.source = [
-        'model/simple-wireless-channel.h',
+        'model/serial-channel.h',
         'model/serial.h',
         'model/serial-low.h',
         'model/serial-central.h',

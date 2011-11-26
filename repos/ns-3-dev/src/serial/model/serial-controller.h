@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -35,7 +35,7 @@
 #include "ns3/event-id.h"
 #include "ns3/data-rate.h"
 #include "ns3/packet.h"
-#include "ns3/simple-wireless-channel.h"
+#include "ns3/serial-channel.h"
 #include "ns3/timer.h"
 #include <vector>
 #include <map>
@@ -49,7 +49,7 @@ enum SerialMode
 
 class SerialMac;
 class SerialMacLow;
-class SimpleWirelessChannel;
+class SerialChannel;
 
 class SerialController : public Object
 {
@@ -124,7 +124,7 @@ public:
   void NotifyTxStartNow (Time duration);
   Time CalculateTxTime (Ptr<const Packet> packet);
   void StartSerialSessions (void);
-  void SetChannel (Ptr<SimpleWirelessChannel> c);
+  void SetChannel (Ptr<SerialChannel> c);
   virtual void Start (void);
 private:
   static Time GetDefaultSlotTime (void);
@@ -136,7 +136,7 @@ private:
   bool IsBusy (void) const;
   void UpdateFrameLength (void);
   void ScheduleSerialSession (const uint32_t slotNum);
-  Ptr<SimpleWirelessChannel> GetChannel (void) const;
+  Ptr<SerialChannel> GetChannel (void) const;
 
 //  Time m_lastRxStart;
 //  Time m_lastRxDuration;
@@ -154,7 +154,7 @@ private:
   bool m_activeEpoch;
   SerialMode m_serialMode;
   SerialMacPtrMap m_slotPtrs;
-  Ptr<SimpleWirelessChannel> m_channel;
+  Ptr<SerialChannel> m_channel;
 };
 
 } // namespace ns3

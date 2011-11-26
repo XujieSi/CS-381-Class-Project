@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -37,17 +37,17 @@
 #include "ns3/traced-callback.h"
 #include "ns3/mac48-address.h"
 #include "ns3/serial.h"
-#include "ns3/simple-wireless-channel.h"
+#include "ns3/serial-channel.h"
 #include "serial-controller.h"
 
 namespace ns3 {
 
-class SimpleWirelessChannel;
+class SerialChannel;
 class SerialController;
 /**
  * \brief Hold together all Serial-related objects.
  *
- * This class holds together ns3::SimpleWirelessChannel and
+ * This class holds together ns3::SerialChannel and
  * ns3::SerialMac
  */
 class SerialNetDevice : public NetDevice
@@ -69,7 +69,7 @@ public:
   /**
    * \param channel The channel this device is attached to
    */
-  void SetChannel (Ptr<SimpleWirelessChannel> channel);
+  void SetChannel (Ptr<SerialChannel> channel);
   /**
    * \param controller The serial controller this device is attached to
    */
@@ -117,13 +117,13 @@ private:
   void LinkUp (void);
   void LinkDown (void);
   void Setup (void);
-  Ptr<SimpleWirelessChannel> DoGetChannel (void) const;
+  Ptr<SerialChannel> DoGetChannel (void) const;
   Ptr<SerialController> GetSerialController (void) const;
   void CompleteConfig (void);
 
   Ptr<Node> m_node;
   Ptr<SerialMac> m_mac;
-  Ptr<SimpleWirelessChannel> m_channel;
+  Ptr<SerialChannel> m_channel;
   Ptr<SerialController> m_serialController;
   NetDevice::ReceiveCallback m_forwardUp;
   NetDevice::PromiscReceiveCallback m_promiscRx;

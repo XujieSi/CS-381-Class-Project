@@ -15,18 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
- *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
@@ -355,7 +343,7 @@ SerialExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDis
   else
     {
 	  NS_LOG_INFO ("using serial");
-      Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (txpDistance));
+      Config::SetDefault ("ns3::SerialChannel::MaxRange", DoubleValue (txpDistance));
       // default allocation, each node gets a slot to transmit
       SerialHelper serial = SerialHelper(4,5,
                0,1,1,0,0,0,

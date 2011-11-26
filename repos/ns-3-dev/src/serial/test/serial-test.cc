@@ -28,7 +28,7 @@
 #include "ns3/serial-controller.h"
 #include "ns3/serial-central.h"
 #include "ns3/serial-net-device.h"
-#include "ns3/simple-wireless-channel.h"
+#include "ns3/serial-channel.h"
 #include "ns3/names.h"
 #include "ns3/callback.h"
 #include "ns3/config.h"
@@ -63,10 +63,10 @@ void
 SerialSlotAllocationTestCase::DoRun ()
 {
   // set the tx range of a node
-  Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (303));
+  Config::SetDefault ("ns3::SerialChannel::MaxRange", DoubleValue (303));
   /**
    * CreateNodes and assign mobility models;
-   * **required by simple-wireless-channel to identify distance between them**
+   * **required by serial-channel to identify distance between them**
    */
   CreateNodes ();
   Ptr<SerialController> serialController = CreateObject<SerialController> ();
@@ -74,7 +74,7 @@ SerialSlotAllocationTestCase::DoRun ()
   serialController->SetGaurdTime (MicroSeconds (100));
   serialController->SetInterFrameTimeInterval (MicroSeconds (200));
   serialController->SetTotalSlotsAllowed (3);
-  Ptr<SimpleWirelessChannel> channel = CreateObject<SimpleWirelessChannel> ();
+  Ptr<SerialChannel> channel = CreateObject<SerialChannel> ();
 
   //create and initialize node1
   Ptr<SerialNetDevice> device1 = CreateObject<SerialNetDevice> ();
@@ -149,7 +149,7 @@ SerialSlotAllocationTestCase::CreateNodes ()
  *  1398 bytes: 1397*8/11000000 = 0.001016 us
  *  1387 bytes: 1386*8/11000000 = 0.001008 us
  *
- *  time taken by simple-wireless-channel to move them over the medium
+ *  time taken by serial-channel to move them over the medium
  *  303*3.3*10^(-9) = 1us
  *  node 1 is allotted 2 slots and node 0 is allotted 1 slot
  *  so tx start and transmission slot times for node 0 and node 1 are as follows

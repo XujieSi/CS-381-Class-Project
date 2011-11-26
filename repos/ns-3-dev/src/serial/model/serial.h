@@ -34,7 +34,7 @@
 
 namespace ns3 {
 
-class SimpleWirelessChannel;
+class SerialChannel;
 class SerialNetDevice;
 class SerialController;
 
@@ -81,7 +81,7 @@ public:
   virtual Mac48Address GetBssid (void) const = 0;
   virtual void SetSerialController (Ptr<SerialController> controller) = 0;
   virtual Ptr<SerialController> GetSerialController (void) const = 0;
-  virtual void SetChannel (Ptr<SimpleWirelessChannel> channel) = 0;
+  virtual void SetChannel (Ptr<SerialChannel> channel) = 0;
   virtual void SetDevice (Ptr<SerialNetDevice> device) = 0;
 
   /**

@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -37,7 +37,7 @@
 #include <map>
 
 #include "ns3/wifi-mac-header.h"
-#include "simple-wireless-channel.h"
+#include "serial-channel.h"
 #include "ns3/data-rate.h"
 #include "ns3/mac48-address.h"
 #include "ns3/callback.h"
@@ -51,7 +51,7 @@ namespace ns3 {
 
 
 class SerialMac;
-class SimpleWirelessChannel;
+class SerialChannel;
 class SerialNetDevice;
 
 class SerialMacLow : public Object
@@ -72,7 +72,7 @@ public:
    *
    * \param channel Pointer to the channel
    */
-  void SetChannel (Ptr<SimpleWirelessChannel> channel);
+  void SetChannel (Ptr<SerialChannel> channel);
   /**
    * \param callback the callback which receives every incoming packet.
    *
@@ -103,11 +103,11 @@ public:
 private:
   uint32_t GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
   void ForwardDown (Ptr<const Packet> packet, const WifiMacHeader *hdr);
-  virtual Ptr<SimpleWirelessChannel> GetChannel (void) const;
+  virtual Ptr<SerialChannel> GetChannel (void) const;
   virtual void DoDispose (void);
   SerialMacLowRxCallback m_rxCallback;
   Ptr<Packet> m_currentPacket;
-  Ptr<SimpleWirelessChannel> m_channel;
+  Ptr<SerialChannel> m_channel;
   Ptr<SerialNetDevice> m_device;
   WifiMacHeader m_currentHdr;
   Mac48Address m_self;

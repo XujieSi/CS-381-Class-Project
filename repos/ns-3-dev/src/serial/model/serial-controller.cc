@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -176,14 +176,14 @@ SerialController::GetDataRate (void) const
 }
 
 void
-SerialController::SetChannel (Ptr<SimpleWirelessChannel> c)
+SerialController::SetChannel (Ptr<SerialChannel> c)
 {
   NS_LOG_FUNCTION (this << c);
   m_channel = c;
 }
 
 
-Ptr<SimpleWirelessChannel>
+Ptr<SerialChannel>
 SerialController::GetChannel (void) const
 {
   NS_LOG_FUNCTION (this);
@@ -194,7 +194,7 @@ void
 SerialController::SetGaurdTime (Time gaurdTime)
 {
   NS_LOG_FUNCTION (this << gaurdTime);
-  //gaurdTime is based on the SimpleWirelessChannel's max range
+  //gaurdTime is based on the SerialChannel's max range
   if (m_channel != 0)
     {
       m_gaurdTime = Seconds (m_channel->GetMaxRange () / 300000000.0).GetMicroSeconds ();

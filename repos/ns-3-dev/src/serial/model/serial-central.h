@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -76,7 +76,7 @@ public:
   virtual Ptr<SerialController> GetSerialController (void) const;
   virtual void SetDevice (Ptr<SerialNetDevice> device);
   virtual Ptr<SerialNetDevice> GetDevice (void) const;
-  virtual void SetChannel (Ptr<SimpleWirelessChannel> channel);
+  virtual void SetChannel (Ptr<SerialChannel> channel);
   virtual void StartTransmission (uint64_t transmissionTime);
   virtual void NotifyTx (Ptr<const Packet> packet);
   virtual void NotifyTxDrop (Ptr<const Packet> packet);
@@ -98,7 +98,7 @@ public:
   void Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr);
   void SetMaxQueueSize (uint32_t size);
   void SetMaxQueueDelay (Time delay);
-  Ptr<SimpleWirelessChannel> GetChannel (void) const;
+  Ptr<SerialChannel> GetChannel (void) const;
   Ptr<SerialMacLow> GetSerialMacLow (void) const;
   void RequestForChannelAccess (void);
 
@@ -165,7 +165,7 @@ private:
   Ptr<SerialNetDevice> m_device;
   Ptr<SerialMacQueue> m_queue;
   Ptr<SerialMacLow> m_low;
-  Ptr<SimpleWirelessChannel> m_channel;
+  Ptr<SerialChannel> m_channel;
   Ssid m_ssid;
   Ptr<Node> m_nodePtr;
   bool m_isSerialRunning;

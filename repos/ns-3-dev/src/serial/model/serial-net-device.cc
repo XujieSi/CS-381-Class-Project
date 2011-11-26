@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -64,7 +64,7 @@ SerialNetDevice::GetTypeId (void)
                    PointerValue (),
                    MakePointerAccessor (&SerialNetDevice::DoGetChannel,
                                         &SerialNetDevice::SetChannel),
-                   MakePointerChecker<SimpleWirelessChannel> ())
+                   MakePointerChecker<SerialChannel> ())
     .AddAttribute ("SerialController", "The serial controller attached to this device",
                    PointerValue (),
                    MakePointerAccessor (&SerialNetDevice::GetSerialController,
@@ -166,7 +166,7 @@ SerialNetDevice::SetNode (Ptr<Node> node)
 }
 
 void
-SerialNetDevice::SetChannel (Ptr<SimpleWirelessChannel> channel)
+SerialNetDevice::SetChannel (Ptr<SerialChannel> channel)
 {
   if (channel != 0)
     {
@@ -181,7 +181,7 @@ SerialNetDevice::GetChannel (void) const
   return m_channel;
 }
 
-Ptr<SimpleWirelessChannel>
+Ptr<SerialChannel>
 SerialNetDevice::DoGetChannel (void) const
 {
   return m_channel;

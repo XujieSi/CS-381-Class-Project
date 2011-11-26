@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -88,14 +88,14 @@ SerialMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> ca
   m_rxCallback = callback;
 }
 
-Ptr<SimpleWirelessChannel>
+Ptr<SerialChannel>
 SerialMacLow::GetChannel (void) const
 {
   return m_channel;
 }
 
 void
-SerialMacLow::SetChannel (Ptr<SimpleWirelessChannel> channel)
+SerialMacLow::SetChannel (Ptr<SerialChannel> channel)
 {
   NS_LOG_FUNCTION (channel);
   m_channel = channel;

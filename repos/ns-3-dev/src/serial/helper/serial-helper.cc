@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Hemanth Narra <hemanthnarra222@gmail.com>
+ * Author: Fred Eisele <phreed@gmail.com>
  *
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
  * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
@@ -30,7 +30,7 @@
  */
 #include "serial-helper.h"
 #include "ns3/serial-net-device.h"
-#include "ns3/simple-wireless-channel.h"
+#include "ns3/serial-channel.h"
 #include "ns3/channel.h"
 #include "ns3/mobility-model.h"
 #include "ns3/log.h"
@@ -86,7 +86,7 @@ SerialHelper::SerialHelper (uint32_t numNodes, uint32_t numSlots) : m_controller
 {
   NS_LOG_FUNCTION (this << numNodes << numSlots);
   m_mac.SetTypeId ("ns3::SerialCentralMac");
-  m_channel = CreateObject<SimpleWirelessChannel> ();
+  m_channel = CreateObject<SerialChannel> ();
   Allocate2D ();
   SetDefaultSlots ();
 }
@@ -98,7 +98,7 @@ SerialHelper::SerialHelper (std::string filename) : m_controller (0),
 {
   NS_LOG_FUNCTION (this << m_filename);
   m_mac.SetTypeId ("ns3::SerialCentralMac");
-  m_channel = CreateObject<SimpleWirelessChannel> ();
+  m_channel = CreateObject<SerialChannel> ();
   m_parser = CreateObject<SerialSlotAssignmentFileParser> (m_filename);
   if (! m_parser->GetParseState()) return;
   m_numRows = m_parser->GetNodeCount ();
@@ -118,7 +118,7 @@ SerialHelper::SerialHelper (int numNodes, int numSlots, ...)
   va_list args;
   va_start (args, numSlots);
   m_mac.SetTypeId ("ns3::SerialCentralMac");
-  m_channel = CreateObject<SimpleWirelessChannel> ();
+  m_channel = CreateObject<SerialChannel> ();
   Allocate2D ();
   NS_LOG_DEBUG ("Rows:" << m_numRows << " columns: " << m_numCols);
   for (uint32_t i = 0; i < m_numRows; i++)
@@ -342,7 +342,7 @@ SerialHelper::EnableLogComponents (void)
   LogComponentEnable ("SerialController", LOG_LEVEL_ALL);
   LogComponentEnable ("SerialMacQueue", LOG_LEVEL_ALL);
   LogComponentEnable ("SerialNetDevice", LOG_LEVEL_ALL);
-  LogComponentEnable ("SimpleWirelessChannel", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialChannel", LOG_LEVEL_ALL);
   LogComponentEnable ("SerialSlotAssignmentFileParser", LOG_LEVEL_ALL);
 }
 
