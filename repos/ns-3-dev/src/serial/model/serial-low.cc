@@ -26,7 +26,7 @@
 NS_LOG_COMPONENT_DEFINE ("SerialMacLow");
 
 #undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT std::clog << "[SerialMac=" << m_self << "] "
+#define NS_LOG_APPEND_CONTEXT std::clog << "[SerialLow=" << m_self << "] "
 
 
 namespace ns3 {

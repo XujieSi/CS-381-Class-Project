@@ -32,7 +32,7 @@ namespace ns3 {
 NS_OBJECT_ENSURE_REGISTERED (SerialCentralMac);
 
 #undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT if (m_low != 0) {std::clog << "[SerialMac=" << m_low->GetAddress () << "] "; }
+#define NS_LOG_APPEND_CONTEXT if (m_low != 0) {std::clog << "[Address=" << m_low->GetAddress () << "] "; }
 
 TypeId
 SerialCentralMac::GetTypeId (void)

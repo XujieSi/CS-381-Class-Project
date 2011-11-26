@@ -18,6 +18,7 @@
  * Author: Fred Eisele <phreed@gmail.com>
  *
  */
+#include <stdarg.h>
 #include "serial-helper.h"
 #include "ns3/serial-net-device.h"
 #include "ns3/serial-channel.h"

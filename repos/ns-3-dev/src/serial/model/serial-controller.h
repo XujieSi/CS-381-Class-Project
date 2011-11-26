@@ -115,7 +115,8 @@ public:
   Time CalculateTxTime (Ptr<const Packet> packet);
   void StartSerialSessions (void);
   void SetChannel (Ptr<SerialChannel> c);
-  virtual void Start (void);
+
+  virtual void DoStart (void);
 private:
   static Time GetDefaultSlotTime (void);
   static Time GetDefaultGaurdTime (void);

@@ -39,7 +39,8 @@ class SerialMacLow;
  *
  * Serial Controller drives the transmission of packets in a round-robin
  * manner depending on the number of slots allocated to a node and the
- * slot interval. Mac also be made to request for more slots or change in
+ * slot interval.
+ * May also be made to request for more slots or change in
  * slot interval which would take affect from the next epoch.
  */
 class SerialCentralMac : public SerialMac

@@ -106,7 +106,7 @@ SerialController::~SerialController ()
 }
 
 void
-SerialController::Start (void)
+SerialController::DoStart (void)
 {
   NS_LOG_FUNCTION (this);
   if (!m_activeEpoch)

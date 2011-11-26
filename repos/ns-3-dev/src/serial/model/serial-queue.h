@@ -31,18 +31,16 @@
 
 namespace ns3 {
 /**
- * \brief a SERIAL MAC queue.
+ * \brief a SERIAL output queue.
  *
- * This queue implements what is needed for the 802.11e standard
- * Specifically, it refers to 802.11e/D9, section 9.9.1.6, paragraph 6.
- *
- * When a packet is received by the MAC, to be sent to the channel,
- * it is queued in the internal queue after being tagged by the
+ * When a packet is received by the device, to be sent to the channel,
+ * it is queued in the internal queue after being tagged with the
  * current time.
  *
- * When a packet is dequeued, the queue checks its timestamp
+ * When a packet is dequeued, the queue checks its time-stamp
  * to verify whether or not it should be dropped. If m_maxDelay has
- * elapsed, it is dropped. Otherwise, it is returned to the caller.
+ * elapsed, it is dropped.
+ * Otherwise, it is returned to the caller.
  */
 class SerialQueue : public Object
 {

@@ -1,6 +1,6 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
- * Copyright (c) 2011 Hemanth Narra
+ * Copyright (c) 2011 Vanderbilt University
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
+ * Author: Fred Eisele <phreed@gmail.com>
  */
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
@@ -343,7 +344,7 @@ SerialExample::CreateDevices (std::string tr_name, bool usingWifi, double txpDis
   else
     {
 	  NS_LOG_INFO ("using serial");
-      Config::SetDefault ("ns3::SimpleWirelessChannel::MaxRange", DoubleValue (txpDistance));
+      Config::SetDefault ("ns3::SerialChannel::MaxRange", DoubleValue (txpDistance));
       // default allocation, each node gets a slot to transmit
       SerialHelper serial = SerialHelper(4,5,
                0,1,1,0,0,0,

@@ -163,4 +163,4 @@ private:
 
 } // namespace ns3
 
-#endif /* AERO_MAC_H */
+#endif /* SERIAL_MAC_H */

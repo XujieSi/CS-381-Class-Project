@@ -88,6 +88,7 @@ SerialNetDevice::DoDispose (void)
 void
 SerialNetDevice::DoStart (void)
 {
+  NS_LOG_FUNCTION_NOARGS ();
   m_mac->Start ();
   NetDevice::DoStart ();
 }

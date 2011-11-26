@@ -3,31 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="384" key="DIALOG_WIDTH"/>
 		<item value="269" key="DIALOG_Y_ORIGIN"/>
-		<item value="503" key="DIALOG_HEIGHT"/>
 		<item value="1304" key="DIALOG_X_ORIGIN"/>
+		<item value="474" key="DIALOG_HEIGHT"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="true" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="m_channelFactory" key="selection"/>
+		<item value="SERIAL_MAC_H" key="selection"/>
 		<list key="findhistory">
-			<item value="m_channelFactory"/>
-			<item value="channel"/>
-			<item value="interfaces"/>
-			<item value="SetupMobility"/>
-			<item value="devices"/>
-			<item value="nodes"/>
-			<item value="CreateNodes"/>
-			<item value="InsertIntoTxp"/>
+			<item value="AERO_MAC_H"/>
+			<item value="SERIAL_MAC_QUEUE_H"/>
+			<item value="ns3::serial"/>
+			<item value="TDMA"/>
+			<item value="TDMA MAC"/>
+			<item value="SIMPLE_WIRELESS"/>
+			<item value="SimpleWirelessChannel"/>
+			<item value="SimpleWire"/>
 		</list>
 		<list key="replacehistory">
+			<item value="SERIAL_MAC_H"/>
+			<item value="SERIAL_QUEUE_H"/>
+			<item value="ns3::Serial"/>
+			<item value="serial"/>
+			<item value="SERIAL"/>
+			<item value="SerialChannel"/>
 			<item value="  NS"/>
 			<item value="  "/>
-			<item value="slotFileName"/>
 		</list>
 	</section>
 </section>

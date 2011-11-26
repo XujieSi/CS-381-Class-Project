@@ -11,15 +11,18 @@ SERIAL Overview
 *****************
 
 Serial access is a contention avoidance medium access protocol. 
-The channel bandwidth that is shared competitively by all nodes 
-in the network is partitioned into time slots for dedicated use among those nodes. 
-Each node transmits data only during this dedicated time slot allotted to it
+The channel bandwidth is shared competitively by all nodes 
+in the network.
+The bandwidth is partitioned into time slots for dedicated use among those nodes. 
+Each node transmits data only during the dedicated time slot allotted to it,
 except when acquiring access to another node's slot. 
 The transmission slots are of fixed time intervals, but they may be shared. 
 Each transmission slot is separated by a guard interval so that the transmissions do not overlap. 
 The value of the guard interval is decided by the serial-net-device model. 
-It is usually the amount of time it takes for a packet to travel the distance specified by the transmission 
-range. In this simple serial model, it is assumed that the clocks of the nodes are synchronized.
+It is usually the amount of time it takes for a packet to travel 
+the distance specified by the transmission range. 
+In this simple serial model, it is assumed that the clocks of the nodes are synchronized,
+any deviation from this included in the guard interval as well.
 
 Implementation of Serial
 **********************
