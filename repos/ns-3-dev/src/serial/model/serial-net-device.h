@@ -22,10 +22,20 @@
 #define SERIAL_NET_DEVICE_H
 
 #include <string>
+#include "ns3/node.h"
+#include "ns3/backoff.h"
+#include "ns3/address.h"
 #include "ns3/net-device.h"
+#include "ns3/callback.h"
 #include "ns3/packet.h"
 #include "ns3/traced-callback.h"
+#include "ns3/nstime.h"
+#include "ns3/data-rate.h"
+#include "ns3/queue.h"
+#include "ns3/ptr.h"
+#include "ns3/random-variable.h"
 #include "ns3/mac48-address.h"
+
 #include "ns3/serial.h"
 #include "ns3/serial-channel.h"
 #include "serial-controller.h"
@@ -97,6 +107,9 @@ public:
   virtual uint32_t GetNQueues (void);
   virtual void SetQueueStateChangeCallback (Callback<void,uint32_t> callback);
 
+  void SetQueue (Ptr<Queue> q);
+  bool Attach (Ptr<SerialChannel> ch);
+
 private:
   // This value conforms to the 802.11 specification
   static const uint16_t MAX_MSDU_SIZE = 2304;
@@ -106,10 +119,20 @@ private:
   void ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to);
   void LinkUp (void);
   void LinkDown (void);
+
   void Setup (void);
   Ptr<SerialChannel> DoGetChannel (void) const;
   Ptr<SerialController> GetSerialController (void) const;
   void CompleteConfig (void);
+
+  /*
+     * The Queue which this CsmaNetDevice uses as a packet source.
+     * Management of this Queue has been delegated to the CsmaNetDevice
+     * and it has the responsibility for deletion.
+     * \see class Queue
+     * \see class DropTailQueue
+     */
+  Ptr<Queue> m_queue;
 
   Ptr<Node> m_node;
   Ptr<SerialMac> m_mac;

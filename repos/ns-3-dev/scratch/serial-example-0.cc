@@ -26,15 +26,16 @@
 // - Tracing of queues and packet receptions to file "udp-echo.tr"
 
 #include <fstream>
-#include "ns3/core-module.h"
-#include "ns3/csma-module.h"
+#include "ns3/command-line.h"
+#include "ns3/serial-net-device.h"
 #include "ns3/applications-module.h"
 #include "ns3/internet-module.h"
 #include "ns3/queue.h"
+#include "ns3/log.h"
 
 using namespace ns3;
 
-NS_LOG_COMPONENT_DEFINE ("UdpEchoExample");
+NS_LOG_COMPONENT_DEFINE ("SerialExample");
 
 int
 main (int argc, char *argv[])
@@ -44,9 +45,9 @@ main (int argc, char *argv[])
 // for selected modules; the below lines suggest how to do this
 //
 #if 1
-  LogComponentEnable ("UdpEchoExample", LOG_LEVEL_INFO);
-  LogComponentEnable ("UdpEchoClientApplication", LOG_LEVEL_ALL);
-  LogComponentEnable ("UdpEchoServerApplication", LOG_LEVEL_ALL);
+  LogComponentEnable ("SerialExample", LOG_LEVEL_INFO);
+  //LogComponentEnable ("SerialClientApplication", LOG_LEVEL_ALL);
+  //LogComponentEnable ("SerialServerApplication", LOG_LEVEL_ALL);
 #endif
 //
 // Allow the user to override any of the defaults and the above Bind() at
@@ -58,31 +59,29 @@ main (int argc, char *argv[])
 // Explicitly create the nodes required by the topology (shown above).
 //
   NS_LOG_INFO ("Create nodes.");
-  NodeContainer n;
-  n.Create (4);
+  NodeContainer nodeSet;
+  nodeSet.Create (4);
 
-  InternetStackHelper internet;
-  internet.Install (n);
-
-  NS_LOG_INFO ("Create channels.");
 //
 // Explicitly create the channels required by the topology (shown above).
 //
-
-  ObjectFactory deviceFactory("ns3::CsmaNetDevice");
+  NS_LOG_INFO ("Create channels.");
+  ObjectFactory deviceFactory("ns3::SerialNetDevice");
   deviceFactory.Set("Mtu", UintegerValue (1400));
 
   ObjectFactory queueFactory("ns3::DropTailQueue");
 
-  ObjectFactory channelFactory("ns3::CsmaChannel");
+  ObjectFactory channelFactory("ns3::SerialChannel");
   channelFactory.Set("DataRate", DataRateValue (DataRate (5000000)));
   channelFactory.Set("Delay", TimeValue (MilliSeconds (2)));
-  Ptr< CsmaChannel > channel = channelFactory.Create ()->GetObject<CsmaChannel> ();
+  Ptr< SerialChannel > channel = channelFactory.Create ()->GetObject<SerialChannel> ();
 
+  NS_LOG_INFO ("Create net devices.");
   NetDeviceContainer devs;
-  for (NodeContainer::Iterator node = n.Begin (); node != n.End (); node++)
+  for (NodeContainer::Iterator node = nodeSet.Begin (); node != nodeSet.End (); node++)
     {
-	  Ptr<CsmaNetDevice> device = deviceFactory.Create<CsmaNetDevice> ();
+	  NS_LOG_INFO ("Create devices");
+	  Ptr<SerialNetDevice> device = deviceFactory.Create<SerialNetDevice> ();
 	   device->SetAddress (Mac48Address::Allocate ());
 	   (*node)->AddDevice (device);
 	   Ptr<Queue> queue = queueFactory.Create<Queue> ();
@@ -91,7 +90,7 @@ main (int argc, char *argv[])
        devs.Add (device);
     }
 
-
+  NS_LOG_INFO ("Assign addresses.");
   Ipv4AddressHelper ipv4;
 //
 // We've got the "hardware" in place.  Now we need to add IP addresses.
@@ -102,26 +101,28 @@ main (int argc, char *argv[])
 
   NS_LOG_INFO ("Create Applications.");
 //
-// Create a UdpEchoServer application on node one.
+// Create a SerialServer application on node one.
 //
   uint16_t port = 9;  // well-known echo port number
   UdpEchoServerHelper server (port);
-  ApplicationContainer apps = server.Install (n.Get (1));
+  // SerialServerHelper server (port);
+  ApplicationContainer apps = server.Install (nodeSet.Get (1));
   apps.Start (Seconds (1.0));
   apps.Stop (Seconds (10.0));
 
 //
-// Create a UdpEchoClient application to send UDP datagrams from node zero to
+// Create a SerialClient application to send UDP datagrams from node zero to
 // node one.
 //
   uint32_t packetSize = 1024;
   uint32_t maxPacketCount = 1;
   Time interPacketInterval = Seconds (1.);
   UdpEchoClientHelper client (i.GetAddress (1), port);
+  // SerialClientHelper client (i.GetAddress (1), port);
   client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
   client.SetAttribute ("Interval", TimeValue (interPacketInterval));
   client.SetAttribute ("PacketSize", UintegerValue (packetSize));
-  apps = client.Install (n.Get (0));
+  apps = client.Install (nodeSet.Get (0));
   apps.Start (Seconds (2.0));
   apps.Stop (Seconds (10.0));
 
@@ -138,10 +139,10 @@ main (int argc, char *argv[])
   client.SetFill (apps.Get (0), fill, sizeof(fill), 1024);
 #endif
 
-  CsmaHelper csma;
+  //CsmaHelper csma;
   AsciiTraceHelper ascii;
-  csma.EnableAsciiAll (ascii.CreateFileStream ("udp-echo.tr"));
-  csma.EnablePcapAll ("udp-echo", true);
+  //csma.EnableAsciiAll (ascii.CreateFileStream ("udp-echo.tr"));
+  //csma.EnablePcapAll ("udp-echo", true);
 
 //
 // Now, do the actual simulation.

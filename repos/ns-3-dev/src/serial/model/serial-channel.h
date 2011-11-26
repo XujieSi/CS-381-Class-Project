@@ -70,6 +70,8 @@ public:
 private:
   SerialMacLowList m_serialMacLowList;
   double m_range;
+  Time m_delay;
+  DataRate m_bps;
 };
 
 } // namespace ns3

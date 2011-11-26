@@ -19,7 +19,7 @@
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="run"/>
 <booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="true"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="repos/ns-3-dev/build/scratch/serial-example"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="repos/ns-3-dev/build/scratch/serial-example-0"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="cs381"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="cdt.managedbuild.config.gnu.exe.debug.1457861941"/>
 <booleanAttribute key="org.eclipse.cdt.launch.use_terminal" value="true"/>

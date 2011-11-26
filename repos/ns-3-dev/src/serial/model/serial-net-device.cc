@@ -18,8 +18,7 @@
  * Author: Fred Eisele <phreed@gmail.com>
  *
  */
-#include "serial.h"
-#include "serial-net-device.h"
+
 #include "ns3/llc-snap-header.h"
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
@@ -27,6 +26,7 @@
 #include "ns3/node.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/log.h"
+#include "serial-net-device.h"
 
 NS_LOG_COMPONENT_DEFINE ("SerialNetDevice");
 
@@ -115,6 +115,39 @@ SerialNetDevice::CompleteConfig (void)
   m_mac->SetTxQueueStartCallback (MakeCallback (&SerialNetDevice::TxQueueStart, this));
   m_mac->SetTxQueueStopCallback (MakeCallback (&SerialNetDevice::TxQueueStop, this));
   m_configComplete = true;
+}
+
+void
+SerialNetDevice::SetQueue (Ptr<Queue> q)
+{
+  NS_LOG_FUNCTION (q);
+  m_queue = q;
+}
+
+bool
+SerialNetDevice::Attach (Ptr<SerialChannel> ch)
+{
+  NS_LOG_FUNCTION (this << &ch);
+
+  m_channel = ch;
+
+  //m_deviceId = m_channel->Attach (this);
+
+  //
+  // The channel provides us with the transmitter data rate.
+  //
+  //m_bps = m_channel->GetDataRate ();
+
+  //
+  // We use the Ethernet interframe gap of 96 bit times.
+  //
+  //m_tInterframeGap = Seconds (m_bps.CalculateTxTime (96/8));
+
+  //
+  // This device is up whenever a channel is attached to it.
+  //
+  // NotifyLinkUp ();
+  return true;
 }
 
 void
