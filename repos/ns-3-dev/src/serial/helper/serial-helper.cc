@@ -17,16 +17,6 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #include "serial-helper.h"
 #include "ns3/serial-net-device.h"
@@ -99,7 +89,7 @@ SerialHelper::SerialHelper (std::string filename) : m_controller (0),
   NS_LOG_FUNCTION (this << m_filename);
   m_mac.SetTypeId ("ns3::SerialCentralMac");
   m_channel = CreateObject<SerialChannel> ();
-  m_parser = CreateObject<SerialSlotAssignmentFileParser> (m_filename);
+  m_parser = CreateObject<SerialSlotAssignmentParser> (m_filename);
   if (! m_parser->GetParseState()) return;
   m_numRows = m_parser->GetNodeCount ();
   m_numCols = m_parser->GetTotalSlots () + 1; // +1 for nodeid in first column

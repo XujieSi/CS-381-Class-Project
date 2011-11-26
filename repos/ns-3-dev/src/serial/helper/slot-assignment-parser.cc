@@ -17,16 +17,6 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #include <fstream>
 #include "ns3/log.h"
@@ -37,16 +27,16 @@ namespace ns3 {
 
 NS_LOG_COMPONENT_DEFINE ("SerialSlotAssignmentFileParser");
 
-NS_OBJECT_ENSURE_REGISTERED (SerialSlotAssignmentFileParser);
+NS_OBJECT_ENSURE_REGISTERED (SerialSlotAssignmentParser);
 
-TypeId SerialSlotAssignmentFileParser::GetTypeId (void)
+TypeId SerialSlotAssignmentParser::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::SerialSlotAssignmentFileParser")
     .SetParent<Object> ();
   return tid;
 }
 
-SerialSlotAssignmentFileParser::SerialSlotAssignmentFileParser (std::string fileName) : m_numRows (0),
+SerialSlotAssignmentParser::SerialSlotAssignmentParser (std::string fileName) : m_numRows (0),
                                                                                     m_numCols (0),
                                                                                     m_parseStatus(true)
 {
@@ -55,12 +45,12 @@ SerialSlotAssignmentFileParser::SerialSlotAssignmentFileParser (std::string file
   ParseSerialSlotInformation ();
 }
 
-SerialSlotAssignmentFileParser::~SerialSlotAssignmentFileParser ()
+SerialSlotAssignmentParser::~SerialSlotAssignmentParser ()
 {
 }
 
 void
-SerialSlotAssignmentFileParser::ParseSerialSlotInformation ()
+SerialSlotAssignmentParser::ParseSerialSlotInformation ()
 {
   NS_LOG_FUNCTION (this);
   std::ifstream topgen;
@@ -115,13 +105,13 @@ SerialSlotAssignmentFileParser::ParseSerialSlotInformation ()
 }
 
 uint32_t
-SerialSlotAssignmentFileParser::GetNodeCount (void)
+SerialSlotAssignmentParser::GetNodeCount (void)
 {
   return m_numRows;
 }
 
 uint32_t
-SerialSlotAssignmentFileParser::GetTotalSlots (void)
+SerialSlotAssignmentParser::GetTotalSlots (void)
 {
   return m_numCols;
 }

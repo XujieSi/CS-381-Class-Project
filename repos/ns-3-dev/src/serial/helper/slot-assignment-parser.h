@@ -17,16 +17,6 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #ifndef __SERIAL_PARSER_H__
 #define __SERIAL_PARSER_H__
@@ -37,12 +27,12 @@ namespace ns3 {
 typedef std::vector<uint32_t> SlotArray;
 class SerialHelper;
 
-class SerialSlotAssignmentFileParser : public Object
+class SerialSlotAssignmentParser : public Object
 {
 public:
   static TypeId GetTypeId (void);
-  ~SerialSlotAssignmentFileParser ();
-  SerialSlotAssignmentFileParser (std::string fileName);
+  ~SerialSlotAssignmentParser ();
+  SerialSlotAssignmentParser (std::string fileName);
   void ParseSerialSlotInformation (void);
   uint32_t GetNodeCount (void);
   uint32_t GetTotalSlots (void);

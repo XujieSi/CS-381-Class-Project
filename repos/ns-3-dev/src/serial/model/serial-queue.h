@@ -17,19 +17,9 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
-#ifndef SERIAL_MAC_QUEUE_H
-#define SERIAL_MAC_QUEUE_H
+#ifndef SERIAL_QUEUE_H
+#define SERIAL_QUEUE_H
 
 #include <list>
 #include "ns3/packet.h"
@@ -54,14 +44,14 @@ namespace ns3 {
  * to verify whether or not it should be dropped. If m_maxDelay has
  * elapsed, it is dropped. Otherwise, it is returned to the caller.
  */
-class SerialMacQueue : public Object
+class SerialQueue : public Object
 {
 public:
   typedef Callback<void, Ptr<const Packet> > SerialMacTxDropCallback;
 
   static TypeId GetTypeId (void);
-  SerialMacQueue ();
-  ~SerialMacQueue ();
+  SerialQueue ();
+  ~SerialQueue ();
 
   void SetMacPtr (Ptr<SerialMac> macPtr);
   /**

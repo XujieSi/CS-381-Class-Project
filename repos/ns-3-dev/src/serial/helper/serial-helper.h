@@ -17,16 +17,6 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #ifndef SERIAL_HELPER_H
 #define SERIAL_HELPER_H
@@ -204,7 +194,7 @@ private:
   uint32_t m_numRows;
   uint32_t m_numCols;
   std::string m_filename;
-  Ptr<SerialSlotAssignmentFileParser> m_parser;
+  Ptr<SerialSlotAssignmentParser> m_parser;
 };
 
 } // namespace ns3

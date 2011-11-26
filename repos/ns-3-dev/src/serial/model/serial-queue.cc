@@ -17,16 +17,6 @@
  *
  * Author: Fred Eisele <phreed@gmail.com>
  *
- * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
- * ResiliNets Research Group  http://wiki.ittc.ku.edu/resilinets
- * Information and Telecommunication Technology Center (ITTC)
- * and Department of Electrical Engineering and Computer Science
- * The University of Kansas Lawrence, KS USA.
- *
- * Work supported in part by NSF FIND (Future Internet Design) Program
- * under grant CNS-0626918 (Postmodern Internet Architecture),
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
  */
 #include "ns3/simulator.h"
 #include "ns3/uinteger.h"
@@ -37,9 +27,9 @@ using namespace std;
 NS_LOG_COMPONENT_DEFINE ("SerialMacQueue");
 namespace ns3 {
 
-NS_OBJECT_ENSURE_REGISTERED (SerialMacQueue);
+NS_OBJECT_ENSURE_REGISTERED (SerialQueue);
 
-SerialMacQueue::Item::Item (Ptr<const Packet> packet,
+SerialQueue::Item::Item (Ptr<const Packet> packet,
                           const WifiMacHeader &hdr,
                           Time tstamp)
   : packet (packet),
@@ -49,73 +39,73 @@ SerialMacQueue::Item::Item (Ptr<const Packet> packet,
 }
 
 TypeId
-SerialMacQueue::GetTypeId (void)
+SerialQueue::GetTypeId (void)
 {
   static TypeId tid = TypeId ("ns3::SerialMacQueue")
     .SetParent<Object> ()
-    .AddConstructor<SerialMacQueue> ()
+    .AddConstructor<SerialQueue> ()
     .AddAttribute ("MaxPacketNumber", "If a packet arrives when there are already this number of packets, it is dropped.",
                    UintegerValue (400),
-                   MakeUintegerAccessor (&SerialMacQueue::m_maxSize),
+                   MakeUintegerAccessor (&SerialQueue::m_maxSize),
                    MakeUintegerChecker<uint32_t> ())
     .AddAttribute ("MaxDelay", "If a packet stays longer than this delay in the queue, it is dropped.",
                    TimeValue (Seconds (10.0)),
-                   MakeTimeAccessor (&SerialMacQueue::m_maxDelay),
+                   MakeTimeAccessor (&SerialQueue::m_maxDelay),
                    MakeTimeChecker ())
   ;
   return tid;
 }
 
-SerialMacQueue::SerialMacQueue ()
+SerialQueue::SerialQueue ()
   : m_size (0),
     m_count (0)
 {
   NS_LOG_FUNCTION_NOARGS ();
 }
 
-SerialMacQueue::~SerialMacQueue ()
+SerialQueue::~SerialQueue ()
 {
   Flush ();
 }
 
 void
-SerialMacQueue::SetMaxSize (uint32_t maxSize)
+SerialQueue::SetMaxSize (uint32_t maxSize)
 {
   m_maxSize = maxSize;
 }
 
 void
-SerialMacQueue::SetMacPtr (Ptr<SerialMac> macPtr)
+SerialQueue::SetMacPtr (Ptr<SerialMac> macPtr)
 {
   m_macPtr = macPtr;
 }
 
 void
-SerialMacQueue::SetMaxDelay (Time delay)
+SerialQueue::SetMaxDelay (Time delay)
 {
   m_maxDelay = delay;
 }
 
 void
-SerialMacQueue::SetSerialMacTxDropCallback (Callback<void,Ptr<const Packet> > callback)
+SerialQueue::SetSerialMacTxDropCallback (Callback<void,Ptr<const Packet> > callback)
 {
   m_txDropCallback = callback;
 }
 
 uint32_t
-SerialMacQueue::GetMaxSize (void) const
+SerialQueue::GetMaxSize (void) const
 {
   return m_maxSize;
 }
 
 Time
-SerialMacQueue::GetMaxDelay (void) const
+SerialQueue::GetMaxDelay (void) const
 {
   return m_maxDelay;
 }
 
 bool
-SerialMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
+SerialQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
 {
   NS_LOG_DEBUG ("Queue Size: " << GetSize () << " Max Size: " << GetMaxSize ());
   Cleanup ();
@@ -132,7 +122,7 @@ SerialMacQueue::Enqueue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
 }
 
 void
-SerialMacQueue::Cleanup (void)
+SerialQueue::Cleanup (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
   if (m_queue.empty ())
@@ -163,7 +153,7 @@ SerialMacQueue::Cleanup (void)
 }
 
 Ptr<const Packet>
-SerialMacQueue::Dequeue (WifiMacHeader *hdr)
+SerialQueue::Dequeue (WifiMacHeader *hdr)
 {
   NS_LOG_FUNCTION_NOARGS ();
   Cleanup ();
@@ -180,7 +170,7 @@ SerialMacQueue::Dequeue (WifiMacHeader *hdr)
 }
 
 Ptr<const Packet>
-SerialMacQueue::Peek (WifiMacHeader *hdr)
+SerialQueue::Peek (WifiMacHeader *hdr)
 {
   NS_LOG_FUNCTION_NOARGS ();
   Cleanup ();
@@ -194,27 +184,27 @@ SerialMacQueue::Peek (WifiMacHeader *hdr)
 }
 
 bool
-SerialMacQueue::IsEmpty (void)
+SerialQueue::IsEmpty (void)
 {
   Cleanup ();
   return m_queue.empty ();
 }
 
 uint32_t
-SerialMacQueue::GetSize (void)
+SerialQueue::GetSize (void)
 {
   return m_size;
 }
 
 void
-SerialMacQueue::Flush (void)
+SerialQueue::Flush (void)
 {
   m_queue.erase (m_queue.begin (), m_queue.end ());
   m_size = 0;
 }
 
 Mac48Address
-SerialMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI it)
+SerialQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, PacketQueueI it)
 {
   if (type == WifiMacHeader::ADDR1)
     {
@@ -232,7 +222,7 @@ SerialMacQueue::GetAddressForPacket (enum WifiMacHeader::AddressType type, Packe
 }
 
 bool
-SerialMacQueue::Remove (Ptr<const Packet> packet)
+SerialQueue::Remove (Ptr<const Packet> packet)
 {
   PacketQueueI it = m_queue.begin ();
   for (; it != m_queue.end (); it++)
