@@ -1,0 +1,24 @@
+These files are presentations made with LibreOffice Draw.
+
+ammo-architecture.fodg
+
+The relationship between the major components
+with an indication of which elements are generated.
+
+ammo-gateway-network.fodg
+
+A series of network topologies indicating the
+evolving character of a network.
+
+ammo-state-machine.fodg
+
+- a state machine for the dispatching of requests.
+
+ammo-serial-radio.fodg
+
+Showing one of the more important channels.
+We have been working on a ns-3 model for this channel.
+One of the reasons we choose ns-3 over omnigraph is
+the ability to dynamically modify the network.
+
+
