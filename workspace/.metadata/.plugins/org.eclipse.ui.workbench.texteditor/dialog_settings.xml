@@ -3,26 +3,26 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="382" key="DIALOG_WIDTH"/>
 		<item value="269" key="DIALOG_Y_ORIGIN"/>
-		<item value="444" key="DIALOG_HEIGHT"/>
 		<item value="1304" key="DIALOG_X_ORIGIN"/>
+		<item value="444" key="DIALOG_HEIGHT"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="true" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Serial" key="selection"/>
+		<item value="Csma" key="selection"/>
 		<list key="findhistory">
+			<item value="Csma"/>
+			<item value="SetQueu"/>
 			<item value="UdpEcho"/>
 			<item value="queue"/>
 			<item value="m_deviceFactory"/>
 			<item value="DoStart"/>
 			<item value="NS_LOG_APPEND_CONTEXT"/>
 			<item value="SerialMac"/>
-			<item value="impl"/>
-			<item value="AERO_MAC_H"/>
 		</list>
 		<list key="replacehistory">
 			<item value="Serial"/>
