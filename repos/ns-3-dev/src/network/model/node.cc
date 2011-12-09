@@ -177,6 +177,7 @@ Node::DoDispose ()
 void 
 Node::DoStart (void)
 {
+  NS_LOG_FUNCTION_NOARGS ();
   for (std::vector<Ptr<NetDevice> >::iterator i = m_devices.begin ();
        i != m_devices.end (); i++)
     {

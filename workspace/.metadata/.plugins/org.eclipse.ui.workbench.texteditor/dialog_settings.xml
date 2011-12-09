@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="370" key="DIALOG_WIDTH"/>
-		<item value="264" key="DIALOG_Y_ORIGIN"/>
-		<item value="1352" key="DIALOG_X_ORIGIN"/>
-		<item value="496" key="DIALOG_HEIGHT"/>
+		<item value="382" key="DIALOG_WIDTH"/>
+		<item value="269" key="DIALOG_Y_ORIGIN"/>
+		<item value="1304" key="DIALOG_X_ORIGIN"/>
+		<item value="444" key="DIALOG_HEIGHT"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,21 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="TdmaSlotAss" key="selection"/>
+		<item value="Csma" key="selection"/>
 		<list key="findhistory">
-			<item value="TdmaSlotAss"/>
-			<item value="m_numCols"/>
-			<item value="Allocate2D"/>
-			<item value="m_slotAllotmentArray"/>
-			<item value="new row"/>
-			<item value="Helper"/>
-			<item value="delete"/>
-			<item value="\tNS"/>
+			<item value="Csma"/>
+			<item value="SetQueu"/>
+			<item value="UdpEcho"/>
+			<item value="queue"/>
+			<item value="m_deviceFactory"/>
+			<item value="DoStart"/>
+			<item value="NS_LOG_APPEND_CONTEXT"/>
+			<item value="SerialMac"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Serial"/>
+			<item value="SERIAL_MAC_H"/>
+			<item value="SERIAL_QUEUE_H"/>
+			<item value="ns3::Serial"/>
+			<item value="serial"/>
+			<item value="SERIAL"/>
+			<item value="SerialChannel"/>
 			<item value="  NS"/>
-			<item value="  "/>
-			<item value="slotFileName"/>
 		</list>
 	</section>
 </section>

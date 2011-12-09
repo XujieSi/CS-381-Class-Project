@@ -1,0 +1,1538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" office:version="1.2" office:mimetype="application/vnd.oasis.opendocument.spreadsheet">
+ <office:meta><meta:initial-creator>Fred Eisele</meta:initial-creator><meta:creation-date>2011-12-05T09:28:39</meta:creation-date><meta:generator>LibreOffice/3.4$Unix LibreOffice_project/340m1$Build-402</meta:generator><meta:document-statistic meta:table-count="3" meta:cell-count="373" meta:object-count="0"/></office:meta>
+ <office:settings>
+  <config:config-item-set config:name="ooo:view-settings">
+   <config:config-item config:name="VisibleAreaTop" config:type="int">0</config:config-item>
+   <config:config-item config:name="VisibleAreaLeft" config:type="int">0</config:config-item>
+   <config:config-item config:name="VisibleAreaWidth" config:type="int">29452</config:config-item>
+   <config:config-item config:name="VisibleAreaHeight" config:type="int">20834</config:config-item>
+   <config:config-item-map-indexed config:name="Views">
+    <config:config-item-map-entry>
+     <config:config-item config:name="ViewId" config:type="string">view1</config:config-item>
+     <config:config-item-map-named config:name="Tables">
+      <config:config-item-map-entry config:name="Sheet1">
+       <config:config-item config:name="CursorPositionX" config:type="int">0</config:config-item>
+       <config:config-item config:name="CursorPositionY" config:type="int">0</config:config-item>
+       <config:config-item config:name="HorizontalSplitMode" config:type="short">0</config:config-item>
+       <config:config-item config:name="VerticalSplitMode" config:type="short">0</config:config-item>
+       <config:config-item config:name="HorizontalSplitPosition" config:type="int">0</config:config-item>
+       <config:config-item config:name="VerticalSplitPosition" config:type="int">0</config:config-item>
+       <config:config-item config:name="ActiveSplitRange" config:type="short">2</config:config-item>
+       <config:config-item config:name="PositionLeft" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionRight" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionTop" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionBottom" config:type="int">0</config:config-item>
+       <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+       <config:config-item config:name="ZoomValue" config:type="int">100</config:config-item>
+       <config:config-item config:name="PageViewZoomValue" config:type="int">60</config:config-item>
+       <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+      </config:config-item-map-entry>
+      <config:config-item-map-entry config:name="throughput on-off">
+       <config:config-item config:name="CursorPositionX" config:type="int">4</config:config-item>
+       <config:config-item config:name="CursorPositionY" config:type="int">0</config:config-item>
+       <config:config-item config:name="HorizontalSplitMode" config:type="short">0</config:config-item>
+       <config:config-item config:name="VerticalSplitMode" config:type="short">0</config:config-item>
+       <config:config-item config:name="HorizontalSplitPosition" config:type="int">0</config:config-item>
+       <config:config-item config:name="VerticalSplitPosition" config:type="int">0</config:config-item>
+       <config:config-item config:name="ActiveSplitRange" config:type="short">2</config:config-item>
+       <config:config-item config:name="PositionLeft" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionRight" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionTop" config:type="int">0</config:config-item>
+       <config:config-item config:name="PositionBottom" config:type="int">0</config:config-item>
+       <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+       <config:config-item config:name="ZoomValue" config:type="int">100</config:config-item>
+       <config:config-item config:name="PageViewZoomValue" config:type="int">60</config:config-item>
+       <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+      </config:config-item-map-entry>
+     </config:config-item-map-named>
+     <config:config-item config:name="ActiveTable" config:type="string">Sheet1</config:config-item>
+     <config:config-item config:name="HorizontalScrollbarWidth" config:type="int">270</config:config-item>
+     <config:config-item config:name="ZoomType" config:type="short">0</config:config-item>
+     <config:config-item config:name="ZoomValue" config:type="int">100</config:config-item>
+     <config:config-item config:name="PageViewZoomValue" config:type="int">60</config:config-item>
+     <config:config-item config:name="ShowPageBreakPreview" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="ShowZeroValues" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="ShowNotes" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="GridColor" config:type="long">12632256</config:config-item>
+     <config:config-item config:name="ShowPageBreaks" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="HasColumnRowHeaders" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="HasSheetTabs" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="IsOutlineSymbolsSet" config:type="boolean">true</config:config-item>
+     <config:config-item config:name="IsSnapToRaster" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="RasterIsVisible" config:type="boolean">false</config:config-item>
+     <config:config-item config:name="RasterResolutionX" config:type="int">1270</config:config-item>
+     <config:config-item config:name="RasterResolutionY" config:type="int">1270</config:config-item>
+     <config:config-item config:name="RasterSubdivisionX" config:type="int">1</config:config-item>
+     <config:config-item config:name="RasterSubdivisionY" config:type="int">1</config:config-item>
+     <config:config-item config:name="IsRasterAxisSynchronized" config:type="boolean">true</config:config-item>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
+  </config:config-item-set>
+  <config:config-item-set config:name="ooo:configuration-settings">
+   <config:config-item config:name="ShowZeroValues" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="LoadReadonly" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="UpdateFromTemplate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="GridColor" config:type="long">12632256</config:config-item>
+   <config:config-item config:name="AllowPrintJobCancel" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IsSnapToRaster" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RasterSubdivisionX" config:type="int">1</config:config-item>
+   <config:config-item config:name="RasterSubdivisionY" config:type="int">1</config:config-item>
+   <config:config-item-map-indexed config:name="ForbiddenCharacters">
+    <config:config-item-map-entry>
+     <config:config-item config:name="Language" config:type="string">en</config:config-item>
+     <config:config-item config:name="Country" config:type="string">US</config:config-item>
+     <config:config-item config:name="Variant" config:type="string"/>
+     <config:config-item config:name="BeginLine" config:type="string"/>
+     <config:config-item config:name="EndLine" config:type="string"/>
+    </config:config-item-map-entry>
+   </config:config-item-map-indexed>
+   <config:config-item config:name="AutoCalculate" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrinterSetup" config:type="base64Binary"/>
+   <config:config-item config:name="ShowNotes" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="IsDocumentShared" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="HasSheetTabs" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="PrinterName" config:type="string"/>
+   <config:config-item config:name="LinkUpdateMode" config:type="short">3</config:config-item>
+   <config:config-item config:name="IsKernAsianPunctuation" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="SaveVersionOnClose" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="RasterIsVisible" config:type="boolean">false</config:config-item>
+   <config:config-item config:name="ApplyUserData" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="RasterResolutionX" config:type="int">1270</config:config-item>
+   <config:config-item config:name="RasterResolutionY" config:type="int">1270</config:config-item>
+   <config:config-item config:name="IsOutlineSymbolsSet" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ShowPageBreaks" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="ShowGrid" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="CharacterCompressionType" config:type="short">0</config:config-item>
+   <config:config-item config:name="IsRasterAxisSynchronized" config:type="boolean">true</config:config-item>
+   <config:config-item config:name="HasColumnRowHeaders" config:type="boolean">true</config:config-item>
+  </config:config-item-set>
+ </office:settings>
+ <office:scripts>
+  <office:script script:language="ooo:Basic">
+   <ooo:libraries xmlns:ooo="http://openoffice.org/2004/office" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <ooo:library-embedded ooo:name="Standard"/>
+   </ooo:libraries>
+  </office:script>
+ </office:scripts>
+ <office:font-face-decls>
+  <style:font-face style:name="Arial" svg:font-family="Arial" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="Liberation Sans" svg:font-family="&apos;Liberation Sans&apos;" style:font-family-generic="swiss" style:font-pitch="variable"/>
+  <style:font-face style:name="DejaVu Sans" svg:font-family="&apos;DejaVu Sans&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="Lohit Hindi" svg:font-family="&apos;Lohit Hindi&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+  <style:font-face style:name="WenQuanYi Micro Hei" svg:font-family="&apos;WenQuanYi Micro Hei&apos;" style:font-family-generic="system" style:font-pitch="variable"/>
+ </office:font-face-decls>
+ <office:styles>
+  <style:default-style style:family="table-cell">
+   <style:paragraph-properties style:tab-stop-distance="0.5in"/>
+   <style:text-properties style:font-name="Liberation Sans" fo:language="en" fo:country="US" style:font-name-asian="DejaVu Sans" style:language-asian="zh" style:country-asian="CN" style:font-name-complex="DejaVu Sans" style:language-complex="hi" style:country-complex="IN"/>
+  </style:default-style>
+  <number:number-style style:name="N0">
+   <number:number number:min-integer-digits="1"/>
+  </number:number-style>
+  <number:currency-style style:name="N104P0" style:volatile="true">
+   <number:currency-symbol number:language="en" number:country="US">$</number:currency-symbol>
+   <number:number number:decimal-places="2" number:min-integer-digits="1" number:grouping="true"/>
+  </number:currency-style>
+  <number:currency-style style:name="N104">
+   <style:text-properties fo:color="#ff0000"/>
+   <number:text>-</number:text>
+   <number:currency-symbol number:language="en" number:country="US">$</number:currency-symbol>
+   <number:number number:decimal-places="2" number:min-integer-digits="1" number:grouping="true"/>
+   <style:map style:condition="value()&gt;=0" style:apply-style-name="N104P0"/>
+  </number:currency-style>
+  <style:style style:name="Default" style:family="table-cell">
+   <style:text-properties style:font-name-asian="WenQuanYi Micro Hei" style:font-name-complex="Lohit Hindi"/>
+  </style:style>
+  <style:style style:name="Result" style:family="table-cell" style:parent-style-name="Default">
+   <style:text-properties fo:font-style="italic" style:text-underline-style="solid" style:text-underline-width="auto" style:text-underline-color="font-color" fo:font-weight="bold"/>
+  </style:style>
+  <style:style style:name="Result2" style:family="table-cell" style:parent-style-name="Result" style:data-style-name="N104"/>
+  <style:style style:name="Heading" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties style:text-align-source="fix" style:repeat-content="false"/>
+   <style:paragraph-properties fo:text-align="center"/>
+   <style:text-properties fo:font-size="16pt" fo:font-style="italic" fo:font-weight="bold"/>
+  </style:style>
+  <style:style style:name="Heading1" style:family="table-cell" style:parent-style-name="Heading">
+   <style:table-cell-properties style:rotation-angle="90"/>
+  </style:style>
+ </office:styles>
+ <office:automatic-styles>
+  <style:style style:name="co1" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.6035in"/>
+  </style:style>
+  <style:style style:name="co2" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.7in"/>
+  </style:style>
+  <style:style style:name="co3" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="2.0228in"/>
+  </style:style>
+  <style:style style:name="co4" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="2.3673in"/>
+  </style:style>
+  <style:style style:name="co5" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="0.8925in"/>
+  </style:style>
+  <style:style style:name="co6" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.9909in"/>
+  </style:style>
+  <style:style style:name="co7" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.1819in"/>
+  </style:style>
+  <style:style style:name="co8" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.5382in"/>
+  </style:style>
+  <style:style style:name="co9" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.3693in"/>
+  </style:style>
+  <style:style style:name="co10" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.1256in"/>
+  </style:style>
+  <style:style style:name="co11" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="1.4957in"/>
+  </style:style>
+  <style:style style:name="co12" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="2.0445in"/>
+  </style:style>
+  <style:style style:name="ro1" style:family="table-row">
+   <style:table-row-properties style:row-height="0.211in" fo:break-before="auto" style:use-optimal-row-height="true"/>
+  </style:style>
+  <style:style style:name="ro2" style:family="table-row">
+   <style:table-row-properties style:row-height="0.1835in" fo:break-before="auto" style:use-optimal-row-height="true"/>
+  </style:style>
+  <style:style style:name="ta1" style:family="table" style:master-page-name="Default">
+   <style:table-properties table:display="true" style:writing-mode="lr-tb"/>
+  </style:style>
+  <style:style style:name="ce1" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties fo:border-bottom="0.06pt solid #000000" fo:border-left="0.06pt solid #000000" fo:border-right="none" fo:border-top="0.06pt solid #000000"/>
+   <style:text-properties style:use-window-font-color="true" style:text-outline="false" style:text-line-through-style="none" fo:font-size="12pt" fo:language="en" fo:country="US" fo:font-style="normal" fo:text-shadow="none" style:text-underline-style="none" fo:font-weight="normal" style:text-underline-mode="continuous" style:text-overline-mode="continuous" style:text-line-through-mode="continuous" style:font-size-asian="6.80000019073486pt" style:language-asian="en" style:country-asian="US" style:font-style-asian="normal" style:font-weight-asian="normal" style:font-size-complex="6.80000019073486pt" style:language-complex="en" style:country-complex="US" style:font-style-complex="normal" style:font-weight-complex="normal" style:text-emphasize="none" style:font-relief="none" style:text-overline-style="none" style:text-overline-color="font-color"/>
+  </style:style>
+  <style:style style:name="ce2" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties fo:border-bottom="0.06pt solid #000000" fo:border-left="0.06pt solid #000000" fo:border-right="none" fo:border-top="none"/>
+   <style:text-properties style:use-window-font-color="true" style:text-outline="false" style:text-line-through-style="none" fo:font-size="12pt" fo:language="en" fo:country="US" fo:font-style="normal" fo:text-shadow="none" style:text-underline-style="none" fo:font-weight="normal" style:text-underline-mode="continuous" style:text-overline-mode="continuous" style:text-line-through-mode="continuous" style:font-size-asian="6.80000019073486pt" style:language-asian="en" style:country-asian="US" style:font-style-asian="normal" style:font-weight-asian="normal" style:font-size-complex="6.80000019073486pt" style:language-complex="en" style:country-complex="US" style:font-style-complex="normal" style:font-weight-complex="normal" style:text-emphasize="none" style:font-relief="none" style:text-overline-style="none" style:text-overline-color="font-color"/>
+  </style:style>
+  <style:style style:name="ce3" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties fo:border="0.06pt solid #000000"/>
+   <style:text-properties style:use-window-font-color="true" style:text-outline="false" style:text-line-through-style="none" fo:font-size="12pt" fo:language="en" fo:country="US" fo:font-style="normal" fo:text-shadow="none" style:text-underline-style="none" fo:font-weight="normal" style:text-underline-mode="continuous" style:text-overline-mode="continuous" style:text-line-through-mode="continuous" style:font-size-asian="6.80000019073486pt" style:language-asian="en" style:country-asian="US" style:font-style-asian="normal" style:font-weight-asian="normal" style:font-size-complex="6.80000019073486pt" style:language-complex="en" style:country-complex="US" style:font-style-complex="normal" style:font-weight-complex="normal" style:text-emphasize="none" style:font-relief="none" style:text-overline-style="none" style:text-overline-color="font-color"/>
+  </style:style>
+  <style:style style:name="ce4" style:family="table-cell" style:parent-style-name="Default">
+   <style:table-cell-properties fo:border-bottom="0.06pt solid #000000" fo:border-left="0.06pt solid #000000" fo:border-right="0.06pt solid #000000" fo:border-top="none"/>
+   <style:text-properties style:use-window-font-color="true" style:text-outline="false" style:text-line-through-style="none" fo:font-size="12pt" fo:language="en" fo:country="US" fo:font-style="normal" fo:text-shadow="none" style:text-underline-style="none" fo:font-weight="normal" style:text-underline-mode="continuous" style:text-overline-mode="continuous" style:text-line-through-mode="continuous" style:font-size-asian="6.80000019073486pt" style:language-asian="en" style:country-asian="US" style:font-style-asian="normal" style:font-weight-asian="normal" style:font-size-complex="6.80000019073486pt" style:language-complex="en" style:country-complex="US" style:font-style-complex="normal" style:font-weight-complex="normal" style:text-emphasize="none" style:font-relief="none" style:text-overline-style="none" style:text-overline-color="font-color"/>
+  </style:style>
+  <style:page-layout style:name="pm1">
+   <style:page-layout-properties style:writing-mode="lr-tb"/>
+   <style:header-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-bottom="0.0984in"/>
+   </style:header-style>
+   <style:footer-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0.0984in"/>
+   </style:footer-style>
+  </style:page-layout>
+  <style:page-layout style:name="pm2">
+   <style:page-layout-properties style:writing-mode="lr-tb"/>
+   <style:header-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-bottom="0.0984in" fo:border="2.49pt solid #000000" fo:padding="0.0071in" fo:background-color="#c0c0c0">
+     <style:background-image/>
+    </style:header-footer-properties>
+   </style:header-style>
+   <style:footer-style>
+    <style:header-footer-properties fo:min-height="0.2957in" fo:margin-left="0in" fo:margin-right="0in" fo:margin-top="0.0984in" fo:border="2.49pt solid #000000" fo:padding="0.0071in" fo:background-color="#c0c0c0">
+     <style:background-image/>
+    </style:header-footer-properties>
+   </style:footer-style>
+  </style:page-layout>
+ </office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Default" style:page-layout-name="pm1">
+   <style:header>
+    <text:p><text:sheet-name>???</text:sheet-name></text:p>
+   </style:header>
+   <style:header-left style:display="false"/>
+   <style:footer>
+    <text:p>Page <text:page-number>1</text:page-number></text:p>
+   </style:footer>
+   <style:footer-left style:display="false"/>
+  </style:master-page>
+  <style:master-page style:name="Report" style:page-layout-name="pm2">
+   <style:header>
+    <style:region-left>
+     <text:p><text:sheet-name>???</text:sheet-name> (<text:title>???</text:title>)</text:p>
+    </style:region-left>
+    <style:region-right>
+     <text:p><text:date style:data-style-name="N2" text:date-value="2011-12-07">12/07/2011</text:date>, <text:time>07:06:26</text:time></text:p>
+    </style:region-right>
+   </style:header>
+   <style:header-left style:display="false"/>
+   <style:footer>
+    <text:p>Page <text:page-number>1</text:page-number> / <text:page-count>99</text:page-count></text:p>
+   </style:footer>
+   <style:footer-left style:display="false"/>
+  </style:master-page>
+ </office:master-styles>
+ <office:body>
+  <office:spreadsheet>
+   <table:table table:name="Sheet1" table:style-name="ta1">
+    <table:table-column table:style-name="co1" table:default-cell-style-name="ce2"/>
+    <table:table-column table:style-name="co2" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co3" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co4" table:default-cell-style-name="ce4"/>
+    <table:table-row table:style-name="ro1" table:number-rows-repeated="3">
+     <table:table-cell table:style-name="ce1"/>
+     <table:table-cell table:style-name="ce3" table:number-columns-repeated="3"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell table:style-name="ce1" office:value-type="string">
+      <text:p>Number of Nodes</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Burst Size (Byte)</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>DataRate (KB/s)</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Time to Clear</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.012076">
+      <text:p>0.012076</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.015409">
+      <text:p>0.015409</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.022138">
+      <text:p>0.022138</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.03532">
+      <text:p>0.03532</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8192">
+      <text:p>8192</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.062317">
+      <text:p>0.062317</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="16384">
+      <text:p>16384</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.113398">
+      <text:p>0.113398</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.21869">
+      <text:p>0.21869</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.024261">
+      <text:p>0.024261</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.030618">
+      <text:p>0.030618</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.044434">
+      <text:p>0.044434</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.070162">
+      <text:p>0.070162</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8192">
+      <text:p>8192</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.122829">
+      <text:p>0.122829</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="16384">
+      <text:p>16384</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.227237">
+      <text:p>0.227237</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.436387">
+      <text:p>0.436387</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.436386">
+      <text:p>0.436386</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.436836">
+      <text:p>0.436836</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.218689">
+      <text:p>0.218689</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32768">
+      <text:p>32768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="0.218689">
+      <text:p>0.218689</text:p>
+     </table:table-cell>
+    </table:table-row>
+   </table:table>
+   <table:table table:name="throughput on-off" table:style-name="ta1">
+    <table:table-column table:style-name="co5" table:default-cell-style-name="ce2"/>
+    <table:table-column table:style-name="co6" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co7" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co8" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co9" table:default-cell-style-name="ce4"/>
+    <table:table-column table:style-name="co10" table:default-cell-style-name="Default"/>
+    <table:table-column table:style-name="co11" table:default-cell-style-name="Default"/>
+    <table:table-column table:style-name="co12" table:default-cell-style-name="Default"/>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell table:style-name="ce1" office:value-type="string">
+      <text:p>Throughput: on/off application, every node broadcast</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" table:number-columns-repeated="4"/>
+     <table:table-cell table:number-columns-repeated="3"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell table:style-name="ce1"/>
+     <table:table-cell table:style-name="ce3" table:number-columns-repeated="4"/>
+     <table:table-cell table:number-columns-repeated="3"/>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell table:style-name="ce1" office:value-type="string">
+      <text:p>Nodes</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Packet size (Byte)</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Rate (KB/s)</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Packets rcvd</text:p>
+     </table:table-cell>
+     <table:table-cell table:style-name="ce3" office:value-type="string">
+      <text:p>Time(s)</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="string">
+      <text:p>Total Kbits Sent (attempt)</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="string">
+      <text:p>Total Kbits Recv</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="string">
+      <text:p>Throughput (KB/s)</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3398">
+      <text:p>3398</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="10.202891">
+      <text:p>10.202891</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A4]*[.C4]*9" office:value-type="float" office:value="18000">
+      <text:p>18000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B4]*[.D4]*8/1000" office:value-type="float" office:value="13918.208">
+      <text:p>13918.208</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G4]/[.E4]" office:value-type="float" office:value="1364.14355499828">
+      <text:p>1364.1435549983</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2196">
+      <text:p>2196</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.990082">
+      <text:p>8.990082</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A5]*[.C5]*9" office:value-type="float" office:value="18000">
+      <text:p>18000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B5]*[.D5]*8/1000" office:value-type="float" office:value="17989.632">
+      <text:p>17989.632</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G5]/[.E5]" office:value-type="float" office:value="2001.05316058296">
+      <text:p>2001.053160583</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1096">
+      <text:p>1096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.967895">
+      <text:p>8.967895</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A6]*[.C6]*9" office:value-type="float" office:value="18000">
+      <text:p>18000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B6]*[.D6]*8/1000" office:value-type="float" office:value="17956.864">
+      <text:p>17956.864</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G6]/[.E6]" office:value-type="float" office:value="2002.34993830771">
+      <text:p>2002.3499383077</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="548">
+      <text:p>548</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.948002">
+      <text:p>8.948002</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A7]*[.C7]*9" office:value-type="float" office:value="18000">
+      <text:p>18000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B7]*[.D7]*8/1000" office:value-type="float" office:value="17956.864">
+      <text:p>17956.864</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G7]/[.E7]" office:value-type="float" office:value="2006.80151837248">
+      <text:p>2006.8015183725</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="600">
+      <text:p>600</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="656">
+      <text:p>656</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.937508">
+      <text:p>8.937508</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A8]*[.C8]*9" office:value-type="float" office:value="21600">
+      <text:p>21600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B8]*[.D8]*8/1000" office:value-type="float" office:value="21495.808">
+      <text:p>21495.808</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G8]/[.E8]" office:value-type="float" office:value="2405.12321779181">
+      <text:p>2405.1232177918</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="700">
+      <text:p>700</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="768">
+      <text:p>768</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.976494">
+      <text:p>8.976494</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A9]*[.C9]*9" office:value-type="float" office:value="25200">
+      <text:p>25200</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B9]*[.D9]*8/1000" office:value-type="float" office:value="25165.824">
+      <text:p>25165.824</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G9]/[.E9]" office:value-type="float" office:value="2803.52485057083">
+      <text:p>2803.5248505708</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="876">
+      <text:p>876</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.964757">
+      <text:p>8.964757</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A10]*[.C10]*9" office:value-type="float" office:value="28800">
+      <text:p>28800</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B10]*[.D10]*8/1000" office:value-type="float" office:value="28704.768">
+      <text:p>28704.768</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G10]/[.E10]" office:value-type="float" office:value="3201.9571751917">
+      <text:p>3201.9571751917</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="4">
+      <text:p>4</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="900">
+      <text:p>900</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="988">
+      <text:p>988</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="8.998097">
+      <text:p>8.998097</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A11]*[.C11]*9" office:value-type="float" office:value="32400">
+      <text:p>32400</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B11]*[.D11]*8/1000" office:value-type="float" office:value="32374.784">
+      <text:p>32374.784</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G11]/[.E11]" office:value-type="float" office:value="3597.95899066214">
+      <text:p>3597.9589906621</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3853">
+      <text:p>3853</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.373886">
+      <text:p>11.373886</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A12]*[.C12]*9" office:value-type="float" office:value="36000">
+      <text:p>36000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B12]*[.D12]*8/1000" office:value-type="float" office:value="15781.888">
+      <text:p>15781.888</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G12]/[.E12]" office:value-type="float" office:value="1387.55461413979">
+      <text:p>1387.5546141398</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="16">
+      <text:p>16</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4691">
+      <text:p>4691</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.713855">
+      <text:p>13.713855</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A13]*[.C13]*9" office:value-type="float" office:value="72000">
+      <text:p>72000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B13]*[.D13]*8/1000" office:value-type="float" office:value="19214.336">
+      <text:p>19214.336</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G13]/[.E13]" office:value-type="float" office:value="1401.0893362953">
+      <text:p>1401.0893362953</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="32">
+      <text:p>32</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="6314">
+      <text:p>6314</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="18.363712">
+      <text:p>18.363712</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A14]*[.C14]*9" office:value-type="float" office:value="144000">
+      <text:p>144000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B14]*[.D14]*8/1000" office:value-type="float" office:value="25862.144">
+      <text:p>25862.144</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G14]/[.E14]" office:value-type="float" office:value="1408.32877361614">
+      <text:p>1408.3287736161</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3187">
+      <text:p>3187</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="12.021639">
+      <text:p>12.021639</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A15]*[.C15]*9" office:value-type="float" office:value="36000">
+      <text:p>36000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B15]*[.D15]*8/1000" office:value-type="float" office:value="26107.904">
+      <text:p>26107.904</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G15]/[.E15]" office:value-type="float" office:value="2171.74247205393">
+      <text:p>2171.7424720539</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="16">
+      <text:p>16</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4013">
+      <text:p>4013</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="15.024264">
+      <text:p>15.024264</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A16]*[.C16]*9" office:value-type="float" office:value="72000">
+      <text:p>72000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B16]*[.D16]*8/1000" office:value-type="float" office:value="32874.496">
+      <text:p>32874.496</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G16]/[.E16]" office:value-type="float" office:value="2188.09360644887">
+      <text:p>2188.0936064489</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="32">
+      <text:p>32</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="5603">
+      <text:p>5603</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="20.894377">
+      <text:p>20.894377</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A17]*[.C17]*9" office:value-type="float" office:value="144000">
+      <text:p>144000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B17]*[.D17]*8/1000" office:value-type="float" office:value="45899.776">
+      <text:p>45899.776</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G17]/[.E17]" office:value-type="float" office:value="2196.752552134">
+      <text:p>2196.752552134</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2192">
+      <text:p>2192</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.854251">
+      <text:p>11.854251</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A18]*[.C18]*9" office:value-type="float" office:value="36000">
+      <text:p>36000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B18]*[.D18]*8/1000" office:value-type="float" office:value="35913.728">
+      <text:p>35913.728</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G18]/[.E18]" office:value-type="float" office:value="3029.60752222979">
+      <text:p>3029.6075222298</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="16">
+      <text:p>16</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3271">
+      <text:p>3271</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="17.610077">
+      <text:p>17.610077</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A19]*[.C19]*9" office:value-type="float" office:value="72000">
+      <text:p>72000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B19]*[.D19]*8/1000" office:value-type="float" office:value="53592.064">
+      <text:p>53592.064</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G19]/[.E19]" office:value-type="float" office:value="3043.26119641612">
+      <text:p>3043.2611964161</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="32">
+      <text:p>32</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4747">
+      <text:p>4747</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="25.446473">
+      <text:p>25.446473</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A20]*[.C20]*9" office:value-type="float" office:value="144000">
+      <text:p>144000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B20]*[.D20]*8/1000" office:value-type="float" office:value="77774.848">
+      <text:p>77774.848</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G20]/[.E20]" office:value-type="float" office:value="3056.40974291408">
+      <text:p>3056.4097429141</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1096">
+      <text:p>1096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="9.532683">
+      <text:p>9.532683</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A21]*[.C21]*9" office:value-type="float" office:value="36000">
+      <text:p>36000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B21]*[.D21]*8/1000" office:value-type="float" office:value="35913.728">
+      <text:p>35913.728</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G21]/[.E21]" office:value-type="float" office:value="3767.43126777634">
+      <text:p>3767.4312677764</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="16">
+      <text:p>16</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2146">
+      <text:p>2146</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="18.535341">
+      <text:p>18.535341</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A22]*[.C22]*9" office:value-type="float" office:value="72000">
+      <text:p>72000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B22]*[.D22]*8/1000" office:value-type="float" office:value="70320.128">
+      <text:p>70320.128</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G22]/[.E22]" office:value-type="float" office:value="3793.84053414502">
+      <text:p>3793.840534145</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="32">
+      <text:p>32</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="500">
+      <text:p>500</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3748">
+      <text:p>3748</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="32.235189">
+      <text:p>32.235189</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A23]*[.C23]*9" office:value-type="float" office:value="144000">
+      <text:p>144000</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B23]*[.D23]*8/1000" office:value-type="float" office:value="122814.464">
+      <text:p>122814.464</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G23]/[.E23]" office:value-type="float" office:value="3809.95017587767">
+      <text:p>3809.9501758777</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="600">
+      <text:p>600</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3854">
+      <text:p>3854</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.38399">
+      <text:p>11.38399</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A24]*[.C24]*9" office:value-type="float" office:value="43200">
+      <text:p>43200</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B24]*[.D24]*8/1000" office:value-type="float" office:value="15785.984">
+      <text:p>15785.984</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G24]/[.E24]" office:value-type="float" office:value="1386.68287656612">
+      <text:p>1386.6828765661</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="700">
+      <text:p>700</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3854">
+      <text:p>3854</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.37817">
+      <text:p>11.37817</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A25]*[.C25]*9" office:value-type="float" office:value="50400">
+      <text:p>50400</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B25]*[.D25]*8/1000" office:value-type="float" office:value="15785.984">
+      <text:p>15785.984</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G25]/[.E25]" office:value-type="float" office:value="1387.39217290654">
+      <text:p>1387.3921729065</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3855">
+      <text:p>3855</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.380673">
+      <text:p>11.380673</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A26]*[.C26]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B26]*[.D26]*8/1000" office:value-type="float" office:value="15790.08">
+      <text:p>15790.08</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G26]/[.E26]" office:value-type="float" office:value="1387.44694623947">
+      <text:p>1387.4469462395</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="512">
+      <text:p>512</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3859">
+      <text:p>3859</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.390723">
+      <text:p>11.390723</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A27]*[.C27]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B27]*[.D27]*8/1000" office:value-type="float" office:value="15806.464">
+      <text:p>15806.464</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G27]/[.E27]" office:value-type="float" office:value="1387.66116953243">
+      <text:p>1387.6611695324</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="600">
+      <text:p>600</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3191">
+      <text:p>3191</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="12.035641">
+      <text:p>12.035641</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A28]*[.C28]*9" office:value-type="float" office:value="43200">
+      <text:p>43200</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B28]*[.D28]*8/1000" office:value-type="float" office:value="26140.672">
+      <text:p>26140.672</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G28]/[.E28]" office:value-type="float" office:value="2171.93849500828">
+      <text:p>2171.9384950083</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="700">
+      <text:p>700</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3191">
+      <text:p>3191</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="12.030295">
+      <text:p>12.030295</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A29]*[.C29]*9" office:value-type="float" office:value="50400">
+      <text:p>50400</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B29]*[.D29]*8/1000" office:value-type="float" office:value="26140.672">
+      <text:p>26140.672</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G29]/[.E29]" office:value-type="float" office:value="2172.90365697599">
+      <text:p>2172.903656976</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3190">
+      <text:p>3190</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="12.037999">
+      <text:p>12.037999</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A30]*[.C30]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B30]*[.D30]*8/1000" office:value-type="float" office:value="26132.48">
+      <text:p>26132.48</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G30]/[.E30]" office:value-type="float" office:value="2170.83254451176">
+      <text:p>2170.8325445118</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1024">
+      <text:p>1024</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="3195">
+      <text:p>3195</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="12.052271">
+      <text:p>12.052271</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A31]*[.C31]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B31]*[.D31]*8/1000" office:value-type="float" office:value="26173.44">
+      <text:p>26173.44</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G31]/[.E31]" office:value-type="float" office:value="2171.6604281467">
+      <text:p>2171.6604281467</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="600">
+      <text:p>600</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2449">
+      <text:p>2449</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.256069">
+      <text:p>13.256069</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A32]*[.C32]*9" office:value-type="float" office:value="43200">
+      <text:p>43200</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B32]*[.D32]*8/1000" office:value-type="float" office:value="40124.416">
+      <text:p>40124.416</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G32]/[.E32]" office:value-type="float" office:value="3026.87139000257">
+      <text:p>3026.8713900026</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="700">
+      <text:p>700</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2463">
+      <text:p>2463</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.332938">
+      <text:p>13.332938</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A33]*[.C33]*9" office:value-type="float" office:value="50400">
+      <text:p>50400</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B33]*[.D33]*8/1000" office:value-type="float" office:value="40353.792">
+      <text:p>40353.792</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G33]/[.E33]" office:value-type="float" office:value="3026.62413940573">
+      <text:p>3026.6241394057</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2464">
+      <text:p>2464</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.332561">
+      <text:p>13.332561</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A34]*[.C34]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B34]*[.D34]*8/1000" office:value-type="float" office:value="40370.176">
+      <text:p>40370.176</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G34]/[.E34]" office:value-type="float" office:value="3027.93859334302">
+      <text:p>3027.938593343</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2048">
+      <text:p>2048</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="2471">
+      <text:p>2471</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.373014">
+      <text:p>13.373014</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A35]*[.C35]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B35]*[.D35]*8/1000" office:value-type="float" office:value="40484.864">
+      <text:p>40484.864</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G35]/[.E35]" office:value-type="float" office:value="3027.35523943967">
+      <text:p>3027.3552394397</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="600">
+      <text:p>600</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1311">
+      <text:p>1311</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="11.396326">
+      <text:p>11.396326</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A36]*[.C36]*9" office:value-type="float" office:value="43200">
+      <text:p>43200</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B36]*[.D36]*8/1000" office:value-type="float" office:value="42958.848">
+      <text:p>42958.848</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G36]/[.E36]" office:value-type="float" office:value="3769.53484833621">
+      <text:p>3769.5348483362</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="700">
+      <text:p>700</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1536">
+      <text:p>1536</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="13.346554">
+      <text:p>13.346554</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A37]*[.C37]*9" office:value-type="float" office:value="50400">
+      <text:p>50400</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B37]*[.D37]*8/1000" office:value-type="float" office:value="50331.648">
+      <text:p>50331.648</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G37]/[.E37]" office:value-type="float" office:value="3771.13433175335">
+      <text:p>3771.1343317534</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1744">
+      <text:p>1744</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="15.15541">
+      <text:p>15.15541</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A38]*[.C38]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B38]*[.D38]*8/1000" office:value-type="float" office:value="57147.392">
+      <text:p>57147.392</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G38]/[.E38]" office:value-type="float" office:value="3770.75856080436">
+      <text:p>3770.7585608044</text:p>
+     </table:table-cell>
+    </table:table-row>
+    <table:table-row table:style-name="ro1">
+     <table:table-cell office:value-type="float" office:value="8">
+      <text:p>8</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="4096">
+      <text:p>4096</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="800">
+      <text:p>800</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="1843">
+      <text:p>1843</text:p>
+     </table:table-cell>
+     <table:table-cell office:value-type="float" office:value="16.015125">
+      <text:p>16.015125</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.A39]*[.C39]*9" office:value-type="float" office:value="57600">
+      <text:p>57600</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.B39]*[.D39]*8/1000" office:value-type="float" office:value="60391.424">
+      <text:p>60391.424</text:p>
+     </table:table-cell>
+     <table:table-cell table:formula="of:=[.G39]/[.E39]" office:value-type="float" office:value="3770.89932173492">
+      <text:p>3770.8993217349</text:p>
+     </table:table-cell>
+    </table:table-row>
+   </table:table>
+   <table:table table:name="Sheet3" table:style-name="ta1">
+    <table:table-column table:style-name="co5" table:default-cell-style-name="Default"/>
+    <table:table-row table:style-name="ro2">
+     <table:table-cell/>
+    </table:table-row>
+   </table:table>
+  </office:spreadsheet>
+ </office:body>
+</office:document>

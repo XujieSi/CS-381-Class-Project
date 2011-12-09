@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="23" version="2.0">
+<workbench progressCount="22" version="2.0">
 <workbenchAdvisor/>
-<window height="1004" width="1571" x="106" y="31">
+<window height="908" width="1691" x="128" y="114">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="382"/>
@@ -13,16 +13,17 @@
 <coolItem id="org.eclipse.cdt.ui.CElementCreationActionSet" itemType="typeToolBarContribution" x="156" y="30"/>
 <coolItem id="org.eclipse.cdt.ui.buildConfigActionSet" itemType="typeToolBarContribution" x="82" y="30"/>
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="120" y="30"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="30"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="96" y="30"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="104" y="30"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="40" y="30"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="184" y="30"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.cdt.ui.editor.CEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1321995217694" focus="true" label="Workspace - C/C++">
+<page aggregateWorkingSetId="Aggregate for window 1321995217694" focus="true" label="Workspace - Debug">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -33,49 +34,238 @@
 <part id="2"/>
 <part id="3"/>
 <part id="4"/>
+<part id="5"/>
+<part id="6"/>
+<part id="7"/>
+<part id="8"/>
+<part id="9"/>
+<part id="10"/>
+<part id="11"/>
+<part id="12"/>
+<part id="13"/>
+<part id="14"/>
+<part id="15"/>
+<part id="16"/>
+<part id="17"/>
+<part id="18"/>
+<part id="19"/>
+<part id="20"/>
+<part id="21"/>
+<part id="22"/>
+<part id="23"/>
+<part id="24"/>
+<part id="25"/>
+<part id="26"/>
+<part id="27"/>
+<part id="28"/>
+<part id="29"/>
+<part id="30"/>
+<part id="31"/>
+<part id="32"/>
+<part id="33"/>
+<part id="34"/>
+<part id="35"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-example.cc" partName="tdma-example.cc" path="/opt/ns3/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc" title="tdma-example.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="12035" selectionTopPixel="5950"/>
+<editor id="org.eclipse.ui.DefaultTextEditor" name="serial.rst" partName="serial.rst" path="/opt/ns3/repos/ns-3-dev/src/serial/doc/serial.rst" title="serial.rst" tooltip="cs381/repos/ns-3-dev/src/serial/doc/serial.rst" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/doc/serial.rst"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1081" selectionTopPixel="381"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-helper.cc" partName="tdma-helper.cc" path="/opt/ns3/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc" title="tdma-helper.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4440" selectionTopPixel="1280"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial.h" partName="serial.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial.h" title="serial.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3200" selectionTopPixel="1376"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-helper.h" partName="tdma-helper.h" path="/opt/ns3/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h" title="tdma-helper.h" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3855" selectionTopPixel="1794"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-central.cc" partName="serial-central.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-central.cc" title="serial-central.cc" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-central.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-central.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="9352" selectionTopPixel="6290"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-slot-assignment-parser.cc" partName="tdma-slot-assignment-parser.cc" path="/opt/ns3/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc" title="tdma-slot-assignment-parser.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2620" selectionTopPixel="804"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-central.h" partName="serial-central.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-central.h" title="serial-central.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-central.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-central.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1511" selectionTopPixel="458"/>
 </editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-slot-assignment-parser.h" partName="tdma-slot-assignment-parser.h" path="/opt/ns3/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h" title="tdma-slot-assignment-parser.h" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1957" selectionTopPixel="490"/>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-queue.h" partName="serial-queue.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-queue.h" title="serial-queue.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-queue.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-queue.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1708" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="slot-assignment-parser.h" partName="slot-assignment-parser.h" path="/opt/ns3/repos/ns-3-dev/src/serial/helper/slot-assignment-parser.h" title="slot-assignment-parser.h" tooltip="cs381/repos/ns-3-dev/src/serial/helper/slot-assignment-parser.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/helper/slot-assignment-parser.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="26" selectionOffset="982" selectionTopPixel="114"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-helper.h" partName="serial-helper.h" path="/opt/ns3/repos/ns-3-dev/src/serial/helper/serial-helper.h" title="serial-helper.h" tooltip="cs381/repos/ns-3-dev/src/serial/helper/serial-helper.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/helper/serial-helper.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1514" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-controller.h" partName="serial-controller.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-controller.h" title="serial-controller.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-controller.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-controller.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2794" selectionTopPixel="1773"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-channel.h" partName="serial-channel.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-channel.h" title="serial-channel.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-channel.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-channel.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2150" selectionTopPixel="817"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="simulator.cc" partName="simulator.cc" path="/opt/ns3/repos/ns-3-dev/src/core/model/simulator.cc" title="simulator.cc" tooltip="cs381/repos/ns-3-dev/src/core/model/simulator.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/core/model/simulator.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4279" selectionTopPixel="2635"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial.cc" partName="serial.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial.cc" title="serial.cc" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="402"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="default-simulator-impl.cc" partName="default-simulator-impl.cc" path="/opt/ns3/repos/ns-3-dev/src/core/model/default-simulator-impl.cc" title="default-simulator-impl.cc" tooltip="cs381/repos/ns-3-dev/src/core/model/default-simulator-impl.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/core/model/default-simulator-impl.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3115" selectionTopPixel="1895"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="event-impl.cc" partName="event-impl.cc" path="/opt/ns3/repos/ns-3-dev/src/core/model/event-impl.cc" title="event-impl.cc" tooltip="cs381/repos/ns-3-dev/src/core/model/event-impl.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/core/model/event-impl.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="992" selectionTopPixel="510"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="make-event.h" partName="make-event.h" path="/opt/ns3/repos/ns-3-dev/build/ns3/make-event.h" title="make-event.h" tooltip="cs381/repos/ns-3-dev/build/ns3/make-event.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/build/ns3/make-event.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2644" selectionTopPixel="1479"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="ptr.h" partName="ptr.h" path="/opt/ns3/repos/ns-3-dev/build/ns3/ptr.h" title="ptr.h" tooltip="cs381/repos/ns-3-dev/build/ns3/ptr.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/build/ns3/ptr.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="10498" selectionTopPixel="7395"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="simple-ref-count.h" partName="simple-ref-count.h" path="/opt/ns3/repos/ns-3-dev/build/ns3/simple-ref-count.h" title="simple-ref-count.h" tooltip="cs381/repos/ns-3-dev/build/ns3/simple-ref-count.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/build/ns3/simple-ref-count.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3181" selectionTopPixel="1309"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-low.cc" partName="serial-low.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-low.cc" title="serial-low.cc" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-low.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-low.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="763" selectionTopPixel="190"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-controller.cc" partName="serial-controller.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-controller.cc" title="serial-controller.cc" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-controller.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-controller.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3945" selectionTopPixel="0"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="serial-net-device.cc" partName="serial-net-device.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-net-device.cc" title="serial-net-device.cc" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-net-device.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-net-device.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5604" selectionTopPixel="2408"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="node.cc" partName="node.cc" path="/opt/ns3/repos/ns-3-dev/src/network/model/node.cc" title="node.cc" tooltip="cs381/repos/ns-3-dev/src/network/model/node.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/network/model/node.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5075" selectionTopPixel="2960"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="object.cc" partName="object.cc" path="/opt/ns3/repos/ns-3-dev/src/core/model/object.cc" title="object.cc" tooltip="cs381/repos/ns-3-dev/src/core/model/object.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/core/model/object.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5152" selectionTopPixel="3013"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-example.cc" partName="serial-example.cc" path="/opt/ns3/repos/ns-3-dev/src/serial/examples/serial-example.cc" title="serial-example.cc" tooltip="cs381/repos/ns-3-dev/src/serial/examples/serial-example.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/examples/serial-example.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="10740" selectionTopPixel="5752"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="internet-stack-helper.cc" partName="internet-stack-helper.cc" path="/opt/ns3/repos/ns-3-dev/src/internet/helper/internet-stack-helper.cc" title="internet-stack-helper.cc" tooltip="cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="28" selectionOffset="13460" selectionTopPixel="6174"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="on-off-helper.h" partName="on-off-helper.h" path="/opt/ns3/repos/ns-3-dev/src/applications/helper/on-off-helper.h" title="on-off-helper.h" tooltip="cs381/repos/ns-3-dev/src/applications/helper/on-off-helper.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/applications/helper/on-off-helper.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="1216" selectionTopPixel="1328"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="onoff-application.h" partName="onoff-application.h" path="/opt/ns3/repos/ns-3-dev/src/applications/model/onoff-application.h" title="onoff-application.h" tooltip="cs381/repos/ns-3-dev/src/applications/model/onoff-application.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/applications/model/onoff-application.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="udp-echo.cc" partName="udp-echo.cc" path="/opt/ns3/repos/ns-3-dev/examples/udp/udp-echo.cc" title="udp-echo.cc" tooltip="cs381/repos/ns-3-dev/examples/udp/udp-echo.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/examples/udp/udp-echo.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="1686" selectionTopPixel="762"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="csma-helper.h" partName="csma-helper.h" path="/opt/ns3/repos/ns-3-dev/src/csma/helper/csma-helper.h" title="csma-helper.h" tooltip="cs381/repos/ns-3-dev/src/csma/helper/csma-helper.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/csma/helper/csma-helper.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="15" selectionOffset="9258" selectionTopPixel="3570"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="csma-helper.cc" partName="csma-helper.cc" path="/opt/ns3/repos/ns-3-dev/src/csma/helper/csma-helper.cc" title="csma-helper.cc" tooltip="cs381/repos/ns-3-dev/src/csma/helper/csma-helper.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/csma/helper/csma-helper.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="151" selectionOffset="1239" selectionTopPixel="578"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="trace-helper.cc" partName="trace-helper.cc" path="/opt/ns3/repos/ns-3-dev/src/network/helper/trace-helper.cc" title="trace-helper.cc" tooltip="cs381/repos/ns-3-dev/src/network/helper/trace-helper.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/network/helper/trace-helper.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="15761" selectionTopPixel="9826"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-example-0.cc" partName="serial-example-0.cc" path="/opt/ns3/repos/ns-3-dev/scratch/serial-example-0.cc" title="serial-example-0.cc" tooltip="cs381/repos/ns-3-dev/scratch/serial-example-0.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/scratch/serial-example-0.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2680" selectionTopPixel="1275"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="internet-stack-helper.h" partName="internet-stack-helper.h" path="/opt/ns3/repos/ns-3-dev/src/internet/helper/internet-stack-helper.h" title="internet-stack-helper.h" tooltip="cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="19" selectionOffset="2381" selectionTopPixel="3788"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="csma-net-device.cc" partName="csma-net-device.cc" path="/opt/ns3/repos/ns-3-dev/src/csma/model/csma-net-device.cc" title="csma-net-device.cc" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-net-device.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/csma/model/csma-net-device.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="491" selectionOffset="20151" selectionTopPixel="10406"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="csma-net-device.h" partName="csma-net-device.h" path="/opt/ns3/repos/ns-3-dev/src/csma/model/csma-net-device.h" title="csma-net-device.h" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-net-device.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/csma/model/csma-net-device.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="318" selectionOffset="905" selectionTopPixel="288"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="serial-net-device.h" partName="serial-net-device.h" path="/opt/ns3/repos/ns-3-dev/src/serial/model/serial-net-device.h" title="serial-net-device.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-net-device.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/serial/model/serial-net-device.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3942" selectionTopPixel="1666"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="command-line.h" partName="command-line.h" path="/opt/ns3/repos/ns-3-dev/src/core/model/command-line.h" title="command-line.h" tooltip="cs381/repos/ns-3-dev/src/core/model/command-line.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/core/model/command-line.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="1492" selectionTopPixel="578"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="csma-channel.cc" partName="csma-channel.cc" path="/opt/ns3/repos/ns-3-dev/src/csma/model/csma-channel.cc" title="csma-channel.cc" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-channel.cc" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/cs381/repos/ns-3-dev/src/csma/model/csma-channel.cc"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1774" selectionTopPixel="446"/>
 </editor>
 </editors>
 <views>
-<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
-<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.cdt.ui.cview.groupincludes="false" org.eclipse.cdt.ui.cview.groupmacros="false" org.eclipse.cdt.ui.editor.CUChildren="true" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+<view id="org.eclipse.debug.ui.ModuleView" partName="Modules">
+<viewState/>
 </view>
 <view id="org.eclipse.ui.views.ProgressView" partName="Progress">
 <viewState/>
 </view>
-<view id="org.eclipse.ui.views.PropertySheet" partName="Properties"/>
-<view id="org.eclipse.cdt.make.ui.views.MakeView" partName="Make Target"/>
+<view id="org.eclipse.debug.ui.MemoryView" partName="Memory">
+<viewState/>
+</view>
 <view id="org.eclipse.debug.ui.DebugView" partName="Debug">
 <viewState/>
 </view>
+<view id="org.eclipse.cdt.debug.ui.executablesView" partName="Executables"/>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
+<columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="350" org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="528" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.priorityField="35" org.eclipse.ui.ide.resourceField="105"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.completionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.priorityField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.descriptionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+</viewState>
+</view>
+<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
+<viewState/>
+</view>
+<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
+<viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.cdt.ui.cview.groupincludes="false" org.eclipse.cdt.ui.cview.groupmacros="false" org.eclipse.cdt.ui.editor.CUChildren="true" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
+</view>
+<view id="org.eclipse.ui.views.PropertySheet" partName="Properties">
+<viewState/>
+</view>
+<view id="org.eclipse.debug.ui.RegisterView" partName="Registers">
+<viewState/>
+</view>
+<view id="org.eclipse.cdt.make.ui.views.MakeView" partName="Make Target"/>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
+<category IMemento.internal.id="Errors (7 items)"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
-<columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="571" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
+<columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="627" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
@@ -86,30 +276,8 @@
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
 </view>
-<view id="org.eclipse.cdt.debug.ui.executablesView" partName="Executables"/>
-<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
-<viewState/>
-</view>
-<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
-<viewState/>
-</view>
-<view id="org.eclipse.ui.views.TaskList" partName="Tasks">
-<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
-<columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="350" org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="367" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.priorityField="35" org.eclipse.ui.ide.resourceField="105"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.completionField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.priorityField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.descriptionField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
-<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
-</viewState>
-</view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
-<viewState/>
-</view>
 </views>
-<perspectives activePart="org.eclipse.ui.views.ProgressView" activePerspective="org.eclipse.cdt.ui.CPerspective">
+<perspectives activePart="org.eclipse.debug.ui.DebugView" activePerspective="org.eclipse.debug.ui.DebugPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -252,9 +420,9 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.23684211" ratioLeft="369" ratioRight="1189" relationship="2" relative="topLeft"/>
-<info folder="true" part="bottom" ratio="0.75" ratioLeft="510" ratioRight="170" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ProgressView" appearance="2" expanded="2">
+<info part="org.eclipse.ui.editorss" ratio="0.1805721" ratioLeft="303" ratioRight="1375" relationship="2" relative="topLeft"/>
+<info folder="true" part="bottom" ratio="0.7010309" ratioLeft="544" ratioRight="232" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
@@ -269,7 +437,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="topRight" ratio="0.7492877" ratioLeft="789" ratioRight="264" relationship="2" relative="org.eclipse.ui.editorss">
+<info folder="true" part="topRight" ratio="0.71898925" ratioLeft="939" ratioRight="367" relationship="2" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.cdt.make.ui.views.MakeView" label="Make Target"/>
@@ -327,57 +495,78 @@
 <view id="org.eclipse.ui.views.TaskList"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.cdt.debug.ui.executablesView"/>
-<view id="org.eclipse.debug.ui.DebugView"/>
+<view id="org.eclipse.debug.ui.MemoryView"/>
 <view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.debug.ui.RegisterView"/>
+<view id="org.eclipse.debug.ui.ModuleView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <view id="org.eclipse.debug.ui.VariableView"/>
+<view id="org.eclipse.debug.ui.DebugView"/>
 <fastViewBars/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.7495195" ratioLeft="1170" ratioRight="391" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.7495195" ratioLeft="1170" ratioRight="391" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7489481" ratioLeft="534" ratioRight="179" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.7489481" ratioLeft="534" ratioRight="179" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.cdt.debug.ui.executablesView" label="Executables"/>
+<page content="org.eclipse.debug.ui.MemoryView" label="Memory"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
 <page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.2840909" ratioLeft="150" ratioRight="378" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
-<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.6283697" ratioLeft="979" ratioRight="579" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info part="org.eclipse.ui.editorss" ratio="0.2739496" ratioLeft="163" ratioRight="432" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.6283697" ratioLeft="979" ratioRight="579" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.gdb.ui.tracecontrol.view" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="2"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.49967968" ratioLeft="780" ratioRight="781" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.BreakpointView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.49967968" ratioLeft="780" ratioRight="781" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">
+<folder activePageID="org.eclipse.debug.ui.BreakpointView" appearance="2" expanded="2">
+<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
+<page content="org.eclipse.debug.ui.RegisterView" label="Registers"/>
+<page content="org.eclipse.debug.ui.ModuleView" label="Modules"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.debug.ui.SignalsView" label="LabelNotFound"/>
-<page content="org.eclipse.debug.ui.ModuleView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
 </presentation>
 </folder>
 </info>
@@ -388,161 +577,167 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/scratch/serial-example-0.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/serial/model/serial-net-device.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/serial/model/serial-module.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/csma/model/csma-net-device.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/scratch/serial-example-0.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/serial/model/serial-net-device.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/examples/udp/udp-echo.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/core/model/command-line.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/csma/model/csma-channel.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/serial/model/serial-channel.cc"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/cs381/repos/ns-3-dev/src/serial/model/serial-channel.h"/>
 </editors>
-<item historyLabel="tdma-helper.h" index="2">
-<position info="not_deleted" x="3662" y="0"/>
+<item historyLabel="serial-example-0.cc" index="0">
+<position info="not_deleted" x="1096" y="0"/>
 </item>
-<item historyLabel="tdma-example.cc" index="1">
-<position info="not_deleted" x="12035" y="0"/>
+<item historyLabel="serial-module.h" index="2">
+<position info="not_deleted" x="147" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4596" y="0"/>
+<item historyLabel="serial-example-0.cc" index="0">
+<position info="not_deleted" x="1241" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="serial-module.h" index="2">
+<position info="not_deleted" x="133" y="208"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="serial-example-0.cc" index="0">
+<position info="not_deleted" x="3238" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="3844" y="9"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="1074" y="0"/>
 </item>
-<item historyLabel="tdma-example.cc" index="1">
-<position info="not_deleted" x="12035" y="0"/>
+<item historyLabel="csma-net-device.h" index="3">
+<position info="not_deleted" x="905" y="318"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2149" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="890" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4596" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2264" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2149" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2264" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2149" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4596" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="1057" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="1565" y="28"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="816" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="11845" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="1037" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="1520" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
+<item historyLabel="udp-echo.cc" index="6">
+<position info="not_deleted" x="1686" y="11"/>
+</item>
+<item historyLabel="command-line.h" index="7">
+<position info="not_deleted" x="1492" y="11"/>
+</item>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="1130" y="0"/>
+</item>
+<item historyLabel="serial-net-device.h" index="1">
 <position info="not_deleted" x="2147" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2291" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="1732" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1760" y="0"/>
+<item historyLabel="serial-net-device.h" index="1">
+<position info="not_deleted" x="3942" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2291" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="1471" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4342" y="12"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="1037" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1760" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2157" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2291" y="0"/>
+<item historyLabel="csma-net-device.h" index="3">
+<position info="not_deleted" x="905" y="318"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position/>
+<item historyLabel="csma-channel.cc" index="8">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2580" y="0"/>
+<item historyLabel="serial-channel.cc" index="9">
+<position info="not_deleted" x="933" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="1037" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1990" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="4575" y="4"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position/>
+<item historyLabel="serial-channel.cc" index="9">
+<position info="not_deleted" x="933" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2571" y="0"/>
+<item historyLabel="serial-channel.h" index="10">
+<position info="not_deleted" x="2101" y="15"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4342" y="12"/>
+<item historyLabel="serial-channel.cc" index="9">
+<position info="not_deleted" x="1955" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4432" y="0"/>
+<item historyLabel="csma-channel.cc" index="8">
+<position info="not_deleted" x="1774" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1950" y="0"/>
+<item historyLabel="serial-channel.h" index="10">
+<position info="not_deleted" x="2150" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2291" y="0"/>
+<item historyLabel="csma-channel.cc" index="8">
+<position info="not_deleted" x="1774" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4432" y="0"/>
+<item historyLabel="serial-channel.h" index="10">
+<position info="not_deleted" x="2150" y="0"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4144" y="0"/>
+<item historyLabel="serial-channel.cc" index="9">
+<position info="not_deleted" x="1966" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1507" y="0"/>
+<item historyLabel="serial-channel.h" index="10">
+<position info="not_deleted" x="2150" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2291" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="4575" y="4"/>
 </item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4150" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2680" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1957" y="0"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="5604" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2129" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2680" y="0"/>
 </item>
-<item historyLabel="tdma-example.cc" index="1">
-<position info="not_deleted" x="12035" y="0"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="5604" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1957" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2680" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2620" y="0"/>
+<item historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="5604" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.h" index="4">
-<position info="not_deleted" x="1957" y="0"/>
+<item historyLabel="serial-example-0.cc" index="4">
+<position info="not_deleted" x="2680" y="0"/>
 </item>
-<item historyLabel="tdma-slot-assignment-parser.cc" index="3">
-<position info="not_deleted" x="2620" y="0"/>
-</item>
-<item historyLabel="tdma-helper.cc" index="0">
-<position info="not_deleted" x="4440" y="0"/>
-</item>
-<item historyLabel="tdma-helper.h" index="2">
-<position info="not_deleted" x="3662" y="0"/>
-</item>
-<item active="true" historyLabel="tdma-helper.h" index="2">
-<position info="not_deleted" x="3840" y="0"/>
+<item active="true" historyLabel="serial-net-device.cc" index="5">
+<position info="not_deleted" x="5604" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -561,35 +756,47 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-slot-assignment-parser.h" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h">
-<persistable path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="csma-channel.cc" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-channel.cc">
+<persistable path="/cs381/repos/ns-3-dev/src/csma/model/csma-channel.cc"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-slot-assignment-parser.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc">
-<persistable path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-slot-assignment-parser.cc"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="command-line.h" tooltip="cs381/repos/ns-3-dev/src/core/model/command-line.h">
+<persistable path="/cs381/repos/ns-3-dev/src/core/model/command-line.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-helper.h" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h">
-<persistable path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="log.h" tooltip="cs381/repos/ns-3-dev/src/core/model/log.h">
+<persistable path="/cs381/repos/ns-3-dev/src/core/model/log.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="bench-packets.cc" tooltip="cs381/repos/ns-3-dev/utils/bench-packets.cc">
-<persistable path="/cs381/repos/ns-3-dev/utils/bench-packets.cc"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="serial-net-device.h" tooltip="cs381/repos/ns-3-dev/src/serial/model/serial-net-device.h">
+<persistable path="/cs381/repos/ns-3-dev/src/serial/model/serial-net-device.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-helper.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc">
-<persistable path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/helper/tdma-helper.cc"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="csma-net-device.h" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-net-device.h">
+<persistable path="/cs381/repos/ns-3-dev/src/csma/model/csma-net-device.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="make-event.h" tooltip="cs381/repos/ns-3-dev/build/ns3/make-event.h">
-<persistable path="/cs381/repos/ns-3-dev/build/ns3/make-event.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="csma-net-device.cc" tooltip="cs381/repos/ns-3-dev/src/csma/model/csma-net-device.cc">
+<persistable path="/cs381/repos/ns-3-dev/src/csma/model/csma-net-device.cc"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="nstime.h" tooltip="cs381/repos/ns-3-dev/src/core/model/nstime.h">
-<persistable path="/cs381/repos/ns-3-dev/src/core/model/nstime.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="internet-stack-helper.h" tooltip="cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.h">
+<persistable path="/cs381/repos/ns-3-dev/src/internet/helper/internet-stack-helper.h"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-example.cc" tooltip="cs381/repos/ns-3-dev/scratch/tdma-example.cc">
-<persistable path="/cs381/repos/ns-3-dev/scratch/tdma-example.cc"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="serial-example-0.cc" tooltip="cs381/repos/ns-3-dev/scratch/serial-example-0.cc">
+<persistable path="/cs381/repos/ns-3-dev/scratch/serial-example-0.cc"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="packet.h" tooltip="cs381/repos/ns-3-dev/src/network/model/packet.h">
-<persistable path="/cs381/repos/ns-3-dev/src/network/model/packet.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="trace-helper.cc" tooltip="cs381/repos/ns-3-dev/src/network/helper/trace-helper.cc">
+<persistable path="/cs381/repos/ns-3-dev/src/network/helper/trace-helper.cc"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="tdma-example.cc" tooltip="cs381/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc">
-<persistable path="/cs381/repos/ns-3-dev/src/simple-wireless-tdma/examples/tdma-example.cc"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="csma-helper.cc" tooltip="cs381/repos/ns-3-dev/src/csma/helper/csma-helper.cc">
+<persistable path="/cs381/repos/ns-3-dev/src/csma/helper/csma-helper.cc"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="csma-helper.h" tooltip="cs381/repos/ns-3-dev/src/csma/helper/csma-helper.h">
+<persistable path="/cs381/repos/ns-3-dev/src/csma/helper/csma-helper.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="serial-example-0.cc" tooltip="cs381/repos/ns-3-dev/src/serial/examples/serial-example-0.cc">
+<persistable path="/cs381/repos/ns-3-dev/src/serial/examples/serial-example-0.cc"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="udp-echo.cc" tooltip="cs381/repos/ns-3-dev/examples/udp/udp-echo.cc">
+<persistable path="/cs381/repos/ns-3-dev/examples/udp/udp-echo.cc"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="onoff-application.h" tooltip="cs381/repos/ns-3-dev/src/applications/model/onoff-application.h">
+<persistable path="/cs381/repos/ns-3-dev/src/applications/model/onoff-application.h"/>
 </file>
 </mruList>
 </workbench>

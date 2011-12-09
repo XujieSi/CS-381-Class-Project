@@ -1,0 +1,42 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    module = bld.create_ns3_module('serial', ['network', 'propagation', 'core'])
+    module.includes = '.'
+    module.source = [
+        'model/serial-channel.cc',
+        'model/serial.cc',
+        'model/serial-central.cc',
+        'model/serial-net-device.cc',
+        'model/serial-low.cc',
+        'model/serial-controller.cc',
+        'model/serial-queue.cc',
+        'helper/slot-assignment-parser.cc',
+        'helper/serial-controller-helper.cc',
+        'helper/serial-helper.cc',
+        ]
+        
+    module_test = bld.create_ns3_module_test_library('serial')
+    module_test.source = [
+        'test/serial-test.cc',
+        ]
+        
+    headers = bld.new_task_gen(features=['ns3header'])
+    headers.module = 'serial'
+    headers.source = [
+        'model/serial-channel.h',
+        'model/serial.h',
+        'model/serial-low.h',
+        'model/serial-central.h',
+        'model/serial-net-device.h',
+        'model/serial-controller.h',
+        'model/serial-queue.h',
+        'helper/slot-assignment-parser.h',
+        'helper/serial-controller-helper.h',
+        'helper/serial-helper.h',        
+        ]
+
+    if (bld.env['ENABLE_EXAMPLES']):
+      bld.add_subdirs('examples')
+      
+#    bld.ns3_python_bindings()

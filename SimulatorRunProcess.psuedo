@@ -1,0 +1,28 @@
+Core:
+
+DefaultSimulatorImple::Run(void) 
+{
+  m_stop = false;
+  while ( ! m_events->IsEmpty() && m_stop ) 
+     processOneEvent();
+}
+
+RealTimeSimulatorImpl::Run(void)
+{
+  m_stop = false;
+  m_running = true;
+  m_synchronizer->SetOrigin(m_currentTs);
+  for(;;)
+  {
+     bool done = false;
+     {
+        CriticalSection cs(m_mutex);
+        if ( m_stop || m_events->IsEmpty())
+           done = true;
+     }
+     if (done) break;
+
+     ProcessOneEvent();
+  }
+}
+

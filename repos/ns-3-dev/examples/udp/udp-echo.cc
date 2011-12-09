@@ -42,7 +42,7 @@ main (int argc, char *argv[])
 // Users may find it convenient to turn on explicit debugging
 // for selected modules; the below lines suggest how to do this
 //
-#if 0
+#if 1
   LogComponentEnable ("UdpEchoExample", LOG_LEVEL_INFO);
   LogComponentEnable ("UdpEchoClientApplication", LOG_LEVEL_ALL);
   LogComponentEnable ("UdpEchoServerApplication", LOG_LEVEL_ALL);
@@ -67,11 +67,14 @@ main (int argc, char *argv[])
 //
 // Explicitly create the channels required by the topology (shown above).
 //
+  ObjectFactory channelFactory("ns3::CsmaChannel");
+  Ptr< CsmaChannel > channel = channelFactory.Create ()->GetObject<CsmaChannel> ();
+
   CsmaHelper csma;
   csma.SetChannelAttribute ("DataRate", DataRateValue (DataRate (5000000)));
   csma.SetChannelAttribute ("Delay", TimeValue (MilliSeconds (2)));
   csma.SetDeviceAttribute ("Mtu", UintegerValue (1400));
-  NetDeviceContainer d = csma.Install (n);
+  NetDeviceContainer d = csma.Install (n, channel);
 
   Ipv4AddressHelper ipv4;
 //
@@ -106,7 +109,7 @@ main (int argc, char *argv[])
   apps.Start (Seconds (2.0));
   apps.Stop (Seconds (10.0));
 
-#if 0
+#if 1
 //
 // Users may find it convenient to initialize echo packets with actual data;
 // the below lines suggest how to do this
@@ -121,7 +124,7 @@ main (int argc, char *argv[])
 
   AsciiTraceHelper ascii;
   csma.EnableAsciiAll (ascii.CreateFileStream ("udp-echo.tr"));
-  csma.EnablePcapAll ("udp-echo", false);
+  csma.EnablePcapAll ("udp-echo", true);
 
 //
 // Now, do the actual simulation.
